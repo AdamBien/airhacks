@@ -26,7 +26,12 @@ public class AssertTest {
     public void collections() {
         List<String> coolStuff = Arrays.asList("java", "jee");
         assertThat(coolStuff, everyItem(containsString("j")));
-        assertThat(coolStuff, hasItem("ee"));
+        assertThat(coolStuff, hasItem("java"));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void expectedException() {
+        throw new IllegalStateException("Exception");
     }
 
 }
