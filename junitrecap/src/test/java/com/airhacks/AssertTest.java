@@ -64,7 +64,8 @@ public class AssertTest {
 
     @Test
     public void fancyLogic() {
-        Assume.assumeFalse(true);
+        String stage = System.getProperty("stage", "int");
+        Assume.assumeFalse(stage.equals("test"));
     }
 
     @After
