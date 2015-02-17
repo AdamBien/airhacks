@@ -3,7 +3,7 @@
     <persistence-unit name="it" transaction-type="RESOURCE_LOCAL">
         <class>com.airhacks.testing.workshops.entity.Workshop</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:derby:./workshops;create=true"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:testDB;create=true"/>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
         </properties>
