@@ -14,3 +14,5 @@ target/
 /FromDB/build/
 /HelloMaven/guests/
 /HelloMaven/derby.log
+/javaeetesting/workshops/
+/javaeetesting/derby.log
