@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -25,6 +26,13 @@ public class WorkshopsCatalogTest {
     public void boookingWithUnsufficientAttendees() {
         when(this.booking.getRegistrationNumber()).thenReturn(2);
         this.cut.startWorkshop();
+    }
+
+    @Test
+    public void successfullBooking() {
+        when(this.booking.getRegistrationNumber()).thenReturn(4);
+        this.cut.startWorkshop();
+        verify(booking).payTrainer();
     }
 
 }
