@@ -21,7 +21,11 @@ public class WorkshopsResourceIT {
     @Before
     public void initClient() {
         this.client = ClientBuilder.newClient();
-        this.tut = this.client.target("http://localhost:8080/javaeetesting/resources/workshops");
+        String host = System.getProperty("host", "localhost");
+        String port = System.getProperty("port", "8080");
+        this.tut = this.client.target("http://{host}:{port}/javaeetesting/resources/workshops").
+                resolveTemplate("host", host).
+                resolveTemplate("port", port);
     }
 
     @Test
