@@ -4,13 +4,18 @@ import java.util.Arrays;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  *
  * @author airhacks.com
  */
 public class AssertTest {
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void stringAssert() {
@@ -32,6 +37,13 @@ public class AssertTest {
     @Test(expected = IllegalStateException.class)
     public void expectedException() {
         throw new IllegalStateException("Exception");
+    }
+
+    @Test
+    public void morePowerfulException() {
+        exception.expect(IllegalStateException.class);
+        exception.expectMessage(startsWith("With"));
+        throw new IllegalStateException("With exception it looks fine");
     }
 
 }
