@@ -1,28 +1,29 @@
 package com.airhacks.testing.workshops.boundary;
 
 import com.airhacks.testing.workshops.control.Booking;
-import org.junit.Before;
 import org.junit.Test;
-import static org.mockito.Mockito.mock;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import static org.mockito.Mockito.when;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  *
  * @author airhacks.com
  */
+@RunWith(MockitoJUnitRunner.class)
 public class WorkshopsCatalogTest {
 
+    @InjectMocks
     WorkshopsCatalog cut;
 
-    @Before
-    public void init() {
-        this.cut = new WorkshopsCatalog();
-        this.cut.booking = mock(Booking.class);
-    }
+    @Mock
+    Booking booking;
 
     @Test(expected = IllegalStateException.class)
     public void boookingWithUnsufficientAttendees() {
-        when(this.cut.booking.getRegistrationNumber()).thenReturn(2);
+        when(this.booking.getRegistrationNumber()).thenReturn(2);
         this.cut.startWorkshop();
     }
 

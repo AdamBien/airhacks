@@ -12,7 +12,7 @@ import javax.inject.Inject;
 public class WorkshopsCatalog {
 
     @Inject
-    Booking booking;
+    private Booking booking;
 
     public String all() {
         return "testing,architecture";
