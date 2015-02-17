@@ -5,6 +5,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.*;
 import org.junit.After;
 import static org.junit.Assert.assertThat;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,6 +60,11 @@ public class AssertTest {
     @Test
     public void ruleTest() {
         System.out.println("ruleTest");
+    }
+
+    @Test
+    public void fancyLogic() {
+        Assume.assumeFalse(true);
     }
 
     @After
