@@ -17,7 +17,8 @@ public class WorkshopIT {
 
     @Before
     public void initEM() {
-        this.em = Persistence.createEntityManagerFactory("it").createEntityManager();
+        this.em = Persistence.createEntityManagerFactory("it").
+                createEntityManager();
         this.tx = this.em.getTransaction();
     }
 
