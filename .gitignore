@@ -1,0 +1,16 @@
+target/
+/blogging-engine/blogDB/
+/blogging-engine/derby.log
+/blogging-engine/nb-configuration.xml
+/FromDB/nbproject/private/
+/ancient-tech/nbproject/private/
+/HowToDI/nbproject/private/
+/HowToDI/build/
+/HowToDI/dist/
+/CustomerService/nbproject/private/
+/CustomerService/build/
+/CustomerService/dist/
+/FutureOutsideJavaEE/nbproject/private/
+/FromDB/build/
+/HelloMaven/guests/
+/HelloMaven/derby.log
