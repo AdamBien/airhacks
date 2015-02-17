@@ -1,5 +1,7 @@
 package com.airhacks;
 
+import java.util.Arrays;
+import java.util.List;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
@@ -18,6 +20,13 @@ public class AssertTest {
         assertThat("javaee", allOf(startsWith("java"), endsWith("ee")));
         assertThat("javaee", not(allOf(startsWith("scalae"),
                 endsWith("groovy"))));
+    }
+
+    @Test
+    public void collections() {
+        List<String> coolStuff = Arrays.asList("java", "jee");
+        assertThat(coolStuff, everyItem(containsString("j")));
+        assertThat(coolStuff, hasItem("ee"));
     }
 
 }
