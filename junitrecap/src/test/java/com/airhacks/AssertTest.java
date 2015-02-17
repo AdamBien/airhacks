@@ -3,7 +3,9 @@ package com.airhacks;
 import java.util.Arrays;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.*;
+import org.junit.After;
 import static org.junit.Assert.assertThat;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -16,6 +18,14 @@ public class AssertTest {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
+
+    @Rule
+    public AspectRule custom = new AspectRule();
+
+    @Before
+    public void before() {
+        System.out.println("Before");
+    }
 
     @Test
     public void stringAssert() {
@@ -44,6 +54,16 @@ public class AssertTest {
         exception.expect(IllegalStateException.class);
         exception.expectMessage(startsWith("With"));
         throw new IllegalStateException("With exception it looks fine");
+    }
+
+    @Test
+    public void ruleTest() {
+        System.out.println("ruleTest");
+    }
+
+    @After
+    public void after() {
+        System.out.println("After");
     }
 
 }
