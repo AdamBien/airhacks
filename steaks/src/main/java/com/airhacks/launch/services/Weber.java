@@ -9,6 +9,8 @@ import javax.enterprise.inject.Produces;
 public class Weber {
 
     @Produces
-    private final static Grill grill = new Grill("weber");
+    public Grill expose() {
+        return new Grill("super weber");
+    }
 
 }
