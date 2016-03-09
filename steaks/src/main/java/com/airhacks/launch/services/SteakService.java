@@ -2,12 +2,14 @@ package com.airhacks.launch.services;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 /**
  *
  * @author airhacks.com
  */
 @Stateless
+@Interceptors(Audit.class)
 public class SteakService {
 
     public SteakService() {
