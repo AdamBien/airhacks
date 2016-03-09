@@ -21,6 +21,7 @@ public class Steaks {
 
     @GET
     public JsonObject all() {
+        System.out.println("--  " + service.getClass().getName());
         return Json.createObjectBuilder().
                 add("type", service.steaks()).
                 build();
