@@ -1,5 +1,6 @@
 package com.airhacks.launch.services;
 
+import com.airhacks.configuration.ConfigurableKey;
 import javax.inject.Inject;
 
 /**
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 public class Grill {
 
     @Inject
+    @ConfigurableKey("grill-name")
     private String name;
 
     public String boot() {

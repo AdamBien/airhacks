@@ -11,7 +11,7 @@ public class Configurator {
 
     @Produces
     public String configure(InjectionPoint ip) {
-        String key = ip.getMember().getDeclaringClass().getName() + " --> " + ip.getMember().getName();
-        return "configured weber " + key;
+        ConfigurableKey annotation = ip.getAnnotated().getAnnotation(ConfigurableKey.class);
+        return "configured weber " + annotation.value();
     }
 }
