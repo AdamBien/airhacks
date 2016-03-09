@@ -13,7 +13,26 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
     <build>
+        <plugins>
+            <plugin>
+                <groupId>de.struller-baumann</groupId>
+                <artifactId>visualee</artifactId>
+                <version>0.28</version>
+                <configuration>
+                    <outputdirectory>target/visualee</outputdirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>visualize</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <finalName>steaks</finalName>
     </build>
     <properties>
