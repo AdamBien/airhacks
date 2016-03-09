@@ -17,7 +17,7 @@ public class AnnotationTest {
         assertTrue(annotationPresent);
 
         CustomFilter customFilter = clazz.getAnnotation(CustomFilter.class);
-        System.out.println("customFilter = " + customFilter.name());
+        System.out.println("customFilter = " + customFilter.value());
 
     }
 

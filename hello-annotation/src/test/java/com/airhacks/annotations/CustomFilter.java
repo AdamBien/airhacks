@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CustomFilter {
 
-    String name();
+    String value();
 
-    int prio();
 }
