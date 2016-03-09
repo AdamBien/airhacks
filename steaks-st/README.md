@@ -1,0 +1,1 @@
+mvn failsafe:integration-test
