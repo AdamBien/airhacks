@@ -1,7 +1,7 @@
 package com.airhacks.scopes;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -10,7 +10,7 @@ import javax.ws.rs.Path;
  *
  * @author airhacks.com
  */
-@RequestScoped
+@ApplicationScoped
 @Path("scopes")
 public class ScopesResource {
 
