@@ -1,11 +1,14 @@
 package com.airhacks.launch.rest;
 
+import com.airhacks.launch.entities.Steak;
 import com.airhacks.launch.services.SteakService;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 /**
@@ -20,11 +23,19 @@ public class Steaks {
     SteakService service;
 
     @GET
-    public JsonObject all() {
+    public List<Steak> all() {
         System.out.println("--  " + service.getClass().getName());
-        return Json.createObjectBuilder().
-                add("type", service.steaks()).
-                build();
+        return service.steaks();
+    }
+
+    @OPTIONS
+    public Steak sample() {
+        return new Steak(42);
+    }
+
+    @POST
+    public void save(JsonObject steak) {
+        this.service.save(new Steak(steak.getInt("weight")));
     }
 
 }

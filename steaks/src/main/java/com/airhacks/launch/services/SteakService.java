@@ -1,9 +1,13 @@
 package com.airhacks.launch.services;
 
+import com.airhacks.launch.entities.Steak;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -16,6 +20,9 @@ public class SteakService {
     @Inject
     Grill grill;
 
+    @PersistenceContext
+    EntityManager em;
+
     public SteakService() {
         System.out.println("--- don't use constructors");
     }
@@ -25,8 +32,13 @@ public class SteakService {
         System.out.println("-- fully initialized " + grill.getClass().getName());
     }
 
-    public String steaks() {
-        return "bloody on " + grill.boot();
+    public List<Steak> steaks() {
+        return this.em.createNamedQuery(Steak.findAll, Steak.class).
+                getResultList();
+    }
+
+    public void save(Steak s) {
+        this.em.merge(s);
     }
 
 }

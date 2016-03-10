@@ -12,7 +12,17 @@ public class Audit {
     @AroundInvoke
     public Object log(InvocationContext ic) throws Exception {
         System.out.println("-- " + ic.getMethod());
-        return ic.proceed();
+        long start = System.currentTimeMillis();
+        try {
+            return ic.proceed();
+
+        } catch (Exception ex) {
+
+            throw ex;
+        } finally {
+            long duration = System.currentTimeMillis() - start;
+            System.out.println("duration = " + duration);
+        }
     }
 
 }
