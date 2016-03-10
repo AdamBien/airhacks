@@ -29,6 +29,28 @@ public class BasicsTest {
         t.start();
     }
 
+    @Test
+    public void withReferences() {
+        Runnable r = this::tnt;
+        new Thread(r).start();
+    }
+
+    //Thread is not allowed in Java EE
+    @Test
+    public void forManuel() {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                tnt();
+            }
+        };
+        new Thread(r).start();
+    }
+
+    void tnt() {
+        System.out.println("TNT action");
+    }
+
     void hello() {
         System.out.println("Hey joe");
     }
