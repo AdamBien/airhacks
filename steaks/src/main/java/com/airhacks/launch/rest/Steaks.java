@@ -7,6 +7,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.JsonObject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
@@ -29,6 +31,9 @@ public class Steaks {
     @Inject
     SteakService service;
 
+    @PersistenceContext
+    EntityManager em;
+
     @GET
     public List<Steak> all() {
         System.out.println("--  " + service.getClass().getName());
@@ -43,7 +48,10 @@ public class Steaks {
     @GET
     @Path("{id}")
     public Steak find(@PathParam("id") long id) {
-        return this.service.find(id);
+        Steak found = this.service.find(id);
+        em.clear();
+        found.grillMe();
+        return found;
     }
 
     @POST
