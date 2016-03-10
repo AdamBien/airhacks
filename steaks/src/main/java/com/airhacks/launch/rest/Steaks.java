@@ -4,6 +4,8 @@ import com.airhacks.launch.entities.Steak;
 import com.airhacks.launch.services.SteakService;
 import java.net.URI;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.JsonObject;
@@ -34,6 +36,9 @@ public class Steaks {
     @PersistenceContext
     EntityManager em;
 
+    @Resource
+    SessionContext cs;
+
     @GET
     public List<Steak> all() {
         System.out.println("--  " + service.getClass().getName());
@@ -58,6 +63,7 @@ public class Steaks {
     public Response save(JsonObject steak, @Context UriInfo info) {
         Steak notGrilled = this.service.save(new Steak(steak.getInt("weight")));
         notGrilled.grillMe();
+        this.cs.setRollbackOnly();
         URI location = info.getAbsolutePathBuilder().path("/" + notGrilled.getId()).build();
         return Response.created(location).build();
     }

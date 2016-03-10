@@ -4,6 +4,7 @@ import com.airhacks.launch.entities.Steak;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
@@ -23,6 +24,9 @@ public class SteakService {
     @PersistenceContext
     EntityManager em;
 
+    @Inject
+    Event<Steak> grillChannel;
+
     public SteakService() {
         System.out.println("--- don't use constructors");
     }
@@ -38,6 +42,7 @@ public class SteakService {
     }
 
     public Steak save(Steak s) {
+        this.grillChannel.fire(s);
         return this.em.merge(s);
     }
 
