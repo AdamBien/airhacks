@@ -35,7 +35,7 @@ public class Steak {
     }
 
     public void grillMe() {
-        System.out.println("Grilled!");
+        this.weight--;
     }
 
 }

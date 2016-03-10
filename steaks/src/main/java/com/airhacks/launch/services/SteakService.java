@@ -37,8 +37,8 @@ public class SteakService {
                 getResultList();
     }
 
-    public void save(Steak s) {
-        this.em.merge(s);
+    public Steak save(Steak s) {
+        return this.em.merge(s);
     }
 
 }

@@ -15,6 +15,8 @@ import javax.ws.rs.Path;
  *
  * @author airhacks.com
  */
+//try with @RequestScoped
+//curl -XPOST -H'Content-type: application/json' -d'{"id":0,"weight":45}' http://localhost:8080/steaks/resources/steaks
 @Stateless
 @Path("steaks")
 public class Steaks {
@@ -35,7 +37,8 @@ public class Steaks {
 
     @POST
     public void save(JsonObject steak) {
-        this.service.save(new Steak(steak.getInt("weight")));
+        Steak notGrilled = this.service.save(new Steak(steak.getInt("weight")));
+        notGrilled.grillMe();
     }
 
 }
