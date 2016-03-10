@@ -1,7 +1,7 @@
 package com.airhacks.steaks.rest;
 
 import com.airhacks.steaks.services.SteakService;
-import java.util.concurrent.CompletableFuture;
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import javax.annotation.Resource;
@@ -29,7 +29,7 @@ public class Steaks {
     public void steak(@Suspended AsyncResponse response) {
         Consumer<Object> browser = response::resume;
         Supplier<String> supplier = this.service::steak;
-        CompletableFuture.supplyAsync(supplier, mes).thenAccept(browser);
+        supplyAsync(supplier, mes).thenAccept(browser);
 
     }
 
