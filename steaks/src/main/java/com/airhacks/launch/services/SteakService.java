@@ -41,4 +41,8 @@ public class SteakService {
         return this.em.merge(s);
     }
 
+    public Steak find(long id) {
+        return this.em.find(Steak.class, id);
+    }
+
 }

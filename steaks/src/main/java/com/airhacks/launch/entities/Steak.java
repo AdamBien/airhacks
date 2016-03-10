@@ -38,4 +38,8 @@ public class Steak {
         this.weight--;
     }
 
+    public long getId() {
+        return this.id;
+    }
+
 }
