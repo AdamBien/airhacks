@@ -23,6 +23,12 @@ public class BasicsTest {
         b.doSomething();
     }
 
+    @Test
+    public void threads() {
+        Thread t = new Thread(new TNTRunnable());
+        t.start();
+    }
+
     void hello() {
         System.out.println("Hey joe");
     }
