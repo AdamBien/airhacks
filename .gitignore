@@ -3,3 +3,8 @@ target/
 .DS_Store
 /hello-annotation/nbproject/
 /steaks-st/nbproject/
+/java-queries/nbproject/
+/entity-graph/derby.log
+/entity-graph/sample/
+/java-samples/nbproject/
+/longsummarystatistics/nbproject/
