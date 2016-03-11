@@ -1,7 +1,7 @@
 package com.airhacks;
 
-import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.LongSummaryStatistics;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,13 +38,13 @@ public class StreamsTest {
 
     @Test
     public void stats() {
-        IntSummaryStatistics stats = Stream.generate(this::next).
+        LongSummaryStatistics stats = Stream.generate(this::next).
                 map(u -> u.toString()).
                 filter(this::withLeadingZero).
                 limit(10).
                 map(this::find).
-                map(b -> b.getMaschine()).
-                collect(Collectors.summarizingInt(Machine::getPs));
+                map(Betrieb::getMaschine).
+                collect(Collectors.summarizingLong(Maschine::getPs));
         System.out.println("stats = " + stats);
     }
 
