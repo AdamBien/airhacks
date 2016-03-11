@@ -32,6 +32,14 @@ public class SpaceshipTest {
     }
 
     @Test
+    public void getReference() {
+        this.et.begin();
+        Spaceship reference = this.em.getReference(Spaceship.class, "duke");
+        this.em.remove(reference);
+        this.et.commit();
+    }
+
+    @Test
     public void namedEntityGraph() {
 
         EntityGraph<?> withEnginesGraph = this.em.getEntityGraph("withEngines");
