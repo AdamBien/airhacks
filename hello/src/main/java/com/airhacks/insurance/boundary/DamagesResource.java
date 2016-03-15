@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
 /**
+ * invoke with: curl -i http://localhost:8080/hello/resources/damages/41
  *
  * @author airhacks.com
  */
