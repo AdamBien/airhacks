@@ -16,3 +16,6 @@ Airhacks at Eventbrite: https://airhacks.eventbrite.com
 
 # links & resources
 
+
+
+https://cidr.xyz/
