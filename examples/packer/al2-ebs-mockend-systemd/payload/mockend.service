@@ -1,0 +1,4 @@
+[Unit]
+Description=mockend
+[Service]
+ExecStart=/usr/bin/java -jar /tmp/mockend-runner.jar
