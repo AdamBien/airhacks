@@ -19,3 +19,5 @@ Airhacks at Eventbrite: https://airhacks.eventbrite.com
 
 
 https://cidr.xyz/
+
+https://calculator.s3.amazonaws.com/index.html
