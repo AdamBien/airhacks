@@ -16,6 +16,10 @@ Airhacks at Eventbrite: https://airhacks.eventbrite.com
 
 # links & resources
 
+Thank you for attending and see you at:
+
+Testing, Monitoring, Resiliency December 9th, 2021
+Serverless Java on AWS Cloud, December 16th, 2021
 
 
 https://cidr.xyz/
