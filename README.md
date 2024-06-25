@@ -37,3 +37,5 @@ https://docs.atlassian.com/ConfluenceServer/javadoc/8.9.3/
 https://commons.apache.org/proper/commons-scxml/
 
 https://docs.langchain4j.dev/tutorials/rag/#document-splitter
+
+https://www.deepnetts.com
