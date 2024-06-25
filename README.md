@@ -25,3 +25,5 @@ https://llama.meta.com/
 https://github.com/mukel/llama3.java
 
 https://mistral.ai
+
+https://huggingface.co
