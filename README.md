@@ -45,3 +45,5 @@ https://www.deepnetts.com
 https://mostlynerdless.de/blog/2023/12/31/hello-ebpf-developing-ebpf-apps-in-java-1/
 
 https://mostlynerdless.de/blog/2023/12/31/hello-ebpf-developing-ebpf-apps-in-java-1/
+
+https://github.com/openjdk/jextract/tree/master/samples
