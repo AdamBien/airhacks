@@ -29,3 +29,5 @@ https://mistral.ai
 https://huggingface.co
 
 https://jsoup.org/
+
+https://tika.apache.org
