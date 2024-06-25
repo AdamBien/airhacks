@@ -41,3 +41,5 @@ https://docs.langchain4j.dev/tutorials/rag/#document-splitter
 https://www.deepnetts.com
 
 https://www.deepnetts.com
+
+https://mostlynerdless.de/blog/2023/12/31/hello-ebpf-developing-ebpf-apps-in-java-1/
