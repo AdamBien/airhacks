@@ -29,7 +29,7 @@ public class AnalysisResource {
     @Consumes(MediaType.TEXT_PLAIN)
     public Result analyse(String message) {
         this.logger.log(Level.INFO, message + " --- received");
-        return analyzer.analyze(message);
+        return this.analyzer.analyze(message);
     }
 
 }
