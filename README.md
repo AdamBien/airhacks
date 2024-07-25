@@ -33,3 +33,5 @@ https://tika.apache.org
 https://platform.openai.com/tokenizer
 
 https://platform.openai.com/tokenizer
+
+https://docs.langchain4j.dev/tutorials/tools/
