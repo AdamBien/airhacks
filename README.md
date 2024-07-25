@@ -29,3 +29,5 @@ https://docs.anthropic.com/en/docs/build-with-claude/embeddings
 https://tika.apache.org
 
 https://tika.apache.org
+
+https://platform.openai.com/tokenizer
