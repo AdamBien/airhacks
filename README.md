@@ -43,3 +43,5 @@ https://github.com/jbellis/jvector
 https://www.deepnetts.com
 
 https://www.rabbit.tech/
+
+https://central.sonatype.com/artifact/dev.langchain4j/langchain4j-document-parser-apache-tika
