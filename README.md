@@ -23,3 +23,5 @@ Adam Bien / Airhacks links: https://airhacks.industries
 https://docs.openrewrite.org/
 
 https://github.com/mukel/llama3.java
+
+https://docs.anthropic.com/en/docs/build-with-claude/embeddings
