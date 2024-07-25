@@ -35,3 +35,5 @@ https://platform.openai.com/tokenizer
 https://platform.openai.com/tokenizer
 
 https://docs.langchain4j.dev/tutorials/tools/
+
+https://docs.anthropic.com/en/docs/build-with-claude/tool-use
