@@ -39,3 +39,5 @@ https://docs.langchain4j.dev/tutorials/tools/
 https://docs.anthropic.com/en/docs/build-with-claude/tool-use
 
 https://github.com/jbellis/jvector
+
+https://www.deepnetts.com
