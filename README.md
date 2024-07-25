@@ -41,3 +41,5 @@ https://docs.anthropic.com/en/docs/build-with-claude/tool-use
 https://github.com/jbellis/jvector
 
 https://www.deepnetts.com
+
+https://www.rabbit.tech/
