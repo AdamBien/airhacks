@@ -31,3 +31,5 @@ https://tika.apache.org
 https://tika.apache.org
 
 https://platform.openai.com/tokenizer
+
+https://platform.openai.com/tokenizer
