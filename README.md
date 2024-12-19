@@ -35,3 +35,5 @@ https://github.com/jtaccuino/jtaccuino
 https://d2l.djl.ai/chapter_deep-learning-computation/model-construction.html
 
 https://tika.apache.org/
+
+https://cwiki.apache.org/confluence/display/tika/tikaocr
