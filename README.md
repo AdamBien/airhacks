@@ -69,3 +69,5 @@ https://openjdk.org/projects/babylon/
 https://www.jcp.org/en/jsr/detail?id=381
 
 https://docs.anthropic.com/en/docs/build-with-claude/tool-use#example-of-empty-tool-result
+
+https://github.com/quarkiverse/quarkus-langchain4j/blob/main/samples/weather-agent/src/main/java/io/quarkiverse/langchain4j/weather/agent/CityExtractorAgent.java
