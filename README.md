@@ -47,3 +47,5 @@ https://bielik.ai/
 https://aws.amazon.com/bedrock/model-distillation/
 
 https://www.voyageai.com
+
+https://openai.com/index/new-embedding-models-and-api-updates/
