@@ -25,3 +25,5 @@ https://djl.ai/
 https://github.com/deepjavalibrary/djl
 
 https://opengpt-x.de/en/models/teuken-7b/
+
+https://mistral.ai/
