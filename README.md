@@ -39,3 +39,5 @@ https://tika.apache.org/
 https://cwiki.apache.org/confluence/display/tika/tikaocr
 
 https://github.com/mukel/llama3.java
+
+https://github.com/ggerganov/llama.cpp
