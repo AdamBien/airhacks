@@ -77,3 +77,5 @@ https://docs.langchain4j.dev/tutorials/embedding-stores/
 https://docs.langchain4j.dev/tutorials/rag/
 
 https://github.com/bsorrentino/langgraph4j
+
+https://github.com/devoxx/DevoxxGenieIDEAPlugin
