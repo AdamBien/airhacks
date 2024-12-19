@@ -43,3 +43,5 @@ https://github.com/mukel/llama3.java
 https://github.com/ggerganov/llama.cpp
 
 https://bielik.ai/
+
+https://aws.amazon.com/bedrock/model-distillation/
