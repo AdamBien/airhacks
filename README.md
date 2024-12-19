@@ -65,3 +65,5 @@ https://www.postgresql.org/docs/current/fuzzystrmatch.html
 https://www.tornadovm.org/
 
 https://openjdk.org/projects/babylon/
+
+https://www.jcp.org/en/jsr/detail?id=381
