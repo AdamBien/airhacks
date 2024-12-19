@@ -53,3 +53,5 @@ https://openai.com/index/new-embedding-models-and-api-updates/
 https://www.deepnetts.com
 
 https://platform.openai.com/tokenizer
+
+https://www.datastax.com/blog/indexing-all-of-wikipedia-on-a-laptop
