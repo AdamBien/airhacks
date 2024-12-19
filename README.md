@@ -75,3 +75,5 @@ https://github.com/quarkiverse/quarkus-langchain4j/blob/main/samples/weather-age
 https://docs.langchain4j.dev/tutorials/embedding-stores/
 
 https://docs.langchain4j.dev/tutorials/rag/
+
+https://github.com/bsorrentino/langgraph4j
