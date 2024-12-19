@@ -45,3 +45,5 @@ https://github.com/ggerganov/llama.cpp
 https://bielik.ai/
 
 https://aws.amazon.com/bedrock/model-distillation/
+
+https://www.voyageai.com
