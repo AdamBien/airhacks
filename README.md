@@ -55,3 +55,5 @@ https://www.deepnetts.com
 https://platform.openai.com/tokenizer
 
 https://www.datastax.com/blog/indexing-all-of-wikipedia-on-a-laptop
+
+https://huggingface.co/datasets/Cohere/wikipedia-2023-11-embed-multilingual-v3
