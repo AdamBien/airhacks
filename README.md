@@ -67,3 +67,5 @@ https://www.tornadovm.org/
 https://openjdk.org/projects/babylon/
 
 https://www.jcp.org/en/jsr/detail?id=381
+
+https://docs.anthropic.com/en/docs/build-with-claude/tool-use#example-of-empty-tool-result
