@@ -59,3 +59,5 @@ https://www.datastax.com/blog/indexing-all-of-wikipedia-on-a-laptop
 https://huggingface.co/datasets/Cohere/wikipedia-2023-11-embed-multilingual-v3
 
 https://www.google.com/search?client=firefox-b-d&q=soundex
+
+https://www.postgresql.org/docs/current/fuzzystrmatch.html
