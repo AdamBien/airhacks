@@ -73,3 +73,5 @@ https://docs.anthropic.com/en/docs/build-with-claude/tool-use#example-of-empty-t
 https://github.com/quarkiverse/quarkus-langchain4j/blob/main/samples/weather-agent/src/main/java/io/quarkiverse/langchain4j/weather/agent/CityExtractorAgent.java
 
 https://docs.langchain4j.dev/tutorials/embedding-stores/
+
+https://docs.langchain4j.dev/tutorials/rag/
