@@ -29,3 +29,5 @@ https://opengpt-x.de/en/models/teuken-7b/
 https://mistral.ai/
 
 https://kyutai.org/cp_moshi.pdf
+
+https://github.com/jtaccuino/jtaccuino
