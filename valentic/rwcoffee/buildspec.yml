@@ -1,0 +1,21 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      java: corretto21
+    commands:
+      - echo "build started by ${CODEBUILD_INITIATOR}"
+      - echo "running on:"
+      - java -version
+      - mvn -version
+      - npm --version
+      - npm install -g aws-cdk
+      - cdk --version
+  build:
+    commands:
+      - echo "building AWS Lambda"
+      - cd ${CODEBUILD_SRC_DIR}/lambda && mvn --no-transfer-progress -DskipTests package
+      - echo "building cdk"
+      - cd ${CODEBUILD_SRC_DIR}/cdk && mvn --no-transfer-progress -DskipTests package
+      - echo "deploying application"
+      - cd ${CODEBUILD_SRC_DIR}/cdk && cdk deploy --all --require-approval=never
