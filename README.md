@@ -23,3 +23,5 @@ Adam Bien / Airhacks links: https://airhacks.industries
 https://github.com/AdamBien/aws-quarkus-lambda-cdk-plain
 
 https://github.com/AdamBien/best-of-java-shorts
+
+https://github.com/AdamBien/aws-functionurl-cdk-only
