@@ -27,3 +27,5 @@ https://jsonata.org
 https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html
 
 https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html
+
+https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html
