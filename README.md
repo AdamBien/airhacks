@@ -18,3 +18,6 @@ Adam Bien / Airhacks links: https://airhacks.industries
 
 # links & resources
 
+
+
+https://github.com/AdamBien/aws-quarkus-lambda-cdk-plain-codepipeline
