@@ -21,3 +21,5 @@ Adam Bien / Airhacks links: https://airhacks.industries
 
 
 https://github.com/AdamBien/aws-quarkus-lambda-cdk-plain-codepipeline
+
+https://jsonata.org
