@@ -25,3 +25,5 @@ https://github.com/AdamBien/aws-quarkus-lambda-cdk-plain-codepipeline
 https://jsonata.org
 
 https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html
+
+https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html
