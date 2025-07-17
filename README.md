@@ -23,3 +23,5 @@ Adam Bien / Airhacks links: https://airhacks.industries
 https://github.com/AdamBien/aws-quarkus-lambda-cdk-plain-codepipeline
 
 https://jsonata.org
+
+https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html
