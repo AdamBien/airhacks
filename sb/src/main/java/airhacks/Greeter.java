@@ -14,6 +14,9 @@ public class Greeter {
     @ConfigProperty(name="first.name",defaultValue = "james")
     String firstName;
 
+    @Inject
+    User user;
+
     @PostConstruct
     public void init(){
         System.out.println(this.getClass() + " init");
@@ -26,7 +29,7 @@ public class Greeter {
 
     
     public String greet(){
-        System.out.println("hello, duke");
+        System.out.println("hello, duke from " + this.user.name());
         return "hello, %s".formatted(this.firstName);
     }
 }

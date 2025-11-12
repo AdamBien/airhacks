@@ -23,3 +23,5 @@ Adam Bien / Airhacks links: https://airhacks.industries
 https://www.graalvm.org/
 
 https://github.com/graalvm/mandrel
+
+https://smallrye.io/

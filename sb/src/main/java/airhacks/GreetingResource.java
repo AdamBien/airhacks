@@ -22,9 +22,17 @@ public class GreetingResource {
     @Inject
     Greeter tweeter;
 
+    @Inject
+    User user;
+
+    public GreetingResource(){
+        System.out.println(this.getClass() + " ctr " + this.tweeter);
+
+    }
+
     @PostConstruct
     public void init() {
-        System.out.println(this.getClass() + " init");
+        System.out.println(this.getClass() + " init " + this.tweeter);
     }
 
     @PreDestroy
@@ -35,6 +43,7 @@ public class GreetingResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public JsonObject hello() {
+        this.user.setName("duke " + System.currentTimeMillis());
         System.out.println("- " + this.tweeter.getClass());
         var greet = this.tweeter.greet();
 
