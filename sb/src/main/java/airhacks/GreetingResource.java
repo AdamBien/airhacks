@@ -4,6 +4,8 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -21,27 +23,31 @@ public class GreetingResource {
     Greeter tweeter;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         System.out.println(this.getClass() + " init");
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         System.out.println(this.getClass() + " destroy");
     }
 
-
     @GET
-    public String hello() {
+    @Produces(MediaType.APPLICATION_JSON)
+    public JsonObject hello() {
         System.out.println("- " + this.tweeter.getClass());
-        return this.tweeter.greet();
+        var greet = this.tweeter.greet();
+
+        return Json.createObjectBuilder()
+                .add("greet", greet)
+                .build();
     }
 
     @GET
     @Path("{id}-{name}")
-    public String byId(@PathParam("id") String id,@PathParam("name") String name) {
-        System.out.println("- " +  id + " " + name);
-        return this.tweeter.greet() + " - " +  id + " " + name;
+    public String byId(@PathParam("id") String id, @PathParam("name") String name) {
+        System.out.println("- " + id + " " + name);
+        return this.tweeter.greet() + " - " + id + " " + name;
     }
 
     @POST
