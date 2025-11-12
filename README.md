@@ -25,3 +25,5 @@ https://www.graalvm.org/
 https://github.com/graalvm/mandrel
 
 https://smallrye.io/
+
+https://openliberty.io/docs/latest/json-p-b.html
