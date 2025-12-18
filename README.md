@@ -25,3 +25,5 @@ https://mcpservers.org/
 https://agents.md
 
 https://block.github.io/goose/
+
+https://github.com/adambien/zmcp
