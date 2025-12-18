@@ -23,3 +23,5 @@ Adam Bien / Airhacks links: https://airhacks.industries
 https://mcpservers.org/
 
 https://agents.md
+
+https://block.github.io/goose/
