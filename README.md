@@ -35,3 +35,5 @@ https://modelcontextprotocol.io/specification/2025-03-26/server/tools#protocol-m
 https://github.com/AdamBien/zmcp
 
 https://github.com/AdamBien/zmcp-filestore-tool
+
+https://github.com/AdamBien/zmcp-code-executor
