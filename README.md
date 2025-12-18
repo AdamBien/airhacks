@@ -33,3 +33,5 @@ https://github.com/AdamBien/aws-agent-core-gateway-lambda-cdk-plain
 https://modelcontextprotocol.io/specification/2025-03-26/server/tools#protocol-messages
 
 https://github.com/AdamBien/zmcp
+
+https://github.com/AdamBien/zmcp-filestore-tool
