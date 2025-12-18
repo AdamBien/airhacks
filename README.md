@@ -37,3 +37,5 @@ https://github.com/AdamBien/zmcp
 https://github.com/AdamBien/zmcp-filestore-tool
 
 https://github.com/AdamBien/zmcp-code-executor
+
+https://github.com/AdamBien/zmcp-code-executor
