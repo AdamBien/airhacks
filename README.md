@@ -57,3 +57,5 @@ https://opentelemetry.io/docs/languages/java/api/#span
 https://www.agent-network-protocol.com
 
 https://docs.redhat.com/en/documentation/red_hat_build_of_quarkus/1.11/html/managing_jta_transactions_with_the_quarkus_transaction_manager/proc-configuring-transaction-node-name-identifier-for-xa-transactions_quarkus-transaction-manager
+
+https://github.com/AdamBien/zsmith
