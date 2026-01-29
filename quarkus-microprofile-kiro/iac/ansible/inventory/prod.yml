@@ -1,0 +1,11 @@
+---
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+  children:
+    openshift:
+      hosts:
+        localhost:
+  vars:
+    env: prod
