@@ -1,5 +1,6 @@
 package airhacks.qmp.accounts.entity;
 
+import airhacks.qmp.ValidationMessages;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.ws.rs.BadRequestException;
@@ -8,10 +9,10 @@ public record AccountIdentifier(String accountNumber, String routingCode) {
 
     public AccountIdentifier {
         if (accountNumber == null || accountNumber.isBlank()) {
-            throw new BadRequestException("accountNumber is required");
+            throw new BadRequestException(ValidationMessages.get("accountNumber.required"));
         }
         if (routingCode == null || routingCode.isBlank()) {
-            throw new BadRequestException("routingCode is required");
+            throw new BadRequestException(ValidationMessages.get("routingCode.required"));
         }
     }
 

@@ -29,7 +29,17 @@ class AccountsResourceIT {
                     "accountNumber": "039158547000",
                     "routingCode": "SBIN0001234",
                     "balance": 1000.00,
-                    "owner": "Duke",
+                    "owner": {
+                        "name": "Duke",
+                        "email": "duke@java.net",
+                        "phone": "+91-9876543210",
+                        "address": {
+                            "street": "MG Road 42",
+                            "city": "Bangalore",
+                            "postalCode": "560001",
+                            "country": "IN"
+                        }
+                    },
                     "currency": "INR"
                 }
                 """;

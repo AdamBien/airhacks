@@ -6,6 +6,28 @@ Built with Quarkus, MicroProfile, JAX-RS, and CDI. BCE-structured with system te
 
 BCE-structured 👉 [bce.design](https://bce.design)
 
+## Architecture
+
+```mermaid
+graph LR
+    subgraph accounts
+        AccountsResource --> Account
+        Account --> AccountIdentifier
+        Account --> Owner
+    end
+    subgraph owners
+        OwnersResource --> Owner
+        Owner --> Address
+    end
+    subgraph health
+        ApplicationLiveness
+        ApplicationReadiness
+    end
+    subgraph greetings
+        GreetingResource --> Greeter
+    end
+```
+
 ## Modules
 
 - [service](service/README.md) - Quarkus application module with BCE structure
