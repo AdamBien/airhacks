@@ -21,3 +21,5 @@ Adam Bien / Airhacks links: https://airhacks.industries
 
 
 https://code.claude.com/docs/en/skills
+
+https://aaif.io
