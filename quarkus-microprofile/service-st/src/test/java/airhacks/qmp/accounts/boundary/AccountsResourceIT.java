@@ -26,10 +26,11 @@ class AccountsResourceIT {
     void create() {
         var payload = """
                 {
-                    "iban": "DE89370400440532013000",
+                    "accountNumber": "039158547000",
+                    "routingCode": "SBIN0001234",
                     "balance": 1000.00,
                     "owner": "Duke",
-                    "currency": "EUR"
+                    "currency": "INR"
                 }
                 """;
         var response = this.client.create(payload);
