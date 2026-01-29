@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Update Architecture on BC Deletion or Creation",
+  "description": "Updates the Mermaid architecture diagram in README.md when a Business Component (BC) package is deleted or created from airhacks/qmp/",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "service/src/main/java/airhacks/qmp/**/package-info.java"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A Business Component may have been removed. Scan the BC packages under service/src/main/java/airhacks/qmp/ and update the Mermaid architecture diagram in service/README.md to reflect only the current BCs and their relationships. Remove any references to deleted components."
+  },
+  "workspaceFolderName": "quarkus-microprofile",
+  "shortName": "update-architecture-on-bc-delete"
+}

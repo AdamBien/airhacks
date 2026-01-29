@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Update Architecture on BC Creation",
+  "description": "Updates the Mermaid architecture diagram in README.md when a new Business Component (BC) package is created under airhacks/qmp/",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "service/src/main/java/airhacks/qmp/**/package-info.java"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A new Business Component may have been added. Scan the BC packages under service/src/main/java/airhacks/qmp/ and update the Mermaid architecture diagram in service/README.md to reflect all current BCs and their relationships. If no diagram exists, create one showing the BCE structure."
+  }
+}

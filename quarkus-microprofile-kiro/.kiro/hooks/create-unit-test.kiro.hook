@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Create Unit Test",
+  "description": "When a new Java class is created with significant business logic, automatically generate a corresponding unit test class following project conventions.",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/*.java"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Analyze the newly created Java file. If it contains significant business logic (not just a record, enum, exception, or simple data class), create a corresponding unit test class in the appropriate test directory. Follow project conventions: use AssertJ assertions, avoid \"test\" or \"should\" prefixes in method names, and generate at most three essential tests. Skip test generation for boundary classes (JAX-RS resources), health checks, and trivial implementations."
+  }
+}
