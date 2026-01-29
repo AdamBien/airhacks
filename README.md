@@ -35,3 +35,5 @@ https://www.coderabbit.ai/
 https://pitest.org
 
 https://github.com/adambien/zsmith
+
+https://github.com/adambien/zmcp
