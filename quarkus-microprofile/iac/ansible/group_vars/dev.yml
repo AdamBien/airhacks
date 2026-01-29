@@ -1,0 +1,16 @@
+---
+app_name: qmp-service
+namespace: qmp-dev
+replicas: 1
+image_tag: latest
+
+# OpenShift cluster (override via environment or vault)
+# openshift_api: https://api.dev-cluster.example.com:6443
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
