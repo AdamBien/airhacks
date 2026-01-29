@@ -1,8 +1,8 @@
 # 🚀Quarkus with MicroProfile on BCE
 
-This is a banking application with basic account management. It uses the openbanking standard. The application manages credits.
+Banking application with account management using the [Open Banking](https://www.openbanking.org.uk) standard. Manages credits with country-agnostic account identification ([IBAN](https://www.iso.org/standard/81090.html), [IFSC](https://www.rbi.org.in/Scripts/bs_viewcontent.aspx?Id=2009), or any routing scheme).
 
-Quarkus MicroProfile template with BCE architecture pattern. Features boundary-control-entity separation, System Tests in a standalone module, REST endpoints with JAX-RS, CDI for dependency injection, and MicroProfile-only dependencies. A starting point for Quarkus projects with minimal dependencies.
+Built with Quarkus, MicroProfile, JAX-RS, and CDI. BCE-structured with system tests in a standalone module.
 
 BCE-structured 👉 [bce.design](https://bce.design)
 
