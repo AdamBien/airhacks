@@ -25,3 +25,5 @@ https://code.claude.com/docs/en/skills
 https://aaif.io
 
 https://bce.design/serverful.html
+
+https://a2a-protocol.org/latest/
