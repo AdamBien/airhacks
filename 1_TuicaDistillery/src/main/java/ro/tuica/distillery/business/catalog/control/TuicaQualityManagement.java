@@ -5,8 +5,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.enterprise.concurrent.ManagedExecutorService;
+import jakarta.annotation.Resource;
+import jakarta.enterprise.concurrent.ManagedExecutorService;
 import ro.tuica.distillery.business.catalog.entity.Tuica;
 
 /**

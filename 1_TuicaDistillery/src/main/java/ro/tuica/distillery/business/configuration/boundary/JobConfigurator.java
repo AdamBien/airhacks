@@ -1,8 +1,8 @@
 package ro.tuica.distillery.business.configuration.boundary;
 
-import javax.ejb.ScheduleExpression;
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
+import jakarta.ejb.ScheduleExpression;
+import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.spi.InjectionPoint;
 
 /**
  *

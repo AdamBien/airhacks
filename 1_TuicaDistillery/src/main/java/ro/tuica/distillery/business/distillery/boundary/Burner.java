@@ -1,17 +1,17 @@
 package ro.tuica.distillery.business.distillery.boundary;
 
 import java.util.Date;
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.ejb.Schedule;
-import javax.ejb.ScheduleExpression;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.ejb.Timeout;
-import javax.ejb.Timer;
-import javax.ejb.TimerService;
-import javax.enterprise.concurrent.ManagedExecutorService;
-import javax.inject.Inject;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
+import jakarta.ejb.Schedule;
+import jakarta.ejb.ScheduleExpression;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.Startup;
+import jakarta.ejb.Timeout;
+import jakarta.ejb.Timer;
+import jakarta.ejb.TimerService;
+import jakarta.enterprise.concurrent.ManagedExecutorService;
+import jakarta.inject.Inject;
 import ro.tuica.distillery.business.distillery.control.Distillator;
 
 /**

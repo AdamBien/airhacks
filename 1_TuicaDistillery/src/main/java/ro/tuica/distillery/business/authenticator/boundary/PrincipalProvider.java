@@ -1,7 +1,7 @@
 package ro.tuica.distillery.business.authenticator.boundary;
 
 import java.security.Principal;
-import javax.enterprise.inject.Produces;
+import jakarta.enterprise.inject.Produces;
 import ro.tuica.distillery.business.authenticator.entity.TuicaPrincipal;
 
 /**
