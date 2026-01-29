@@ -18,3 +18,6 @@ Adam Bien / Airhacks links: https://airhacks.industries
 
 # links & resources
 
+
+
+https://code.claude.com/docs/en/skills

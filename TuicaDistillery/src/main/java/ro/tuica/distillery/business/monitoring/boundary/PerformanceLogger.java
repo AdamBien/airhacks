@@ -1,7 +1,7 @@
 package ro.tuica.distillery.business.monitoring.boundary;
 
-import javax.interceptor.AroundInvoke;
-import javax.interceptor.InvocationContext;
+import jakarta.interceptor.AroundInvoke;
+import jakarta.interceptor.InvocationContext;
 
 /**
  *
