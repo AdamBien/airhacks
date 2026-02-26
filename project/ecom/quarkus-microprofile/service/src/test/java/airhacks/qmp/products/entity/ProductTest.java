@@ -44,9 +44,14 @@ class ProductTest {
     @Test
     void roundTrip() {
         var original = new Product("p2", "Gadget", "A handy gadget", new BigDecimal("9.95"), Color.GREEN);
-        var restored = Product.fromJSON(original.toJSON());
+        var json = original.toJSON();
+        var restored = Product.fromJSON(json);
 
-        assertEquals(original, restored);
+        assertEquals(original.productId(), restored.productId());
+        assertEquals(original.name(), restored.name());
+        assertEquals(original.description(), restored.description());
+        assertEquals(original.price(), restored.price());
+        assertEquals(original.color(), restored.color());
     }
 
     @Test

@@ -4,33 +4,33 @@ import static java.lang.System.Logger.Level.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import airhacks.qmp.products.entity.Product;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class ProductStore {
 
     static System.Logger LOG = System.getLogger(ProductStore.class.getName());
 
-    List<Product> products = new CopyOnWriteArrayList<>();
+    @Inject
+    EntityManager em;
 
     public List<Product> all() {
         LOG.log(INFO, "returning all products");
-        return this.products;
+        return this.em.createNamedQuery("all", Product.class).getResultList();
     }
 
     public Product add(Product product) {
         LOG.log(INFO, "adding product: " + product.name());
-        this.products.add(product);
+        this.em.persist(product);
         return product;
     }
 
     public Optional<Product> findById(String productId) {
         LOG.log(INFO, "finding product by id: " + productId);
-        return this.products.stream()
-                .filter(p -> p.productId().equals(productId))
-                .findFirst();
+        return Optional.ofNullable(this.em.find(Product.class, productId));
     }
 }
