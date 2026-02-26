@@ -4,6 +4,72 @@ A multi-seller marketplace where independent sellers run branded stores, custome
 
 ---
 
+## Architecture Overview
+
+```mermaid
+graph TB
+    subgraph Clients
+        C[Customer]
+        S[Seller]
+    end
+
+    subgraph "service module — BCE"
+        subgraph "Auth BC"
+            AR[AuthResource<br/>/auth]
+            AR --> US[UserService]
+            AR --> TS[TokenService]
+            US --> PS[PasswordService]
+            US --> UDB[(Users<br/>ConcurrentHashMap)]
+        end
+
+        subgraph "Products BC"
+            PR[ProductResource<br/>/products]
+            PR --> PSvc[ProductService]
+            PSvc --> PDB[(Products<br/>ConcurrentHashMap)]
+        end
+
+        JWT[[JWT / SmallRye]]
+        AR -.->|issues token| JWT
+        JWT -.->|verifies token| PR
+    end
+
+    subgraph "service-st module"
+        ARC[AuthResourceClient] -->|REST| AR
+        PRC[ProductResourceClient] -->|REST| PR
+        AIT[AuthResourceIT] --> ARC
+        PIT[ProductResourceIT] --> ARC
+        PIT --> PRC
+    end
+
+    C -->|browse products| PR
+    C -->|register / login| AR
+    S -->|register / login| AR
+    S -->|CRUD products| PR
+
+    style AR fill:#4a9,color:#fff
+    style PR fill:#4a9,color:#fff
+    style JWT fill:#f90,color:#fff
+    style AIT fill:#69f,color:#fff
+    style PIT fill:#69f,color:#fff
+```
+
+### Business Components (implemented)
+
+| BC | Path | Endpoints | Auth |
+|---|---|---|---|
+| **Auth** | `/auth` | registration, login, token refresh, password reset | Public |
+| **Products** | `/products` | CRUD, browse active, seller listings | `SELLER` for writes, `PermitAll` for reads |
+
+### BCE Layer Convention
+
+| Layer | Package | Responsibility |
+|---|---|---|
+| **Boundary** | `*.boundary` | JAX-RS resources — HTTP in/out |
+| **Control** | `*.control` | Business logic services |
+| **Entity** | `*.entity` | Records, enums, DTOs |
+
+---
+
 ## The Problem
 
 Buyers want variety and competitive pricing in one place. Sellers want reach without the overhead of running their own storefront. Traditional single-vendor e-commerce solves neither. A marketplace solves both — but only if it handles the complexity of multiple sellers, split fulfilment, and transparent financials behind a seamless customer experience.
