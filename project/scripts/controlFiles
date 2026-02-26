@@ -1,0 +1,107 @@
+#!/usr/bin/env -S java --source 25
+
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Properties;
+
+String version = "2026-02-26.1";
+
+void main(String... args) throws Exception {
+    if (args.length > 0 && args[0].equals("-help")) {
+        Log.USER.out("Usage: controlFiles [directory]");
+        Log.USER.out("  Lists all Java files in 'control' packages");
+        Log.USER.out("  directory  Root directory to search (default: current directory)");
+        Log.USER.out("  -help      Show this help");
+        Log.USER.out("  -version   Show version");
+        return;
+    }
+    if (args.length > 0 && args[0].equals("-version")) {
+        Log.INFO.out("controlFiles " + version);
+        return;
+    }
+    ZCfg.load("controlFiles");
+    var packageName = ZCfg.string("package.name", "control");
+    var fileExtension = ZCfg.string("file.extension", ".java");
+    var root = Path.of(args.length > 0 ? args[0] : ".");
+    try (var files = Files.find(root, Integer.MAX_VALUE,
+            (path, _) -> path.toString().endsWith(fileExtension)
+                      && path.getParent().getFileName().toString().equals(packageName))) {
+        files.map(root::relativize).map(Path::toString).forEach(Log.INFO::out);
+    }
+}
+
+enum Log {
+
+    USER(Color.BRIGHT_CYAN, System.out),
+    INFO(Color.BRIGHT_YELLOW, System.out);
+
+    PrintStream out;
+
+    enum Color {
+        BRIGHT_GREEN("\u001B[38;5;46m"),
+        BRIGHT_CYAN("\u001B[38;5;51m"),
+        BRIGHT_YELLOW("\u001B[38;5;226m");
+
+        String code;
+
+        Color(String code) {
+            this.code = code;
+        }
+    }
+
+    private final String value;
+    private final static String RESET = "\u001B[0m";
+
+    private Log(Color color, PrintStream out) {
+        this.value = (color.code + "%s" + RESET);
+        this.out = out;
+    }
+
+    public String formatted(String raw) {
+        return this.value.formatted(raw);
+    }
+
+    public void out(String message) {
+        var colored = formatted(message);
+        this.out.println(colored);
+    }
+}
+
+class ZCfg {
+
+    static final String PROPERTIES_FILE = "app.properties";
+    static Properties CACHE;
+
+    public static void load(String appName) {
+        CACHE = loadProperties(appName);
+    }
+
+    static Properties loadProperties(String appName) {
+        var properties = new Properties();
+        var userHome = System.getProperty("user.home");
+        var globalConfig = Path.of(userHome, "." + appName, PROPERTIES_FILE);
+        if (Files.exists(globalConfig)) {
+            loadFromFile(globalConfig, properties);
+        }
+        var localConfig = Path.of(PROPERTIES_FILE);
+        if (Files.exists(localConfig)) {
+            loadFromFile(localConfig, properties);
+        }
+        properties.putAll(System.getProperties());
+        return properties;
+    }
+
+    static void loadFromFile(Path file, Properties properties) {
+        try (var is = Files.newBufferedReader(file)) {
+            properties.load(is);
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot load properties from: " + file, e);
+        }
+    }
+
+    public static String string(String key, String defaultValue) {
+        if (CACHE == null)
+            throw new IllegalStateException("Call ZCfg.load(appName) first");
+        return CACHE.getProperty(key, defaultValue);
+    }
+}
