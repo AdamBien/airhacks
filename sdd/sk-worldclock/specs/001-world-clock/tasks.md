@@ -16,12 +16,12 @@ description: "Task list for World Clock for Business Hubs"
 
 - **[P]**: Can run in parallel (different files, no dependencies)
 - **[Story]**: US1, US2 (Setup/Foundational/Polish have no story label)
-- BCE layout: `src/main/java/airhacks/<bc>/<layer>/`, tests in `src/test/java/airhacks/`
+- BCE layout: `src/main/java/airhacks/<bc>/<layer>/`, zunit tests in `test/`
 
 ## Path Conventions
 
 - Main: `src/main/java/airhacks/`
-- Test: `src/test/java/airhacks/`
+- Test: `test/` (zunit self-contained `void main()` scripts; run against `zbo/app.jar`)
 - Build: `zb` (zero-dependency), package `zbo/app.jar`
 
 ---
@@ -30,8 +30,8 @@ description: "Task list for World Clock for Business Hubs"
 
 **Purpose**: Establish the BCE package structure and confirm the build runs.
 
-- [ ] T001 Create BCE package directories under `src/main/java/airhacks/`: `clock/entity/`, `clock/control/`, `clock/boundary/`, `zones/control/`; and test dirs `src/test/java/airhacks/clock/` and `src/test/java/airhacks/zones/`
-- [ ] T002 Verify the toolchain: run `zb` and confirm the existing `src/main/java/airhacks/App.java` compiles and packages to `zbo/app.jar`
+- [X] T001 Create BCE package directories under `src/main/java/airhacks/`: `clock/entity/`, `clock/control/`, `clock/boundary/`, `zones/control/`; and test dirs `src/test/java/airhacks/clock/` and `src/test/java/airhacks/zones/`
+- [X] T002 Verify the toolchain: run `zb` and confirm the existing `src/main/java/airhacks/App.java` compiles and packages to `zbo/app.jar`
 
 ---
 
@@ -41,10 +41,10 @@ description: "Task list for World Clock for Business Hubs"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T003 [P] Create `Hub` record (`label` String, `zone` ZoneId) in `src/main/java/airhacks/clock/entity/Hub.java`
-- [ ] T004 [P] Create `Reading` record (`label` String, `localTime` ZonedDateTime, `isReference` boolean) in `src/main/java/airhacks/clock/entity/Reading.java`
-- [ ] T005 Create `Hubs` control with the curated fixed list (New York, London, Frankfurt, Dubai, Singapore, Tokyo, Sydney) as `List<Hub>` in `src/main/java/airhacks/clock/control/Hubs.java` (depends on T003)
-- [ ] T006 [P] Add `HubsTest` asserting all 7 curated hubs are present with valid `ZoneId`s in `src/test/java/airhacks/clock/HubsTest.java`
+- [X] T003 [P] Create `Hub` record (`label` String, `zone` ZoneId) in `src/main/java/airhacks/clock/entity/Hub.java`
+- [X] T004 [P] Create `Reading` record (`label` String, `localTime` ZonedDateTime, `isReference` boolean) in `src/main/java/airhacks/clock/entity/Reading.java`
+- [X] T005 Create `Hubs` control with the curated fixed list (New York, London, Frankfurt, Dubai, Singapore, Tokyo, Sydney) as `List<Hub>` in `src/main/java/airhacks/clock/control/Hubs.java` (depends on T003)
+- [X] T006 [P] Add `HubsTest` asserting all 7 curated hubs are present with valid `ZoneId`s in `test/HubsTest.java` (zunit convention: self-contained `void main()` scripts in `test/`)
 
 **Checkpoint**: Domain entities and curated list ready — user stories can begin.
 
@@ -58,15 +58,15 @@ description: "Task list for World Clock for Business Hubs"
 
 ### Tests for User Story 1 ⚠️ (write first, ensure they FAIL)
 
-- [ ] T007 [P] [US1] `ReferenceZoneTest` — with no argument, resolver returns `ZoneId.systemDefault()`, in `src/test/java/airhacks/zones/ReferenceZoneTest.java`
-- [ ] T008 [P] [US1] `WorldClockTest` — given a fixed `Instant` + reference zone: all `Reading`s share that instant (FR-004), offsets reflect DST at that instant (FR-009), exactly one `Reading.isReference` is true (FR-005), readings sorted west→east by UTC offset (FR-010), and a non-hub reference is added as an extra row (FR-006), in `src/test/java/airhacks/clock/WorldClockTest.java`
+- [X] T007 [P] [US1] `ReferenceZoneTest` — with no argument, resolver returns `ZoneId.systemDefault()`, in `test/ReferenceZoneTest.java`
+- [X] T008 [P] [US1] `WorldClockTest` — given a fixed `Instant` + reference zone: all `Reading`s share that instant (FR-004), offsets reflect DST at that instant (FR-009), exactly one `Reading.isReference` is true (FR-005), readings sorted west→east by UTC offset (FR-010), and a non-hub reference is added as an extra row (FR-006), in `test/WorldClockTest.java`
 
 ### Implementation for User Story 1
 
-- [ ] T009 [US1] Implement `ReferenceZone` control with default resolution (`ZoneId.systemDefault()` when no argument) in `src/main/java/airhacks/zones/control/ReferenceZone.java`
-- [ ] T010 [US1] Implement `WorldClock` boundary: accept a reference `Instant` + reference `ZoneId`, produce `List<Reading>` from `Hubs` (converting the shared instant per zone), mark the reference row, add the reference as an extra row when not a curated hub, and sort west→east by offset, in `src/main/java/airhacks/clock/boundary/WorldClock.java` (depends on T003, T004, T005)
-- [ ] T011 [US1] Implement rendering in `WorldClock` (or a private formatter): one aligned row per reading `HH:mm  Day  City (Zone)` with the `*` reference marker and legend, minute precision, 24-hour clock, per contracts/cli.md, in `src/main/java/airhacks/clock/boundary/WorldClock.java`
-- [ ] T012 [US1] Wire `App.java`: with no argument, capture a single `Instant.now()`, resolve default zone via `ReferenceZone`, render via `WorldClock`, print to stdout, exit 0, in `src/main/java/airhacks/App.java` (depends on T009, T010, T011)
+- [X] T009 [US1] Implement `ReferenceZone` control with default resolution (`ZoneId.systemDefault()` when no argument) in `src/main/java/airhacks/zones/control/ReferenceZone.java`
+- [X] T010 [US1] Implement `WorldClock` boundary: accept a reference `Instant` + reference `ZoneId`, produce `List<Reading>` from `Hubs` (converting the shared instant per zone), mark the reference row, add the reference as an extra row when not a curated hub, and sort west→east by offset, in `src/main/java/airhacks/clock/boundary/WorldClock.java` (depends on T003, T004, T005)
+- [X] T011 [US1] Implement rendering in `WorldClock` (or a private formatter): one aligned row per reading `HH:mm  Day  City (Zone)` with the `*` reference marker and legend, minute precision, 24-hour clock, per contracts/cli.md, in `src/main/java/airhacks/clock/boundary/WorldClock.java`
+- [X] T012 [US1] Wire `App.java`: with no argument, capture a single `Instant.now()`, resolve default zone via `ReferenceZone`, render via `WorldClock`, print to stdout, exit 0, in `src/main/java/airhacks/App.java` (depends on T009, T010, T011)
 
 **Checkpoint**: `java -jar zbo/app.jar` shows the full hub table for the default zone — MVP is functional and demoable.
 
@@ -80,13 +80,13 @@ description: "Task list for World Clock for Business Hubs"
 
 ### Tests for User Story 2 ⚠️ (write first, ensure they FAIL)
 
-- [ ] T013 [P] [US2] Extend `ReferenceZoneTest`: a valid arg resolves to that `ZoneId` (FR-003); an invalid arg is rejected (throws / signals error, no silent default) (FR-007), in `src/test/java/airhacks/zones/ReferenceZoneTest.java`
-- [ ] T014 [P] [US2] `AppTest` — argument-count handling: one valid arg → success/exit 0; invalid zone → non-zero exit with stderr message and no stdout table; two+ args → usage error, non-zero exit, in `src/test/java/airhacks/AppTest.java`
+- [X] T013 [P] [US2] Extend `ReferenceZoneTest`: a valid arg resolves to that `ZoneId` (FR-003); an invalid arg is rejected (throws / signals error, no silent default) (FR-007), in `test/ReferenceZoneTest.java`
+- [X] T014 [P] [US2] `AppTest` — argument-count handling via `App.zoneFor`: one valid arg → that zone; invalid zone → throws; two+ args → usage `IllegalArgumentException`, in `test/AppTest.java`
 
 ### Implementation for User Story 2
 
-- [ ] T015 [US2] Extend `ReferenceZone` to resolve a supplied zone id via `ZoneId.of(arg)` and signal invalid ids distinctly (no fallback), in `src/main/java/airhacks/zones/control/ReferenceZone.java`
-- [ ] T016 [US2] Extend `App.java` argument handling: 0 args → default (US1 path); 1 arg → override; invalid zone → stderr error naming the value + exit 1; ≥2 args → usage message on stderr + exit 1; never print a partial table on error, per contracts/cli.md, in `src/main/java/airhacks/App.java` (depends on T015)
+- [X] T015 [US2] Extend `ReferenceZone` to resolve a supplied zone id via `ZoneId.of(arg)` and signal invalid ids distinctly (no fallback), in `src/main/java/airhacks/zones/control/ReferenceZone.java`
+- [X] T016 [US2] Extend `App.java` argument handling: 0 args → default (US1 path); 1 arg → override; invalid zone → stderr error naming the value + exit 1; ≥2 args → usage message on stderr + exit 1; never print a partial table on error, per contracts/cli.md, in `src/main/java/airhacks/App.java` (depends on T015)
 
 **Checkpoint**: Both default and override paths work; invalid input fails cleanly. All user stories independently functional.
 
@@ -96,9 +96,9 @@ description: "Task list for World Clock for Business Hubs"
 
 **Purpose**: Verification and finishing touches spanning both stories.
 
-- [ ] T017 Run full `zb` build and the zunit suite; confirm all tests pass and `zbo/app.jar` is produced
-- [ ] T018 Execute all quickstart.md scenarios (1–6) manually and confirm actual output matches expected (default, shared-instant/DST, override, non-hub override, invalid zone, too-many-args)
-- [ ] T019 [P] Confirm `README.md` build/run examples match the shipped CLI contract (default vs override invocations)
+- [X] T017 Run full `zb` build and the zunit suite; confirm all tests pass and `zbo/app.jar` is produced
+- [X] T018 Execute all quickstart.md scenarios (1–6) manually and confirm actual output matches expected (default, shared-instant/DST, override, non-hub override, invalid zone, too-many-args)
+- [X] T019 [P] Confirm `README.md` build/run examples match the shipped CLI contract (default vs override invocations)
 
 ---
 
