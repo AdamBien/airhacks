@@ -1,0 +1,40 @@
+#!/usr/bin/java --enable-native-access=ALL-UNNAMED -Dtools.permissions.default=allow --class-path=../zsmith/zbo/zsmith.jar:../zsmith/zbo/lightmetal.jar --source 25
+
+import airhacks.zsmith.agent.boundary.Agent;
+import airhacks.zsmith.logging.control.Log;
+import airhacks.zsmith.tui.control.CommandLine;
+
+void main(String ...args) {
+
+    var port = CommandLine.port(args, 8080);
+
+    var assistant = new Agent("assistant", """
+            You are a fully loaded, versatile, and helpful assistant.
+            You have access to a broad set of tools and a catalog of skills.
+
+            Use the recall_memory tool at the start of a conversation and before
+            answering domain questions; use store_memory to remember durable user
+            preferences (user), guidance (feedback), ongoing work (project), and
+            useful resources (reference).
+
+            Use the load_skill tool to activate a relevant skill before applying it.
+            Use the remaining tools (file access, fetch_url, check_link, calculator,
+            current_time, clipboard, execute_script, ...) whenever they help complete
+            the task.
+
+            You are served over HTTP: communicate ONLY through your response text.
+            Do NOT call the user_question, user_confirmation, or user_message tools —
+            they block on the server console and cannot reach the HTTP caller.
+
+            Be concise and accurate.
+            """)
+            .withAllTools()          // every Tools enum constant
+            .withEpisodicMemory()    // store_memory / recall_memory (persistent)
+            .withSkills()            // load all discovered skills + load_skill tool
+            .withMaxIterations(50);  // headroom for multi-step tool chains
+
+    assistant.withHttpServer(port);
+
+    Log.agent("fully loaded assistant ready on http://localhost:" + port
+            + " — POST /chat or /act (header X-Session-Id optional)");
+}

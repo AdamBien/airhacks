@@ -1,0 +1,39 @@
+#!/usr/bin/java --enable-native-access=ALL-UNNAMED --class-path=../zsmith/zbo/zsmith.jar:../zsmith/zbo/lightmetal.jar --source 25
+
+
+import java.time.LocalDate;
+
+import airhacks.zsmith.agent.boundary.Agent;
+import airhacks.zsmith.tools.control.Tool;
+
+/**
+ * When {@code lightmetal.jar} is present on the classpath, zsmith communicates
+ * with LightMetal in-process (no HTTP, no IPC) — both run inside the same JVM
+ * and share the same heap.
+ */
+void main() {
+
+var currentDate = Tool.of(
+        "current_date",
+        "Returns the current date in ISO format (yyyy-MM-dd).",
+        _ -> LocalDate.now().toString());
+
+var printMessage = Tool.of(
+        "print_user_message",
+        "Prints a message to the user's console.",
+        Tool.schema(Tool.Prop.string(PrintField.message, "The message to print to the user")),
+        input -> {
+            IO.println(input.getString("message"));
+            return "Message printed to user";
+        });
+
+var agent = new Agent("current-date", """
+1. Use the current_date tool to obtain today's date.
+2. Use the print_user_message tool to print the date to the user.
+""")
+.withTools(currentDate, printMessage);
+
+agent.act();
+}
+
+enum PrintField { message }

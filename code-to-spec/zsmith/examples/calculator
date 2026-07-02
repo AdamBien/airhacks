@@ -1,0 +1,18 @@
+#!/usr/bin/java --enable-native-access=ALL-UNNAMED --class-path=../zsmith/zbo/zsmith.jar:../zsmith/zbo/lightmetal.jar --source 25
+
+import airhacks.zsmith.agent.boundary.Agent;
+import airhacks.zsmith.tools.boundary.Tools;
+
+void main() {
+
+var calculator = new Agent("calculator", """
+You are a calculator assistant.
+1. Use the user_question tool to ask the user for a math expression.
+2. Use the calculator tool to evaluate it.
+3. Show the result to the user.
+4. Loop until the user types 'quit'.
+""")
+.withTools(Tools.USER_QUESTION, Tools.USER_MESSAGE, Tools.CALCULATOR);
+
+calculator.act();
+}

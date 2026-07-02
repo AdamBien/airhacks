@@ -1,0 +1,44 @@
+#!/usr/bin/java --enable-native-access=ALL-UNNAMED -Dtools.permissions.default=allow --class-path=../zsmith/zbo/zsmith.jar:./zsmith/zbo/lightmetal.jar --source 25
+
+import airhacks.zsmith.agent.boundary.Agent;
+import airhacks.zsmith.tools.boundary.Tools;
+
+void main() {
+
+var linkLabeler = new Agent("link_labeler", """
+You describe the intent of a single web page.
+
+Given one URL, use the fetch_url tool to load it, then return a short
+description of what the page is for — its intent, not its title. Capture
+why someone would visit it (e.g. "JDK download page", "Quarkus REST
+tutorial", "personal blog about Java performance").
+
+Return ONLY the description: a handful of words, no URL, no quotes, no
+trailing punctuation. If the page is unreachable, return exactly:
+unreachable
+""")
+.withTool(Tools.FETCH_URL)
+.withMaxIterations(10);
+
+var linkTitler = new Agent("linkTitler", """
+You turn a list of links into an annotated "link - description" list.
+
+1. Use the read_clipboard tool to read the links (one URL per line).
+2. For every link, in order, use the delegate_to_link_labeler tool with
+   that single URL to obtain a short description of the page's intent.
+   Do not fetch pages yourself — delegation keeps page content out of
+   your context.
+3. Build a plain-text list, one entry per line, formatted exactly as:
+   <link> - <description>
+   Preserve the original order of the links.
+4. Use the write_clipboard tool to write the finished list back to the
+   clipboard.
+
+Be concise.
+""")
+.withTools(Tools.READ_CLIPBOARD, Tools.WRITE_CLIPBOARD)
+.withSubAgent(linkLabeler)
+.withMaxIterations(40);
+
+IO.println(linkTitler.act());
+}

@@ -1,0 +1,55 @@
+#!/usr/bin/env -S java --source 25
+
+import module java.net.http;
+
+String name = MethodHandles.lookup().lookupClass().getName();
+String version = "2026-06-10.1";
+
+String baseUrl = "https://github.com/AdamBien/zsmith/releases/latest/download";
+Path jarTarget = Path.of("zbo", "zsmith.jar");
+
+/// JAR lands in `./zbo/` so the README's `-cp zbo/zsmith.jar` shebangs resolve
+/// when the user runs their agent scripts from this same working directory.
+///
+/// No flag handling — per the `/java-cli-script` convention, scripts with no
+/// operands surface their version as the first line of normal output instead
+/// of gating it behind `-version`.
+void main(String... args) throws Exception {
+    IO.println("%s %s".formatted(name, version));
+    install(baseUrl + "/zsmith.jar", jarTarget, false);
+}
+
+void install(String url, Path destination, boolean executable) throws Exception {
+    IO.println("%s: fetching %s".formatted(name, url));
+    download(url, destination);
+    if (executable) {
+        destination.toFile().setExecutable(true, false);
+    }
+    IO.println("%s: installed %s (%d bytes)".formatted(name, destination, Files.size(destination)));
+}
+
+/// Atomic-replace: `destination` either keeps its previous content or becomes
+/// the fully-downloaded payload, never a half-written stream.
+///
+/// The `.part` staging file lives next to `destination`, not in the system
+/// temp directory, so [Files#move] with [StandardCopyOption#ATOMIC_MOVE]
+/// cannot fail with a cross-device link error on hosts where `/tmp` sits on
+/// a different filesystem. [Path#toAbsolutePath] is what makes the lookup
+/// work for `Path.of("zsmith.jar")` — a bare filename has a null relative parent.
+///
+/// Exit-on-failure on non-200 is deliberate — a single-file script has no
+/// caller to unwind to.
+void download(String url, Path destination) throws Exception {
+    var parent = destination.toAbsolutePath().getParent();
+    Files.createDirectories(parent);
+    var staging = Files.createTempFile(parent, destination.getFileName() + "-", ".part");
+    var client = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.ALWAYS).build();
+    var request = HttpRequest.newBuilder(URI.create(url)).build();
+    var response = client.send(request, HttpResponse.BodyHandlers.ofFile(staging));
+    if (response.statusCode() != HttpURLConnection.HTTP_OK) {
+        Files.deleteIfExists(staging);
+        System.err.println("%s: download failed (HTTP %d)".formatted(name, response.statusCode()));
+        System.exit(1);
+    }
+    Files.move(staging, destination, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+}

@@ -1,0 +1,26 @@
+#!/usr/bin/java --enable-native-access=ALL-UNNAMED -Dtools.permissions.default=allow --class-path=../zsmith/zbo/zsmith.jar:../zsmith/zbo/lightmetal.jar --source 25
+
+import airhacks.zsmith.agent.boundary.Agent;
+import airhacks.zsmith.benchmark.boundary.PointerChasingBenchmark;
+import airhacks.zsmith.tui.control.CommandLine;
+
+void main(String... args) {
+
+    var depth = CommandLine.firstInt(args, 50);
+
+    var benchmark = new PointerChasingBenchmark(depth);
+
+    // The walk needs one agent turn per hop (the hops are serially dependent, so at most one
+    // tool call resolves per turn) plus one turn to emit the answer: depth + 1 at minimum.
+    // The extra slack absorbs stray turns — a "thinking" turn with no tool call, or a retry
+    // after an unknown-key error — so an occasional wasted turn does not trip a false FAIL.
+    var maxIterations = depth + 20;
+
+    var agent = new Agent("pointer-chaser", benchmark.systemPrompt())
+            .withTool(benchmark.tool())
+            .withMaxIterations(maxIterations);
+
+    var result = benchmark.score(agent.chat("go"));
+
+    IO.println(result.summary());
+}

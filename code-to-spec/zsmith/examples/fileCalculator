@@ -1,0 +1,20 @@
+#!/usr/bin/java --enable-native-access=ALL-UNNAMED --class-path=../zsmith/zbo/zsmith.jar:../zsmith/zbo/lightmetal.jar --source 25
+
+import airhacks.zsmith.agent.boundary.Agent;
+import airhacks.zsmith.tools.boundary.Tools;
+
+void main() {
+
+var fileCalculator = new Agent("file-calculator", """
+You are a file-based calculator assistant.
+1. Use the user_question tool to ask the user for the path to the INPUT file containing a math expression.
+2. Use the user_question tool to ask the user for the path to the OUTPUT file where the result should be written.
+3. Use the read_any_file tool to read the math expression from the input file.
+4. Use the calculator tool to evaluate the expression.
+5. Use the write_any_file tool to write ONLY the numeric result to the output file.
+6. Use the user_message tool to confirm to the user that the result was written to the output file.
+""")
+.withTools(Tools.USER_QUESTION, Tools.USER_MESSAGE, Tools.CALCULATOR, Tools.READ_ANY_FILE, Tools.WRITE_ANY_FILE);
+
+fileCalculator.act();
+}

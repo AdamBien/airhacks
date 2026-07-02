@@ -1,0 +1,12 @@
+#!/usr/bin/java --enable-native-access=ALL-UNNAMED --class-path=../zsmith/zbo/zsmith.jar:../zsmith/zbo/lightmetal.jar --source 25
+
+import airhacks.zsmith.agent.boundary.Agent;
+
+void main() {
+
+var helloWorld = new Agent("helloWorld", """
+Reply with a friendly "Hello, World!" greeting.
+""");
+
+IO.println(helloWorld.act());
+}

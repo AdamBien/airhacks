@@ -1,0 +1,25 @@
+#!/usr/bin/java --enable-native-access=ALL-UNNAMED -Dtools.permissions.default=allow --class-path=../zsmith/zbo/zsmith.jar:../zsmith/zbo/lightmetal.jar --source 25
+
+import airhacks.zsmith.agent.boundary.Agent;
+import airhacks.zsmith.benchmark.boundary.ParallelDiscriminationBenchmark;
+import airhacks.zsmith.tui.control.CommandLine;
+
+void main(String... args) {
+
+    var tasks = CommandLine.firstInt(args, 8);
+
+    var benchmark = new ParallelDiscriminationBenchmark(tasks);
+
+    // A serial agent needs one turn per lookup plus one to answer: tasks + 1 at minimum.
+    // Allow that worst case (plus slack) so a serializing model still finishes and is scored as
+    // inefficient — rather than hitting max_iterations, which would hide the very signal measured.
+    var maxIterations = tasks + 20;
+
+    var agent = new Agent("parallel-worker", benchmark.systemPrompt())
+            .withTool(benchmark.tool())
+            .withMaxIterations(maxIterations);
+
+    var result = benchmark.score(agent.chat("go"));
+
+    IO.println(result.summary());
+}

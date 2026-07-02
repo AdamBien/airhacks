@@ -1,0 +1,11 @@
+#!/usr/bin/java --enable-native-access=ALL-UNNAMED --class-path=../zsmith/zbo/zsmith.jar:../zsmith/zbo/lightmetal.jar --source 25
+
+import airhacks.zsmith.tui.boundary.Chat;
+import airhacks.zsmith.tui.control.CommandLine;
+
+void main(String... args) {
+    var port = CommandLine.port(args, 8080);
+    new Chat()
+            .withPort(port)
+            .start();
+}
