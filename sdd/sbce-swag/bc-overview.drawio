@@ -1,0 +1,31 @@
+<mxfile>
+  <diagram name="BC Overview" id="bc-overview">
+    <mxGraphModel dx="1024" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="attendee" value="Attendee" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;dashed=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="140" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="swag" value="swag" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;fontSize=13;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="140" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="inventory" value="inventory" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;fontSize=13;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="660" y="140" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="organizer" value="Organizer" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;dashed=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;fontSize=13;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="660" y="360" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-claim" value="claim-swag" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#000000;fontColor=#000000;fontSize=16;fontStyle=0;endArrow=block;endFill=1;shadow=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="attendee" target="swag" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-reserve" value="reserve-swag" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#000000;fontColor=#000000;fontSize=16;fontStyle=0;endArrow=block;endFill=1;shadow=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="swag" target="inventory" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-stock" value="set-stock / list-availability" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#000000;fontColor=#000000;fontSize=16;fontStyle=0;endArrow=block;endFill=1;shadow=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="organizer" target="inventory" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
