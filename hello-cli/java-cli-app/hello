@@ -1,0 +1,7 @@
+#!/usr/bin/env -S java --source 25 -cp /Users/abien/work/workspaces/airhacks/workspace/hello-cli/java-cli-app/zbo/app.jar
+
+import airhacks.App;
+
+void main(String... args) throws Exception {
+    App.main(args);
+}
