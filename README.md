@@ -22,7 +22,17 @@ https://bce.design - Boundary Control Entity design pattern for maintainable sof
 
 https://airails.dev - Guidelines (skills, agents and guardrails) for Agentic development
 
-https://sbce.space - Spec-driven Boundary-Control-Entity development where the spec lives in code, not markdown
+https://sbce.dev - Spec-driven Boundary-Control-Entity development where the spec lives in code, not markdown
+
+https://github.com/AdamBien/bce.design - Quickstarter and sample application for building non-trivial web applications with minimal tooling, essential dependencies, high productivity, and no migrations.
+
+https://github.com/AdamBien/webcomponents-with-redux.training - Web Components and Redux training project for building web apps with modern web standards
+
+https://github.com/AdamBien/zdmd - Java CLI tool for linting, diffing, and exporting DESIGN.md design tokens without JavaScript dependencies
+
+https://github.com/AdamBien/zbaseline - Java CLI tool to fetch web platform Baseline data and generate a greppable markdown snapshot for LLM-based feature checks
+
+https://github.com/AdamBien/zws - Zero Dependencies Web Server (ZWS) - development web server in a single Java source file serving static files with auto browser opening and live reload capabilities
 
 https://github.com/AdamBien/z - Zero-dependency Java 25 project catalog
 
