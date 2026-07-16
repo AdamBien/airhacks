@@ -1,5 +1,12 @@
 import { createReducer } from "@reduxjs/toolkit"
-import { addressUpdatedAction, saveAddressAction } from "../control/CRUDControl.js";
+import {
+    addressUpdatedAction,
+    addressesSortedAction,
+    cellEditedAction,
+    cellUpdatedAction,
+    editCancelledAction,
+    saveAddressAction
+} from "../control/CRUDControl.js";
 
 /**
  * @typedef {Object} Address
@@ -12,15 +19,31 @@ import { addressUpdatedAction, saveAddressAction } from "../control/CRUDControl.
  */
 
 /**
+ * @typedef {Object} Sort
+ * @property {?string} by Address property to sort the list by, null for insertion order
+ * @property {boolean} ascending sort direction
+ */
+
+/**
+ * @typedef {Object} Edit
+ * @property {?number} id address whose cell is under edit, null for none
+ * @property {?string} field Address property under edit
+ */
+
+/**
  * @typedef {Object} AddressState
  * @property {Address[]} list saved addresses
  * @property {Partial<Address>} draft temporal cache for form input
+ * @property {Sort} sort list sort criteria
+ * @property {Edit} edit cell under inline edit
  */
 
 /** @type {AddressState} */
 const initialState = {
     list: [],
-    draft: {}
+    draft: {},
+    sort: { by: null, ascending: true },
+    edit: { id: null, field: null }
 }
 
 /**
@@ -33,6 +56,19 @@ const initialState = {
 export const address = createReducer(initialState, (builder) => {
     builder.addCase(addressUpdatedAction, (state, { payload: { name, value } }) => {
         state.draft[name] = value;
+    }).addCase(addressesSortedAction, (state, { payload }) => {
+        state.sort = {
+            by: payload,
+            ascending: state.sort?.by === payload ? !state.sort.ascending : true
+        };
+    }).addCase(cellEditedAction, (state, { payload: { id, field } }) => {
+        state.edit = { id, field };
+    }).addCase(cellUpdatedAction, (state, { payload: { id, field, value } }) => {
+        state.list = state.list.map(address =>
+            address.id === id ? { ...address, [field]: value } : address);
+        state.edit = { id: null, field: null };
+    }).addCase(editCancelledAction, (state) => {
+        state.edit = { id: null, field: null };
     }).addCase(saveAddressAction, (state, { payload }) => {
         state.draft.id = payload;
         state.list = state.list.concat(state.draft);

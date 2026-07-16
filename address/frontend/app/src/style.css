@@ -123,19 +123,45 @@ b-preview{
 
 b-address{
     display: block;
-    padding-top: var(--spacing-md);
+    padding-block: var(--spacing-md) var(--spacing-xl);
 }
 b-address-preview address{
     font-style: normal;
     min-height: 6lh;
-    margin-bottom: var(--spacing-md);
-    padding: var(--spacing-md);
-    width: min(40ch, 100%);
-    border: 1px solid var(--color-accent-border);
+    line-height: 1.6;
+    margin-block-end: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    width: min(48ch, 100%);
+    background-color: var(--color-neutral);
+    border-inline-start: 4px solid var(--color-primary);
     border-radius: var(--rounded-md);
     color: var(--color-on-surface-strong);
 }
-b-address form,
+b-address-preview .hint{
+    margin: 0;
+    color: var(--color-on-surface);
+    opacity: 0.6;
+}
+b-address form{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--spacing-md);
+    width: min(48ch, 100%);
+}
+b-address form label{
+    grid-column: 1 / -1;
+}
+b-address form label:has(input[name="postalCode"]){
+    grid-column: 1;
+}
+b-address form label:has(input[name="city"]){
+    grid-column: 2;
+}
+b-address form button{
+    grid-column: 1 / -1;
+    justify-self: start;
+    padding-inline: var(--spacing-xl);
+}
 b-add form{
     display: flex;
     flex-direction: column;
@@ -160,6 +186,12 @@ input{
     border: 1px solid var(--color-primary);
     border-radius: var(--rounded-md);
     box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.05);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input:focus-visible{
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary), transparent 75%);
 }
 input::placeholder{
     color: var(--color-on-surface);
@@ -168,9 +200,26 @@ input::placeholder{
 input:user-invalid{
     border-color: var(--color-danger);
 }
+/* applied by the boundary to every invalid field on a failed save,
+   removed on animationend — :user-invalid alone only reacts to edits */
+input.shake{
+    border-color: var(--color-danger);
+    animation: shake 0.3s ease-in-out;
+}
+@keyframes shake{
+    25%{ translate: -6px 0; }
+    50%{ translate: 6px 0; }
+    75%{ translate: -3px 0; }
+}
+@media (prefers-reduced-motion: reduce){
+    input.shake{
+        animation: none;
+    }
+}
 
 form button{
     font: inherit;
+    font-weight: 600;
     height: 40px;
     padding: 0 var(--spacing-md);
     border: none;
@@ -178,9 +227,89 @@ form button{
     background-color: var(--color-primary);
     color: var(--color-on-primary);
     cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+form button:active{
+    transform: translateY(1px);
 }
 form button:hover{
     background-color: color-mix(in oklab, var(--color-primary), black 8%);
+}
+
+b-address-list{
+    display: block;
+    padding-block: var(--spacing-lg);
+    overflow-x: auto;
+}
+b-address-list table{
+    border-collapse: collapse;
+    width: 100%;
+}
+b-address-list caption{
+    text-align: start;
+    font-weight: 700;
+    color: var(--color-on-surface-strong);
+    padding-block-end: var(--spacing-sm);
+}
+b-address-list th,
+b-address-list td{
+    text-align: start;
+    border-block-end: 1px solid var(--color-accent-border);
+}
+b-address-list th{
+    color: var(--color-on-surface-strong);
+    background-color: color-mix(in oklab, var(--color-primary) 10%, var(--color-surface));
+    border-block-end: 2px solid var(--color-primary);
+    padding: 0;
+}
+b-address-list th button{
+    font: inherit;
+    font-weight: 700;
+    color: inherit;
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: start;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+b-address-list th button:hover{
+    background-color: color-mix(in oklab, var(--color-primary) 20%, var(--color-surface));
+}
+b-address-list .sort-indicator{
+    font-size: 10px;
+    color: var(--color-primary);
+}
+b-address-list td{
+    font-variant-numeric: tabular-nums;
+    padding: 0;
+}
+b-address-list td .cell{
+    font: inherit;
+    color: inherit;
+    display: block;
+    width: 100%;
+    min-height: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: start;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+b-address-list td .cell:hover{
+    background-color: color-mix(in oklab, var(--color-primary) 8%, transparent);
+}
+b-address-list td input{
+    height: 36px;
+    padding: 0 var(--spacing-sm);
+    margin: 1px;
+    width: calc(100% - 2px);
+}
+b-address-list tbody tr:nth-child(even){
+    background-color: color-mix(in oklab, var(--color-neutral) 60%, var(--color-surface));
+}
+b-address-list tbody tr:hover{
+    background-color: var(--color-neutral-hover);
 }
 
 b-list{

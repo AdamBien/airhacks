@@ -1,5 +1,6 @@
 import BElement from "../../BElement.js";
 import { html } from "lit-html";
+import { messages } from "../../i18n/control/I18nControl.js";
 
 /**
  * Live preview of the address draft, rendered as a postal address block.
@@ -26,7 +27,9 @@ class Preview extends BElement {
         ].filter(Boolean);
         return html`
         <address>
-            ${lines.map(line => html`<div>${line}</div>`)}
+            ${lines.length
+                ? lines.map(line => html`<div>${line}</div>`)
+                : html`<p class="hint">${messages.previewHint}</p>`}
         </address>
         `;
     }

@@ -1,0 +1,22 @@
+{
+    "title": "Adressen",
+    "addAddress": "Adresse hinzufügen",
+    "labels": {
+        "name": "Name",
+        "street": "Straße",
+        "postalCode": "Postleitzahl",
+        "city": "Ort",
+        "country": "Land"
+    },
+    "placeholders": {
+        "name": "Name",
+        "street": "Straße und Hausnummer",
+        "postalCode": "Postleitzahl",
+        "city": "Ort",
+        "country": "Land"
+    },
+    "saveAddress": "Adresse speichern",
+    "savedAddresses": "gespeicherte Adressen",
+    "previewHint": "die Adresse erscheint hier während der Eingabe",
+    "clickToEdit": "zum Bearbeiten klicken"
+}

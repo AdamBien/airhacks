@@ -1,7 +1,9 @@
 import BElement from "../../BElement.js";
 import { html } from "lit-html";
 import { addressUpdated, saveAddress } from "../control/CRUDControl.js";
+import { messages } from "../../i18n/control/I18nControl.js";
 import './Preview.js';
+import './List.js';
 
 /**
  * Postal address input form — the address module's primary entry point.
@@ -22,23 +24,24 @@ class Address extends BElement {
         return html`
         <b-address-preview></b-address-preview>
         <form>
-            <label>Name:
-                <input required name="name" autocomplete="name" placeholder="name" .value="${this.state.name ?? ''}" @input=${e => this.onUserInput(e)}>
+            <label>${messages.labels.name}:
+                <input required name="name" autocomplete="name" placeholder="${messages.placeholders.name}" .value="${this.state.name ?? ''}" @input=${e => this.onUserInput(e)}>
             </label>
-            <label>Street:
-                <input required name="street" autocomplete="street-address" placeholder="street and number" .value="${this.state.street ?? ''}" @input=${e => this.onUserInput(e)}>
+            <label>${messages.labels.street}:
+                <input required name="street" autocomplete="street-address" placeholder="${messages.placeholders.street}" .value="${this.state.street ?? ''}" @input=${e => this.onUserInput(e)}>
             </label>
-            <label>Postal Code:
-                <input required name="postalCode" autocomplete="postal-code" placeholder="postal code" .value="${this.state.postalCode ?? ''}" @input=${e => this.onUserInput(e)}>
+            <label>${messages.labels.postalCode}:
+                <input required name="postalCode" autocomplete="postal-code" placeholder="${messages.placeholders.postalCode}" .value="${this.state.postalCode ?? ''}" @input=${e => this.onUserInput(e)}>
             </label>
-            <label>City:
-                <input required name="city" autocomplete="address-level2" placeholder="city" .value="${this.state.city ?? ''}" @input=${e => this.onUserInput(e)}>
+            <label>${messages.labels.city}:
+                <input required name="city" autocomplete="address-level2" placeholder="${messages.placeholders.city}" .value="${this.state.city ?? ''}" @input=${e => this.onUserInput(e)}>
             </label>
-            <label>Country:
-                <input required name="country" autocomplete="country-name" placeholder="country" .value="${this.state.country ?? ''}" @input=${e => this.onUserInput(e)}>
+            <label>${messages.labels.country}:
+                <input required name="country" autocomplete="country-name" placeholder="${messages.placeholders.country}" .value="${this.state.country ?? ''}" @input=${e => this.onUserInput(e)}>
             </label>
-            <button @click="${e => this.onSave(e)}">save address</button>
+            <button @click="${e => this.onSave(e)}">${messages.saveAddress}</button>
         </form>
+        <b-address-list></b-address-list>
         `;
     }
 
@@ -51,7 +54,7 @@ class Address extends BElement {
 
     /**
      * Validates the form with native constraint validation and commits
-     * the draft on success.
+     * the draft on success. A failed attempt shakes the invalid fields.
      * @param {Event & {target: {form: HTMLFormElement}}} event click event
      */
     onSave(event) {
@@ -61,7 +64,21 @@ class Address extends BElement {
         if (form.checkValidity()) {
             saveAddress();
             form.reset();
+        } else {
+            this.shakeInvalid(form);
         }
+    }
+
+    /**
+     * Replays the shake animation on every invalid field. Like focus
+     * handling, a browser-only concern — no state involved.
+     * @param {HTMLFormElement} form
+     */
+    shakeInvalid(form) {
+        form.querySelectorAll('input:invalid').forEach(input => {
+            input.classList.add('shake');
+            input.addEventListener('animationend', _ => input.classList.remove('shake'), { once: true });
+        });
     }
 }
 

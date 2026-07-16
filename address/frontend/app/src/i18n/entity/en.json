@@ -1,0 +1,22 @@
+{
+    "title": "addresses",
+    "addAddress": "add address",
+    "labels": {
+        "name": "Name",
+        "street": "Street",
+        "postalCode": "Postal Code",
+        "city": "City",
+        "country": "Country"
+    },
+    "placeholders": {
+        "name": "name",
+        "street": "street and number",
+        "postalCode": "postal code",
+        "city": "city",
+        "country": "country"
+    },
+    "saveAddress": "save address",
+    "savedAddresses": "saved addresses",
+    "previewHint": "the address appears here as you type",
+    "clickToEdit": "click to edit"
+}
