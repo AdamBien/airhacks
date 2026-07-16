@@ -18,5 +18,8 @@
     "saveAddress": "Adresse speichern",
     "savedAddresses": "gespeicherte Adressen",
     "previewHint": "die Adresse erscheint hier während der Eingabe",
-    "clickToEdit": "zum Bearbeiten klicken"
+    "clickToEdit": "zum Bearbeiten klicken",
+    "pagination": "Tabellenseiten",
+    "previousPage": "vorherige Seite",
+    "nextPage": "nächste Seite"
 }

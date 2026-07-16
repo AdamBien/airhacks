@@ -18,5 +18,8 @@
     "saveAddress": "save address",
     "savedAddresses": "saved addresses",
     "previewHint": "the address appears here as you type",
-    "clickToEdit": "click to edit"
+    "clickToEdit": "click to edit",
+    "pagination": "table pages",
+    "previousPage": "previous page",
+    "nextPage": "next page"
 }

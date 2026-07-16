@@ -3,7 +3,7 @@
  * To deactivate localStorage persistence, comment out or remove the store.subscribe() block.
  */
 import { initRouter } from "./router.js";
-import './address/boundary/Address.js';
+import './addresses/boundary/Addresses.js';
 import store from "./store.js";
 import { save } from "./localstorage/control/StorageControl.js";
 import { language, messages } from "./i18n/control/I18nControl.js";
@@ -25,7 +25,7 @@ store.subscribe(_ => {
     save(state);
 })
 initRouter(document.querySelector('.view'), [
-    { path: '/',    component: 'b-address' },
-    { path: '/add', component: 'b-address' }
+    { path: '/',    component: 'b-addresses' },
+    { path: '/add', component: 'b-addresses' }
 ]);
 console.log("router initialized");

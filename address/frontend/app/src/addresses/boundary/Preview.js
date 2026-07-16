@@ -10,10 +10,10 @@ import { messages } from "../../i18n/control/I18nControl.js";
 class Preview extends BElement {
 
     /**
-     * @param {{address: import('../entity/AddressReducer.js').AddressState}} state
-     * @returns {Partial<import('../entity/AddressReducer.js').Address>} the draft under input
+     * @param {{address: import('../entity/AddressesReducer.js').AddressState}} state
+     * @returns {Partial<import('../entity/AddressesReducer.js').Address>} the draft under input
      */
-    extractState({ address: { draft } }) {
+    extractState({ addresses: { draft } }) {
         return draft;
     }
 
@@ -34,4 +34,4 @@ class Preview extends BElement {
         `;
     }
 }
-customElements.define('b-address-preview', Preview);
+customElements.define('b-addresses-preview', Preview);

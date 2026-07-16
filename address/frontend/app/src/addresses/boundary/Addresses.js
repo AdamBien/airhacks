@@ -10,19 +10,19 @@ import './List.js';
  * Binds each field to the draft in the address state slice; native
  * constraint validation gates the save.
  */
-class Address extends BElement {
+class Addresses extends BElement {
 
     /**
-     * @param {{address: import('../entity/AddressReducer.js').AddressState}} state
-     * @returns {Partial<import('../entity/AddressReducer.js').Address>} the draft under input
+     * @param {{address: import('../entity/AddressesReducer.js').AddressState}} state
+     * @returns {Partial<import('../entity/AddressesReducer.js').Address>} the draft under input
      */
-    extractState({ address: { draft } }) {
+    extractState({ addresses: { draft } }) {
         return draft;
     }
 
     view() {
         return html`
-        <b-address-preview></b-address-preview>
+        <b-addresses-preview></b-addresses-preview>
         <form>
             <label>${messages.labels.name}:
                 <input required name="name" autocomplete="name" placeholder="${messages.placeholders.name}" .value="${this.state.name ?? ''}" @input=${e => this.onUserInput(e)}>
@@ -41,7 +41,7 @@ class Address extends BElement {
             </label>
             <button @click="${e => this.onSave(e)}">${messages.saveAddress}</button>
         </form>
-        <b-address-list></b-address-list>
+        <b-addresses-list></b-addresses-list>
         `;
     }
 
@@ -82,4 +82,4 @@ class Address extends BElement {
     }
 }
 
-customElements.define('b-address', Address);
+customElements.define('b-addresses', Addresses);

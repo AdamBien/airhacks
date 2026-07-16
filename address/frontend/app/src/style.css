@@ -121,11 +121,11 @@ b-preview{
     align-items: flex-start;
 }
 
-b-address{
+b-addresses{
     display: block;
     padding-block: var(--spacing-md) var(--spacing-xl);
 }
-b-address-preview address{
+b-addresses-preview address{
     font-style: normal;
     min-height: 6lh;
     line-height: 1.6;
@@ -137,27 +137,27 @@ b-address-preview address{
     border-radius: var(--rounded-md);
     color: var(--color-on-surface-strong);
 }
-b-address-preview .hint{
+b-addresses-preview .hint{
     margin: 0;
     color: var(--color-on-surface);
     opacity: 0.6;
 }
-b-address form{
+b-addresses form{
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: var(--spacing-md);
     width: min(48ch, 100%);
 }
-b-address form label{
+b-addresses form label{
     grid-column: 1 / -1;
 }
-b-address form label:has(input[name="postalCode"]){
+b-addresses form label:has(input[name="postalCode"]){
     grid-column: 1;
 }
-b-address form label:has(input[name="city"]){
+b-addresses form label:has(input[name="city"]){
     grid-column: 2;
 }
-b-address form button{
+b-addresses form button{
     grid-column: 1 / -1;
     justify-self: start;
     padding-inline: var(--spacing-xl);
@@ -236,33 +236,33 @@ form button:hover{
     background-color: color-mix(in oklab, var(--color-primary), black 8%);
 }
 
-b-address-list{
+b-addresses-list{
     display: block;
     padding-block: var(--spacing-lg);
     overflow-x: auto;
 }
-b-address-list table{
+b-addresses-list table{
     border-collapse: collapse;
     width: 100%;
 }
-b-address-list caption{
+b-addresses-list caption{
     text-align: start;
     font-weight: 700;
     color: var(--color-on-surface-strong);
     padding-block-end: var(--spacing-sm);
 }
-b-address-list th,
-b-address-list td{
+b-addresses-list th,
+b-addresses-list td{
     text-align: start;
     border-block-end: 1px solid var(--color-accent-border);
 }
-b-address-list th{
+b-addresses-list th{
     color: var(--color-on-surface-strong);
     background-color: color-mix(in oklab, var(--color-primary) 10%, var(--color-surface));
     border-block-end: 2px solid var(--color-primary);
     padding: 0;
 }
-b-address-list th button{
+b-addresses-list th button{
     font: inherit;
     font-weight: 700;
     color: inherit;
@@ -273,18 +273,18 @@ b-address-list th button{
     border: none;
     cursor: pointer;
 }
-b-address-list th button:hover{
+b-addresses-list th button:hover{
     background-color: color-mix(in oklab, var(--color-primary) 20%, var(--color-surface));
 }
-b-address-list .sort-indicator{
+b-addresses-list .sort-indicator{
     font-size: 10px;
     color: var(--color-primary);
 }
-b-address-list td{
+b-addresses-list td{
     font-variant-numeric: tabular-nums;
     padding: 0;
 }
-b-address-list td .cell{
+b-addresses-list td .cell{
     font: inherit;
     color: inherit;
     display: block;
@@ -296,20 +296,44 @@ b-address-list td .cell{
     border: none;
     cursor: pointer;
 }
-b-address-list td .cell:hover{
+b-addresses-list td .cell:hover{
     background-color: color-mix(in oklab, var(--color-primary) 8%, transparent);
 }
-b-address-list td input{
+b-addresses-list td input{
     height: 36px;
     padding: 0 var(--spacing-sm);
     margin: 1px;
     width: calc(100% - 2px);
 }
-b-address-list tbody tr:nth-child(even){
+b-addresses-list tbody tr:nth-child(even){
     background-color: color-mix(in oklab, var(--color-neutral) 60%, var(--color-surface));
 }
-b-address-list tbody tr:hover{
+b-addresses-list tbody tr:hover{
     background-color: var(--color-neutral-hover);
+}
+b-addresses-list .pagination{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: var(--spacing-sm);
+    padding-block: var(--spacing-sm);
+}
+b-addresses-list .pagination button{
+    font: inherit;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: var(--rounded-md);
+    background-color: var(--color-neutral);
+    color: var(--color-on-neutral);
+    cursor: pointer;
+}
+b-addresses-list .pagination button:hover:not(:disabled){
+    background-color: var(--color-neutral-hover);
+}
+b-addresses-list .pagination button:disabled{
+    opacity: 0.4;
+    cursor: default;
 }
 
 b-list{

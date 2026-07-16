@@ -6,10 +6,10 @@
  */
 import { configureStore } from "@reduxjs/toolkit";
 import { load } from "./localstorage/control/StorageControl.js";
-import { address } from "./address/entity/AddressReducer.js"
+import { addresses } from "./addresses/entity/AddressesReducer.js"
 
 const reducer = {
-    address
+    addresses
 }
 const preloadedState = load();
 const config = preloadedState ? { reducer, preloadedState } : {reducer};

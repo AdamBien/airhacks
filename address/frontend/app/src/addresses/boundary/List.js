@@ -1,6 +1,7 @@
 import BElement from "../../BElement.js";
 import { html } from "lit-html";
-import { addressesSorted, cancelEdit, editCell, updateCell } from "../control/CRUDControl.js";
+import { addressesSorted, cancelEdit, editCell, pageSelected, updateCell } from "../control/CRUDControl.js";
+import { clampedPage, pageCount, pageOf, sorted } from "../control/QueryControl.js";
 import { messages } from "../../i18n/control/I18nControl.js";
 
 /** @type {Array<{key: string, label: string}>} table columns, one per Address property */
@@ -16,23 +17,23 @@ const COLUMNS = ['name', 'street', 'postalCode', 'city', 'country']
 class List extends BElement {
 
     /**
-     * Derives the sorted view from the canonical list — the list itself
-     * stays in insertion order, the sort criteria live in the state.
-     * @param {{address: import('../entity/AddressReducer.js').AddressState}} state
-     * @returns {import('../entity/AddressReducer.js').Address[]} the addresses, sorted for display
+     * Selects the table's state slices; the display derivation
+     * (sorting, paging) is delegated to QueryControl.
+     * @param {{address: import('../entity/AddressesReducer.js').AddressState}} state
+     * @returns {import('../entity/AddressesReducer.js').Address[]} the addresses, sorted for display
      */
-    extractState({ address: { list, sort, edit } }) {
+    extractState({ addresses: { list, sort, edit, page } }) {
         this.sort = sort ?? { by: null, ascending: true };
         this.edit = edit ?? { id: null, field: null };
-        const { by, ascending } = this.sort;
-        if (!by) return list;
-        const sorted = list.toSorted((a, b) =>
-            String(a[by] ?? '').localeCompare(String(b[by] ?? ''), undefined, { numeric: true }));
-        return ascending ? sorted : sorted.reverse();
+        this.page = page ?? 0;
+        return sorted(list, this.sort);
     }
 
     view() {
         if (!this.state.length) return html``;
+        const pages = pageCount(this.state);
+        const page = clampedPage(this.state, this.page);
+        const rows = pageOf(this.state, page);
         return html`
         <table>
             <caption>${messages.savedAddresses}</caption>
@@ -42,13 +43,34 @@ class List extends BElement {
                 </tr>
             </thead>
             <tbody>
-                ${this.state.map(address => html`
+                ${rows.map(address => html`
                 <tr>
                     ${COLUMNS.map(({ key }) => this.cellView(address, key))}
                 </tr>
                 `)}
             </tbody>
         </table>
+        ${this.paginationView(page, pages)}
+        `;
+    }
+
+    /**
+     * Previous/next pager with the current position — rendered only
+     * when the list spans more than one page.
+     * @param {number} page the clamped, zero-based current page
+     * @param {number} pageCount total number of pages
+     * @returns {any} the pager, or nothing for a single page
+     */
+    paginationView(page, pageCount) {
+        if (pageCount <= 1) return html``;
+        return html`
+        <nav class="pagination" aria-label="${messages.pagination}">
+            <button aria-label="${messages.previousPage}" ?disabled="${page === 0}"
+                @click="${_ => pageSelected(page - 1)}">‹</button>
+            <span>${page + 1} / ${pageCount}</span>
+            <button aria-label="${messages.nextPage}" ?disabled="${page === pageCount - 1}"
+                @click="${_ => pageSelected(page + 1)}">›</button>
+        </nav>
         `;
     }
 
@@ -56,7 +78,7 @@ class List extends BElement {
      * Renders one cell: as an input while under edit, otherwise as a
      * click target starting the edit. Typing never dispatches — only
      * committing (Enter/blur via change) or cancelling (Escape) does.
-     * @param {import('../entity/AddressReducer.js').Address} address the row's address
+     * @param {import('../entity/AddressesReducer.js').Address} address the row's address
      * @param {string} key the column's Address property
      * @returns {any} the table cell
      */
@@ -117,4 +139,4 @@ class List extends BElement {
         `;
     }
 }
-customElements.define('b-address-list', List);
+customElements.define('b-addresses-list', List);

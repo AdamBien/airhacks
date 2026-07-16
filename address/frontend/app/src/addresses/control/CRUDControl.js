@@ -23,6 +23,17 @@ export const addressesSorted = (by) => {
     store.dispatch(addressesSortedAction(by));
 }
 
+export const pageSelectedAction = createAction("pageSelectedAction");
+
+/**
+ * Switches the address table to the given page. The reducer clamps
+ * the value to the existing page range.
+ * @param {number} page zero-based page index
+ */
+export const pageSelected = (page) => {
+    store.dispatch(pageSelectedAction(page));
+}
+
 export const cellEditedAction = createAction("cellEditedAction");
 
 /**
