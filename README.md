@@ -52,4 +52,14 @@ https://stitch.withgoogle.com - Google Stitch UI builder with DESIGN.md
 
 https://github.com/ChromeDevTools/chrome-devtools-mcp/ - Chrome DevTools for agents to control and inspect a live Chrome browser via Model-Context-Protocol
 
+# Codex MCP installation
+codex mcp add chrome-devtools -- npx chrome-devtools-mcp@latest
+
+# Claude Code installation
+
+# Install as a plugin (MCP+Skills)
+# Add the marketplace registry:
+/plugin marketplace add ChromeDevTools/chrome-devtools-mcp
+# Install
+/plugin install chrome-devtools-mcp@chrome-devtools-plugins
 
