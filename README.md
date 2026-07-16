@@ -42,3 +42,14 @@ https://airhacks.live - Live virtual workshops with Adam Bien for Java and cloud
 
 https://airhacks.university - One-day in-person workshop at Munich Airport on architect-grade Java development with LLMs
 
+https://github.com/google-labs-code/design.md - DESIGN.md specification
+
+https://github.com/google-labs-code/stitch-skills - DESIGN.md skills
+
+https://penpot.app - Open-source design tool - understands DTCG
+
+https://stitch.withgoogle.com - Google Stitch UI builder with DESIGN.md
+
+https://github.com/ChromeDevTools/chrome-devtools-mcp/ - Chrome DevTools for agents to control and inspect a live Chrome browser via Model-Context-Protocol
+
+
