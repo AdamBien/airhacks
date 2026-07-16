@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>[BCE template]</title>
+  <!-- root-absolute URLs: with the index.html fallback, this document is also
+       served for nested routes like /edit/17 — relative URLs would resolve
+       against /edit/ and 404 -->
+  <link rel="stylesheet" href="/tokens.css">
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="images/png" href="/images/favicon.png">
+  <!-- state management is switchable here: "@reduxjs/toolkit" resolves to the
+       minimal, standards-based /reduction.js -- point it back to
+       /libs/redux-toolkit.modern.js to use the original Redux Toolkit -->
+  <script type="importmap">
+  {
+    "imports": {
+      "lit-html": "/libs/lit-html.js",
+      "@reduxjs/toolkit": "/reduction.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>bookmarks</h1>
+    </header>
+    <nav>
+      <ul>
+      <li><a href="/add">add bookmark</a></li>
+      <li><a href="/">list</a></li>
+    </ul>
+    </nav>
+    <section class="view">
+      <h2>>>magic-less, minimalistic, opinionated, standard-based, quickstarter</h2>
+    </section>
+    <footer>powered by: <a href="https://airhacks.live">airhacks.live</a></footer>
+  </main>
+  <!-- init.js shims window.process, needed only by the original Redux Toolkit --
+       re-enable when the import map points "@reduxjs/toolkit" back to
+       /libs/redux-toolkit.modern.js -->
+  <!-- <script src="/init.js"></script> -->
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

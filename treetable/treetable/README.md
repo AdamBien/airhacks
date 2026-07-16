@@ -1,0 +1,232 @@
+# treetable
+
+A TreeTable web component, inspired by Swing's JTreeTable: a table whose rows nest. Nested rows are the single feature that separates a TreeTable from a regular table — every row can carry child rows, the first column renders the hierarchy with indentation and expand / collapse toggles, and all remaining columns stay ordinary, aligned table columns.
+
+A table flattens, a tree hides: a tree shows one label per node, a table shows many attributes but no structure. Most real data is both — projects containing tasks containing subtasks, each with owner, status, and effort. A TreeTable renders structure and attributes at once.
+
+## nested rows
+
+- Any row may declare children; child rows are regular rows and nest to arbitrary depth.
+- The hierarchy column indents by depth and toggles subtrees; collapsing a row hides its entire subtree.
+- All other columns stay aligned across depths — the grid never breaks.
+- Expansion state is application state: it lives in the store, survives re-renders, and is inspectable in Redux DevTools like any other state.
+
+## inline editing
+
+Cells are edited in place — no detail form, no modal, no round trip:
+
+1. Activating a cell (click or Enter) swaps the rendered value for an input.
+2. Committing (Enter or blur) dispatches an action; the reducer updates the node inside the tree and the affected row re-renders. Escape discards the edit.
+3. Edits are plain actions in the unidirectional data flow below — logged in Redux DevTools, timed via `performance.measure`, and testable like every other state change.
+
+The component is standards-based: a semantic `<table>` with treegrid ARIA semantics (`role="treegrid"`, `aria-level`, `aria-expanded`), a custom element for the boundary, and lit-html for templating — no framework, no build.
+
+<!-- sbce:generated:start -->
+# system
+
+> A standards-based TreeTable — a table with nested rows — shipped as a single-page application.
+
+**Vision**: A JTreeTable-class component built from nothing but web standards — hierarchy and attributes visible, and editable, in one place.
+
+| business component | responsibility |
+|---|---|
+| [treetable](app/src/treetable/package-info.md) | Render hierarchical rows as a table — expand and collapse subtrees, edit value cells in place. |
+<!-- sbce:generated:end -->
+
+# foundation: bce.design
+
+treetable is built on [bce.design](https://bce.design) — a quickstarter for non-trivial web applications with minimal tooling, essential dependencies, high productivity, and no migrations.
+
+**Web standards first, external libraries last.** Built directly on browser APIs - no framework lock-in, just native [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components), [ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), and modern JavaScript. Visit [bce.design/web-components](https://bce.design/web-components.html) for more information.
+
+Every external dependency is treated as a liability and continuously replaced with web standards: the Bulma CSS framework was removed in favor of plain CSS design tokens, and Redux Toolkit is superseded by [reduction.js](app/src/reduction.js), a minimal standards-based store built on [structuredClone](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone). The single remaining runtime library is [lit-html](https://lit.dev/docs/libraries/standalone-templates/) for declarative templating. The complete replacement log: [from dependencies to web standards](#from-dependencies-to-web-standards).
+
+> [!TIP]
+> LLMs love stable web standards: [airails.dev](https://airails.dev) ...and developers predictability: [sbce.dev](https://sbce.dev). This project's architecture rules are captured in the [web-components skill](https://github.com/AdamBien/airails/tree/main/web/web-components).
+
+## Core Architecture
+
+This project implements **unidirectional data flow** with a Redux-style store for predictable state management. All state changes flow in one direction: Actions → Reducers → Store → View Components. The application follows the Boundary Control Entity (BCE) pattern for clear separation of concerns.
+
+Two interchangeable store implementations are provided, selected via the import map in `app/src/index.html`: [reduction.js](app/src/reduction.js) (active default) — a minimal, standards-based implementation of the used Redux Toolkit API (`configureStore`, `createAction`, `createReducer`) that relies on [structuredClone](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone) instead of Immer — or the original [Redux Toolkit](https://redux-toolkit.js.org) vendored in `app/src/libs/`. Application code imports `@reduxjs/toolkit` either way; switching means changing the import map entry and re-enabling the commented-out `init.js` script tag in `index.html` — the shim sets `window.process`, which Redux Toolkit expects but reduction.js does not need.
+
+<img src="https://repository-images.githubusercontent.com/355100926/4731b900-979e-11eb-9014-3b30688cc691" alt="Boundary Control Entity quickstarter -> with web components" height="400"/>
+
+# run
+
+There is nothing to build. Serve `app/src` with any static web server that falls back to `index.html` for unknown paths (required for client-side routing), e.g. with [zws](https://github.com/adamBien/zws) (zero dependencies web server, requires Java):
+
+```bash
+cd app/src
+zws.sh --single
+```
+
+For deployment, copy `app/src` to any static host — an S3 bucket, a CDN, or the `META-INF/resources/` folder of a [Quarkus](https://quarkus.io) backend.
+
+[![BCE overview](https://i.ytimg.com/vi/LYzGgCW0OxY/mqdefault.jpg)](https://www.youtube.com/embed/LYzGgCW0OxY?rel=0)
+
+
+
+## e2e tests
+
+The e2e tests are available from:
+
+[tests](./tests/)
+
+## code coverage
+
+The e2e tests with configured global code coverage is available from: [codecoverage](./codecoverage/)
+
+# IDE
+
+1. [Visual Studio Code](https://code.visualstudio.com)
+2. Setup: [JS imports](https://www.adam-bien.com/roller/abien/entry/fixing_es_6_import_autocompletion)
+3. lit-html [plugin](https://marketplace.visualstudio.com/items?itemName=bierner.lit-html) for syntax highlighting inside html templates
+4. redux devtools browser [extension](https://github.com/reduxjs/redux-devtools) — works with both store implementations, see [observability](#observability)
+
+# update dependencies
+
+There is no build system. Runtime dependencies are vendored as self-contained ES modules in `app/src/libs/` and mapped via the import map in `index.html`. lit-html ships as a single dependency-free module, so an update is a plain file copy:
+
+```bash
+./update-lit-html.sh 3.3.3
+```
+
+# optional type checking
+
+There is no transpilation, but the TypeScript compiler serves as an optional, on-demand checker for the plain JavaScript sources ([checkJs](https://www.typescriptlang.org/tsconfig/#checkJs)). [jsconfig.json](app/src/jsconfig.json) mirrors the import map — `lit-html` resolves to a minimal hand-written declaration file ([libs/lit-html.d.ts](app/src/libs/lit-html.d.ts), which also shields the vendored, minified module from being checked) and `@reduxjs/toolkit` to [reduction.js](app/src/reduction.js) — so the application code checks as-is:
+
+```bash
+npx tsc -p app/src/jsconfig.json
+```
+
+TypeScript runs via `npx` at development time only; nothing is installed into the project and the "no build" property is preserved. Visual Studio Code picks up the same `jsconfig.json` automatically for type-aware IntelliSense and inline errors.
+
+# external ingredients
+
+1. [lit-html](https://lit.dev/docs/libraries/standalone-templates/)
+2. [redux toolkit](https://redux-toolkit.js.org) (optional — [reduction.js](app/src/reduction.js), a minimal built-in implementation of the used API, is the active default; switch via the import map in `index.html` and re-enable the commented-out `init.js` script tag, which shims `window.process` for Redux Toolkit)
+
+Client-side routing is implemented with web standards: the [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API) and [URLPattern](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern) — no router dependency required.
+
+# standards-based routing
+
+`app/src/app.js` declares the route table, `app/src/router.js` implements the mechanics in ~30 lines:
+
+```javascript
+initRouter(document.querySelector('.view'), [
+    { path: '/',                 component: 'b-list' },
+    { path: '/add',              component: 'b-bookmarks' },
+    { path: '/edit/:bookmarkId', component: 'b-bookmarks' }
+]);
+```
+
+Navigation is plain HTML: any `<a href="/add">` whose URL matches a route is intercepted by the Navigation API and rendered client-side — no `Router.go()`, no link components. URLPattern uses the same `:param` syntax as router libraries (both inherit it from `path-to-regexp`); named path parameters are passed to the routed component as attributes. The edit view demonstrates the pattern: the list renders `<a href="/edit/${bookmark.id}">`, the router creates `<b-bookmarks bookmarkid="...">`, and the component loads the bookmark into the form through the control layer.
+
+Deliberate non-features: URLs matching no route fall through to regular browser navigation (external links keep working), and reloads are never intercepted (reload means reload). Both imply the serving requirement above — unknown paths must fall back to `index.html`.
+
+# observability
+
+Store and components report diagnostics directly to browser DevTools — no additional tooling required:
+
+- **Redux DevTools**: with the [Redux DevTools extension](https://github.com/reduxjs/redux-devtools) installed, [reduction.js](app/src/reduction.js) reports every dispatched action and the resulting state — action log, payloads, state tree, and diffs appear in the Redux panel. Without the extension this is a no-op.
+- **User Timing**: every dispatch records standards-based [performance.measure](https://developer.mozilla.org/en-US/docs/Web/API/Performance/measure) entries: `reduce <action>` (reducer run) and `notify <action>` (subscriber notification) in [reduction.js](app/src/reduction.js), plus `render <Component>` per web component in [BElement.js](app/src/BElement.js). The component renders nest inside the `notify` window, breaking each dispatch down by component — visible in the Performance panel's Timings track and queryable via `performance.getEntriesByType('measure')`.
+
+# what is BCE?
+
+Boundary Control Entity (BCE) pattern organizes code by responsibility:
+
+- **Boundary**: UI components (Web Components) - user interaction layer
+- **Control**: Business logic and orchestration - application behavior  
+- **Entity**: State management and data models - domain objects
+
+In this project:
+- `bookmarks/boundary/` - UI components like List.js, Add.js
+- `bookmarks/control/` - Logic like CRUDControl.js
+- `bookmarks/entity/` - State like BookmarksReducer.js
+
+The `bookmarks` BC is the sample business component inherited from the bce.design template; it keeps the project runnable and testable until the `treetable` BC (`treetable/boundary/` for the TreeTable element, `treetable/control/` for expand / collapse and edit actions, `treetable/entity/` for the tree reducer) replaces it. Replacing it touches four coupling points: the imports and the route registrations in `app/src/app.js`, the `bookmarks` reducer registration in `app/src/store.js`, the `<h1>` title in `app/src/index.html`, and the e2e specs in `tests/` and `codecoverage/`.
+
+BCE eliminates naming debates and provides instant code organization, helping avoid [Parkinson's law of triviality](https://en.wikipedia.org/wiki/Law_of_triviality). [Learn more about BCE](https://en.wikipedia.org/wiki/Entity-control-boundary)
+
+## unidirectional data flow
+
+State always travels the same cycle — the view never mutates state directly. A boundary web component (`Add.js`) forwards user input to the control layer (`CRUDControl.js`), which dispatches an action to the store; the entity layer reducer (`BookmarksReducer.js`) computes the next state, and the store notifies all subscribed components (`BElement.js`), which re-render via lit-html:
+
+```mermaid
+graph LR
+    Boundary([Boundary<br/>web components]) -->|user event| Control([Control<br/>action creators])
+    Control -->|dispatches action| Store([Store<br/>reduction.js or Redux Toolkit])
+    Store -->|state, action| Entity([Entity<br/>reducers])
+    Entity -->|next state| Store
+    Store -->|notifies subscribers| Boundary
+    Store -.->|persists state| Storage([localStorage])
+
+    classDef boundary fill:#d5e8d4,stroke:#82b366,color:#000
+    classDef control fill:#e1d5e7,stroke:#9673a6,color:#000
+    classDef entity fill:#fff2cc,stroke:#d6b656,color:#000
+    classDef bc fill:#dae8fc,stroke:#6c8ebf,color:#000
+    classDef ext fill:#fff2cc,stroke:#d6b656,color:#000,stroke-dasharray:5 5
+    class Boundary boundary
+    class Control control
+    class Entity entity
+    class Store bc
+    class Storage ext
+```
+
+[![unidirectional data flow](https://i.ytimg.com/vi/zjtaLLs2eSM/mqdefault.jpg)](https://www.youtube.com/embed/zjtaLLs2eSM?rel=0)
+
+## static hosting on Amazon S3
+
+[![static web hosting on Amazon S3 intro](https://i.ytimg.com/vi/EtvyaUJjg_E/mqdefault.jpg)](https://www.youtube.com/watch?v=EtvyaUJjg_E)
+
+
+# from dependencies to web standards
+
+Each external dependency was removed once a web standard could take over. The dependency name links to the commit that eliminated it:
+
+| removed dependency | web standard replacement | in the code |
+|---|---|---|
+| [Vaadin Router](https://github.com/AdamBien/bce.design/commit/4dcede8) | [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API) + [URLPattern](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern) | [router.js](app/src/router.js) |
+| [Bulma CSS framework](https://github.com/AdamBien/bce.design/commit/cf4be4f) | [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) as design tokens, [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries) | [tokens.css](app/src/tokens.css), [style.css](app/src/style.css) |
+| [Redux Toolkit + Immer](https://github.com/AdamBien/bce.design/commit/2cdadf2) | [structuredClone](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone)-based store | [reduction.js](app/src/reduction.js) |
+| [build system (Rollup / npm)](https://github.com/AdamBien/bce.design/commit/f4fd563) | [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) + vendored ES modules | [index.html](app/src/index.html), [libs/](app/src/libs/) |
+| [lit-html](https://lit.dev/docs/libraries/standalone-templates/) *(pending)* | [DOM Parts](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/DOM-Parts.md) — proposal, not yet implemented in browsers | [libs/lit-html.js](app/src/libs/lit-html.js) |
+
+lit-html is the last remaining runtime dependency — declarative templating with efficient re-rendering has no shipped web standard equivalent yet. Once DOM Parts lands, the final row completes.
+
+# resources
+
+## Web Standards and Browser APIs Used
+
+- [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) - Custom Elements, Shadow DOM, HTML Templates
+- [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/API/Window/customElements) - Define new HTML elements
+- [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) - Native JavaScript module system
+- [Import Maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) - Map bare module specifiers to URLs
+- [Container Queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries) - Responsive layouts based on container size
+- [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) - Browser storage for state persistence
+- [structuredClone](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone) - Immutable state updates in reduction.js, replacing Immer
+- [JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON) - Data serialization for storage
+- [querySelector/querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) - DOM element selection
+- [ES6 Classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) - JavaScript class syntax
+- [Template Literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) - String templates with embedded expressions
+- [Arrow Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) - Concise function syntax
+- [Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) - Extract values from objects/arrays
+- [Spread Syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) - Expand arrays/objects
+- [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API) - Intercepts same-origin navigations for client-side routing
+- [URLPattern](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern) - Route matching without a router dependency
+- [User Timing / performance.measure](https://developer.mozilla.org/en-US/docs/Web/API/Performance/measure) - Per-dispatch and per-component timing in the Performance panel
+
+## Testing & Development Tools
+
+[mockend](https://github.com/adambien/mockend) serves as a mock backend with throttling functionality.
+
+Mockend can slow down responses, which simplifies the testing of asynchronous view updates. Fetch requests in the `control` layer can be delayed for test purposes.
+
+Article: [Web Components, Boundary Control Entity (BCE) and Unidirectional Data Flow with redux](https://adambien.blog/roller/abien/entry/web_components_boundary_control_entity)
+
+# AI coding agents
+
+Guidance for AI coding agents (Claude Code, Codex, Gemini CLI, ...) is maintained in [AGENTS.md](./AGENTS.md).
+
+powered by [airhacks.industries](https://airhacks.industries)
