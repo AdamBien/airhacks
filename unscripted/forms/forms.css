@@ -1,0 +1,92 @@
+/* Forms BC — demo styles.
+   Support floor: :user-valid/:user-invalid — Widely; field-sizing — Newly (2026-06);
+   customizable <select> (appearance: base-select) — Limited (Chrome 135+). */
+
+.v-form {
+  display: grid;
+  gap: var(--space-2);
+  max-inline-size: 26rem;
+}
+
+.field { display: grid; gap: 0.35rem; }
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+}
+
+/* validation feedback only after user interaction (R1.1–R1.3) */
+
+input:user-invalid { border-color: var(--alert); }
+input:user-valid { border-color: var(--ok); }
+
+.error {
+  display: none;
+  color: var(--alert);
+  font-size: 0.85rem;
+}
+
+input:user-invalid ~ .error { display: block; }
+
+.field:has(:user-valid) label::after { content: " ✓"; color: var(--ok); }
+
+.v-form button { justify-self: start; }
+
+/* auto-growing textarea (R2) */
+
+.growing {
+  field-sizing: content;
+  min-block-size: 2.8rem;
+  max-block-size: 12rem;
+  inline-size: 100%;
+  max-inline-size: 26rem;
+  resize: none;
+}
+
+/* customizable select (R3) */
+
+.fancy,
+.fancy::picker(select) {
+  appearance: base-select;
+}
+
+.fancy { min-inline-size: 14rem; }
+
+.fancy::picker(select) {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.35rem;
+  box-shadow: 0 12px 32px oklch(10% 0.02 275 / 0.35);
+}
+
+.fancy option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius-sm);
+}
+
+.fancy option:hover,
+.fancy option:focus-visible { background: var(--surface-2); }
+
+.fancy option:checked { color: var(--accent); font-weight: 600; }
+
+.swatch {
+  display: inline-block;
+  inline-size: 0.9rem;
+  block-size: 0.9rem;
+  border-radius: 50%;
+}
+
+.sw-violet { background: oklch(65% 0.2 290); }
+.sw-cyan { background: oklch(75% 0.13 220); }
+.sw-green { background: oklch(72% 0.17 150); }
+.sw-amber { background: oklch(80% 0.14 85); }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Enter and exit animations for elements toggling from display none — no transitionend bookkeeping.">
+  <title>@starting-style — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="motion.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">motion</p>
+    <h1>@starting-style</h1>
+    <p class="baseline baseline-newly">Baseline: Newly available · since 2024-08</p>
+    <p class="replaces"><strong>Replaces:</strong> the classic add-class, wait-for-transitionend,
+      remove-node dance. <code>@starting-style</code> animates the entry from
+      <code>display: none</code>; <code>transition-behavior: allow-discrete</code> keeps the
+      element rendered while its exit plays.</p>
+
+    <section class="demo" aria-label="Starting style demo">
+      <p>Toggle the toast — it slides and fades in on entry and out on exit, though it toggles
+        between rendered and <code>display: none</code>:</p>
+      <button type="button" class="primary" popovertarget="demo-toast">Toggle toast</button>
+      <div popover id="demo-toast" class="toast">
+        <p>Deployed. Entry and exit are pure CSS.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>.toast {
+  opacity: 0;
+  translate: 0 1rem;
+  transition: opacity .35s, translate .35s,
+              display .35s allow-discrete,
+              overlay .35s allow-discrete;
+}
+
+.toast:popover-open {
+  opacity: 1;
+  translate: 0 0;
+
+  @starting-style {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}</code></pre>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

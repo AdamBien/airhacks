@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A textarea that grows with its content — one CSS declaration instead of an autosize script.">
+  <title>field-sizing — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="forms.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">forms</p>
+    <h1>field-sizing</h1>
+    <p class="baseline baseline-newly">Baseline: Newly available · since 2026-06</p>
+    <p class="replaces"><strong>Replaces:</strong> every autosize/autogrow textarea script —
+      the input listener, the scrollHeight measurement, the style writes.</p>
+
+    <section class="demo" aria-label="Field sizing demo">
+      <p class="field">
+        <label for="notes">Type a few lines — the textarea grows with the content and stops
+          at its <code>max-block-size</code>:</label>
+        <textarea id="notes" name="notes" class="growing" rows="1"></textarea>
+      </p>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>textarea {
+  field-sizing: content;
+  max-block-size: 12rem;
+}</code></pre>
+      <p>Also works on <code>&lt;input&gt;</code> and <code>&lt;select&gt;</code> — any form
+        field can size itself to its value.</p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

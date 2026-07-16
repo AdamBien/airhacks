@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An exclusive accordion with animated disclosure — details name plus ::details-content.">
+  <title>Exclusive accordion — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="structure.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">structure</p>
+    <h1>Exclusive accordion</h1>
+    <p class="baseline baseline-newly">Baseline: Newly available · name since 2024-09, ::details-content since 2025-09</p>
+    <p class="replaces"><strong>Replaces:</strong> accordion components and their open-state
+      bookkeeping. A shared <code>name</code> makes the group exclusive — the browser closes
+      the previous item; <code>::details-content</code> animates the disclosure.</p>
+
+    <section class="demo" aria-label="Accordion demo">
+      <div class="faq">
+        <details name="faq">
+          <summary>Why does opening one item close the other?</summary>
+          <p class="answer">The three <code>&lt;details&gt;</code> share
+            <code>name="faq"</code> — exclusivity is native, exactly like radio buttons.</p>
+        </details>
+        <details name="faq">
+          <summary>Where is the height animation code?</summary>
+          <p class="answer">There is none. <code>::details-content</code> transitions
+            <code>block-size</code> to <code>auto</code>, with
+            <code>interpolate-size: allow-keywords</code> making the keyword animatable.</p>
+        </details>
+        <details name="faq">
+          <summary>Is this accessible?</summary>
+          <p class="answer">Keyboard toggling, semantics, and find-in-page support come with
+            the element. The old component versions had to reimplement all three.</p>
+        </details>
+      </div>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>&lt;details name="faq"&gt;…&lt;/details&gt;
+&lt;details name="faq"&gt;…&lt;/details&gt;
+
+details::details-content {
+  block-size: 0;
+  transition: block-size .3s, content-visibility .3s allow-discrete;
+}
+details[open]::details-content { block-size: auto; }</code></pre>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

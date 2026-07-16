@@ -1,0 +1,87 @@
+/* Overlays BC — demo styles.
+   Support floor: Popover API — Newly (2025-01); invoker commands — Newly (2025-12, Chrome 135+);
+   anchor positioning — Limited (Chrome 125+, no Firefox/Safari yet). */
+
+[popover] {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+  box-shadow: 0 12px 32px oklch(10% 0.02 275 / 0.35);
+}
+
+.menu {
+  list-style: none;
+  display: grid;
+  gap: 0.25rem;
+  min-inline-size: 12rem;
+}
+
+.menu a {
+  display: block;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.menu a:hover { background: var(--surface-2); }
+
+dialog {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+  max-inline-size: 28rem;
+}
+
+dialog h2 { margin-block-start: 0; }
+
+dialog::backdrop {
+  background: oklch(10% 0.02 275 / 0.6);
+  backdrop-filter: blur(3px);
+}
+
+dialog form { display: flex; gap: var(--space-1); justify-content: end; }
+
+/* anchor positioning */
+
+.anchor-demo {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#btn-a { anchor-name: --a; }
+
+#tip-a {
+  position-anchor: --a;
+  position-area: block-start;
+  position-try-fallbacks: flip-block;
+}
+
+#btn-edge { anchor-name: --edge; }
+
+#tip-edge {
+  position-anchor: --edge;
+  position-area: inline-end;
+  position-try-fallbacks: flip-inline;
+}
+
+.tip {
+  position: fixed;
+  display: none;
+  background: var(--surface-2);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.8rem;
+  max-inline-size: 15rem;
+  font-size: 0.9rem;
+  margin: 0.4rem;
+}
+
+button:hover + .tip,
+button:focus-visible + .tip { display: block; }

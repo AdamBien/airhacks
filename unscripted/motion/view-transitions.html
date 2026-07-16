@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Element continuity across page navigation with cross-document view transitions — no client-side router.">
+  <title>View transitions — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="motion.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">motion</p>
+    <h1>View transitions</h1>
+    <p class="baseline baseline-limited">Baseline: Limited availability (cross-document) · Chrome 126+</p>
+    <p class="replaces"><strong>Replaces:</strong> route-change animation code — and, combined
+      with prefetching, the main UX argument for client-side routing. These are two separate
+      HTML pages; the card morphs between them because both give it the same
+      <code>view-transition-name</code>.</p>
+
+    <section class="demo" aria-label="View transition demo">
+      <p class="vt-card vt-card-small">A</p>
+      <p><a href="view-transitions-detail.html">Open the detail page →</a></p>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+
+.vt-card { view-transition-name: vt-card; }</code></pre>
+      <p>Both pages opt in with <code>@view-transition</code>; the shared name creates the
+        morph. Reduced-motion users navigate instantly.</p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

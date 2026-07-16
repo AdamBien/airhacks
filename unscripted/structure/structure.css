@@ -1,0 +1,102 @@
+/* Structure BC — demo styles.
+   Support floor: :has() — Widely; container queries — Widely; <details name> — Newly (2024-09);
+   ::details-content — Newly (2025-09); interpolate-size — Limited (Chrome 129+). */
+
+/* :has() parent-state styling (R1) */
+
+.picker .hint {
+  color: var(--warn);
+  font-style: italic;
+}
+
+.picker:has(input:checked) .hint { display: none; }
+
+.plans {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.plan {
+  flex: 1 1 10rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  padding: var(--space-2);
+  cursor: pointer;
+  display: grid;
+  gap: 0.35rem;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.plan strong { font-family: var(--font-mono); }
+
+.plan:has(:checked) {
+  border-color: var(--accent);
+  background: color-mix(in oklch, var(--accent) 12%, var(--surface-2));
+}
+
+/* container queries (R2) */
+
+.resizable {
+  container-type: inline-size;
+  resize: horizontal;
+  overflow: auto;
+  min-inline-size: 15rem;
+  max-inline-size: 100%;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.avatar {
+  flex: none;
+  inline-size: 4.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--gradient);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: light-dark(white, oklch(15% 0.025 275));
+}
+
+@container (min-inline-size: 30rem) {
+  .profile { flex-direction: row; align-items: center; }
+}
+
+/* exclusive accordion (R3) */
+
+.faq { display: grid; gap: var(--space-1); }
+
+.faq details {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  interpolate-size: allow-keywords;
+}
+
+.faq summary {
+  cursor: pointer;
+  padding: var(--space-2);
+  font-weight: 600;
+}
+
+.faq details[open] summary { color: var(--accent); }
+
+.faq details::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition: block-size 0.3s, content-visibility 0.3s allow-discrete;
+}
+
+.faq details[open]::details-content { block-size: auto; }
+
+.faq .answer { padding: 0 var(--space-2) var(--space-2); color: var(--text-muted); }

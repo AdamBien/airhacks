@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Parent and sibling styling reacting to child state via :has() — no state classes, no listeners.">
+  <title>:has() — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="structure.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">structure</p>
+    <h1>:has()</h1>
+    <p class="baseline baseline-widely">Baseline: Widely available · since 2026-06</p>
+    <p class="replaces"><strong>Replaces:</strong> state classes toggled by change listeners —
+      the <code>container.classList.toggle('selected')</code> pattern. The parent styles itself
+      by asking about its children.</p>
+
+    <section class="demo picker" aria-label=":has() demo">
+      <p class="hint">Nothing selected yet — the hint you are reading is hidden by
+        <code>:has(input:checked)</code> the moment you pick a plan.</p>
+      <div class="plans">
+        <label class="plan">
+          <input type="radio" name="plan" value="starter">
+          <strong>Starter</strong>
+          <span>1 project</span>
+        </label>
+        <label class="plan">
+          <input type="radio" name="plan" value="pro">
+          <strong>Pro</strong>
+          <span>Unlimited projects</span>
+        </label>
+        <label class="plan">
+          <input type="radio" name="plan" value="enterprise">
+          <strong>Enterprise</strong>
+          <span>Unlimited everything</span>
+        </label>
+      </div>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>.plan:has(:checked) { border-color: var(--accent); }
+
+.picker:has(input:checked) .hint { display: none; }</code></pre>
+      <p>Selection state lives where it always did — in the form controls. CSS now reads it
+        upward, so no JavaScript has to copy it into class names.</p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

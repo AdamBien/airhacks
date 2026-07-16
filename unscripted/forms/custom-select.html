@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A fully styled native select with rich option content — no custom dropdown component.">
+  <title>Customizable select — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="forms.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">forms</p>
+    <h1>Customizable &lt;select&gt;</h1>
+    <p class="baseline baseline-limited">Baseline: Limited availability · Chrome 135+</p>
+    <p class="replaces"><strong>Replaces:</strong> custom dropdown components — and with them
+      the keyboard navigation, ARIA wiring, and mobile behavior those components always get
+      subtly wrong. The element stays a native <code>&lt;select&gt;</code>.</p>
+
+    <section class="demo" aria-label="Customizable select demo">
+      <p class="field">
+        <label for="theme">Accent color</label>
+        <select id="theme" name="theme" class="fancy">
+          <option value="violet"><span class="swatch sw-violet"></span> Violet</option>
+          <option value="cyan"><span class="swatch sw-cyan"></span> Cyan</option>
+          <option value="green"><span class="swatch sw-green"></span> Green</option>
+          <option value="amber"><span class="swatch sw-amber"></span> Amber</option>
+        </select>
+      </p>
+      <p>In browsers without support this degrades to the fully functional native select.</p>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>select,
+select::picker(select) {
+  appearance: base-select;
+}
+
+select::picker(select) { /* style the listbox */ }
+option:checked { /* style the selection */ }</code></pre>
+      <p>Opting in with <code>appearance: base-select</code> makes the trigger and the picker
+        stylable and allows real markup inside options — the swatches here are
+        <code>&lt;span&gt;</code> elements.</p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

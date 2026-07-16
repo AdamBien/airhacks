@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A reading-progress bar and reveal-on-scroll effects bound to scroll position — no scroll listeners, no IntersectionObserver.">
+  <title>Scroll-driven animations — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="motion.css">
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">motion</p>
+    <h1>Scroll-driven animations</h1>
+    <p class="baseline baseline-limited">Baseline: Limited availability · Chrome 115+, Firefox (flagged)</p>
+    <p class="replaces"><strong>Replaces:</strong> scroll listeners for progress bars and
+      parallax, and IntersectionObserver for reveal-on-scroll. The gradient bar at the top of
+      this page and the sections below are driven entirely by <code>animation-timeline</code>.</p>
+
+    <section class="demo spacer-copy" aria-label="Scroll-driven demo">
+      <p>Scroll down. The progress bar tracks <code>scroll()</code>; each section animates in
+        on its own <code>view()</code> timeline.</p>
+    </section>
+
+    <section class="demo reveal spacer-copy" aria-label="Reveal section one">
+      <h2>view() — the IntersectionObserver killer</h2>
+      <p>This section's entry animation runs as it crosses the viewport — mapped to scroll
+        position, not to time. Scroll back and forth: the animation scrubs in both directions,
+        which an IntersectionObserver could never do.</p>
+    </section>
+
+    <section class="demo reveal spacer-copy" aria-label="Reveal section two">
+      <h2>scroll() — the progress bar</h2>
+      <p>The bar at the top maps document scroll to a <code>scale</code> keyframe. One
+        animation, one timeline, zero event handlers — and it runs off the main thread.</p>
+    </section>
+
+    <section class="demo reveal spacer-copy" aria-label="Reveal section three">
+      <h2>animation-range</h2>
+      <p><code>animation-range: entry 0% entry 60%</code> confines the effect to the moment
+        the element enters — the declarative version of every threshold configuration ever
+        passed to an observer.</p>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>.progress {
+  animation: grow linear both;
+  animation-timeline: scroll();
+}
+
+.reveal {
+  animation: rise linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 60%;
+}</code></pre>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

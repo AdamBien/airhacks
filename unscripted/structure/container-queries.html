@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A component adapting to its container's width — no ResizeObserver.">
+  <title>Container queries — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="structure.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">structure</p>
+    <h1>Container queries</h1>
+    <p class="baseline baseline-widely">Baseline: Widely available · since 2025-08</p>
+    <p class="replaces"><strong>Replaces:</strong> ResizeObserver-driven layout switching and
+      the "card component that needs to know where it lives" problem. The card below answers to
+      its container, not the viewport.</p>
+
+    <section class="demo" aria-label="Container query demo">
+      <p>Drag the dashed container's bottom-right corner (CSS <code>resize</code> — also no
+        JavaScript). Below 30rem the card stacks; above, it goes horizontal:</p>
+      <div class="resizable">
+        <article class="profile">
+          <p class="avatar" aria-hidden="true">ab</p>
+          <div>
+            <h2>Duke</h2>
+            <p>Trains architects, builds with web standards, measures dependencies in
+              bytes. This card never asked how wide the screen is.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>.resizable { container-type: inline-size; resize: horizontal; }
+
+.profile { flex-direction: column; }
+
+@container (min-inline-size: 30rem) {
+  .profile { flex-direction: row; }
+}</code></pre>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Buttons driving dialogs and popovers via command and commandfor attributes — zero JavaScript.">
+  <title>Invoker commands — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="overlays.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">overlays</p>
+    <h1>Invoker commands</h1>
+    <p class="baseline baseline-newly">Baseline: Newly available · since 2025-12</p>
+    <p class="replaces"><strong>Replaces:</strong> every <code>dialog.showModal()</code>,
+      <code>dialog.close()</code>, and <code>popover.togglePopover()</code> call — the last
+      JavaScript glue that dialogs and popovers still needed.</p>
+
+    <section class="demo" aria-label="Invoker commands demo">
+      <p>Each button declares its action as an attribute — the label is the actual markup:</p>
+      <p>
+        <button type="button" commandfor="cmd-pop" command="toggle-popover"><code>command="toggle-popover"</code></button>
+        <button type="button" commandfor="cmd-dialog" command="show-modal"><code>command="show-modal"</code></button>
+      </p>
+      <div popover id="cmd-pop">
+        <p>Toggled by a declarative command — no event listener anywhere.</p>
+      </div>
+      <dialog id="cmd-dialog">
+        <h2>Opened declaratively</h2>
+        <p>The button that opened this dialog carries
+          <code>commandfor="cmd-dialog" command="show-modal"</code>.</p>
+        <form method="dialog">
+          <button type="button" commandfor="cmd-dialog" command="close"><code>command="close"</code></button>
+        </form>
+      </dialog>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>&lt;button commandfor="cmd-pop" command="toggle-popover"&gt;Menu&lt;/button&gt;
+&lt;button commandfor="cmd-dialog" command="show-modal"&gt;Open&lt;/button&gt;
+&lt;button commandfor="cmd-dialog" command="close"&gt;Close&lt;/button&gt;</code></pre>
+      <p>Built-in commands cover dialogs and popovers; custom <code>command="--my-action"</code>
+        values dispatch a <code>CommandEvent</code> for the cases that do need script.</p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

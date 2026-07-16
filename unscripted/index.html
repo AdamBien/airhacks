@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Every page proves one HTML or CSS feature that replaces SPA JavaScript.">
+  <title>HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="./">html+css<span>/spa</span></a>
+      <a href="https://airhacks.industries">airhacks.industries</a>
+    </nav>
+  </header>
+  <main id="main">
+    <h1>The browser ate your JavaScript</h1>
+    <p class="tagline">Every page below proves one HTML or CSS feature that replaces a category
+      of single-page-application JavaScript — no scripts, no dependencies, no build. View source
+      on any page: what you see is the entire implementation.</p>
+
+    <section aria-labelledby="overlays-heading">
+      <h2 id="overlays-heading">Overlays</h2>
+      <ul class="catalog">
+        <li>
+          <article>
+            <h3><a href="overlays/popover.html">Popover API</a></h3>
+            <p class="baseline baseline-newly">Baseline: Newly available</p>
+            <p class="replaces">Replaces click-toggle menus, outside-click listeners, ESC handlers, z-index wars.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="overlays/dialog.html">&lt;dialog&gt;</a></h3>
+            <p class="baseline baseline-widely">Baseline: Widely available</p>
+            <p class="replaces">Replaces modal libraries, focus traps, backdrop handling.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="overlays/invoker-commands.html">Invoker commands</a></h3>
+            <p class="baseline baseline-newly">Baseline: Newly available</p>
+            <p class="replaces">Replaces showModal() and togglePopover() glue code.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="overlays/anchor-positioning.html">Anchor positioning</a></h3>
+            <p class="baseline baseline-limited">Baseline: Limited availability</p>
+            <p class="replaces">Replaces Floating UI, Popper, and manual tooltip math.</p>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="forms-heading">
+      <h2 id="forms-heading">Forms</h2>
+      <ul class="catalog">
+        <li>
+          <article>
+            <h3><a href="forms/validation.html">:user-valid / :user-invalid</a></h3>
+            <p class="baseline baseline-widely">Baseline: Widely available</p>
+            <p class="replaces">Replaces form validation libraries and touched-state tracking.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="forms/field-sizing.html">field-sizing</a></h3>
+            <p class="baseline baseline-newly">Baseline: Newly available</p>
+            <p class="replaces">Replaces auto-growing textarea scripts.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="forms/custom-select.html">Customizable &lt;select&gt;</a></h3>
+            <p class="baseline baseline-limited">Baseline: Limited availability</p>
+            <p class="replaces">Replaces custom dropdown components and their keyboard handling.</p>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="motion-heading">
+      <h2 id="motion-heading">Motion</h2>
+      <ul class="catalog">
+        <li>
+          <article>
+            <h3><a href="motion/view-transitions.html">View transitions</a></h3>
+            <p class="baseline baseline-limited">Baseline: Limited availability (cross-document)</p>
+            <p class="replaces">Replaces route-change animation code and questions client-side routing itself.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="motion/starting-style.html">@starting-style</a></h3>
+            <p class="baseline baseline-newly">Baseline: Newly available</p>
+            <p class="replaces">Replaces the add-class, await-transitionend, remove-node dance.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="motion/scroll-driven.html">Scroll-driven animations</a></h3>
+            <p class="baseline baseline-limited">Baseline: Limited availability</p>
+            <p class="replaces">Replaces scroll listeners and IntersectionObserver reveal effects.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="motion/carousel.html">CSS carousel</a></h3>
+            <p class="baseline baseline-limited">Baseline: Limited availability</p>
+            <p class="replaces">Replaces carousel components — buttons, dots, snapping, the lot.</p>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="structure-heading">
+      <h2 id="structure-heading">Structure</h2>
+      <ul class="catalog">
+        <li>
+          <article>
+            <h3><a href="structure/has.html">:has()</a></h3>
+            <p class="baseline baseline-widely">Baseline: Widely available</p>
+            <p class="replaces">Replaces state classes toggled by event listeners.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="structure/container-queries.html">Container queries</a></h3>
+            <p class="baseline baseline-widely">Baseline: Widely available</p>
+            <p class="replaces">Replaces ResizeObserver-driven layout switching.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="structure/accordion.html">Exclusive accordion</a></h3>
+            <p class="baseline baseline-newly">Baseline: Newly available</p>
+            <p class="replaces">Replaces accordion components and open-state bookkeeping.</p>
+          </article>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript anywhere on this site — view source to verify.</p>
+  </footer>
+</body>
+</html>

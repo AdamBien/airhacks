@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A modal dialog with backdrop, focus containment, and Escape handling — zero JavaScript.">
+  <title>&lt;dialog&gt; — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="overlays.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">overlays</p>
+    <h1>&lt;dialog&gt;</h1>
+    <p class="baseline baseline-widely">Baseline: Widely available · since 2024-09</p>
+    <p class="replaces"><strong>Replaces:</strong> modal libraries, hand-rolled focus traps,
+      backdrop overlays, and scroll locking. Opened here by a declarative invoker command,
+      so the whole modal ships without a script.</p>
+
+    <section class="demo" aria-label="Dialog demo">
+      <p>The dialog is modal: focus stays inside it, the page behind is inert, and
+        <kbd>Escape</kbd> closes it.</p>
+      <button type="button" class="primary" commandfor="demo-dialog" command="show-modal">Open dialog</button>
+      <dialog id="demo-dialog">
+        <h2>Delete workspace?</h2>
+        <p>This modal has a dimmed backdrop, contains keyboard focus, and closes on
+          <kbd>Escape</kbd> — all native behavior.</p>
+        <form method="dialog">
+          <button type="submit">Cancel</button>
+          <button type="submit" class="primary">Delete</button>
+        </form>
+      </dialog>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>&lt;button commandfor="demo-dialog" command="show-modal"&gt;Open dialog&lt;/button&gt;
+
+&lt;dialog id="demo-dialog"&gt;
+  …content…
+  &lt;form method="dialog"&gt;
+    &lt;button&gt;Cancel&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;</code></pre>
+      <p><code>form method="dialog"</code> closes the dialog on submit; <code>::backdrop</code>
+        styles the dimmed layer.</p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

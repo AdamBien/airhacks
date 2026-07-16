@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Constraint validation with interaction-aware styling — no validation library.">
+  <title>:user-valid / :user-invalid — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="forms.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">forms</p>
+    <h1>:user-valid / :user-invalid</h1>
+    <p class="baseline baseline-widely">Baseline: Widely available · since 2026-05</p>
+    <p class="replaces"><strong>Replaces:</strong> validation libraries and the touched/dirty
+      state tracking they exist for. Constraints live in the markup; the <code>:user-*</code>
+      pseudo-classes wait for interaction instead of flagging pristine fields.</p>
+
+    <section class="demo" aria-label="Validation demo">
+      <p>Fields stay neutral until you interact. Commit an invalid value (Tab away) to see
+        feedback; submitting with an empty required field is blocked by the browser.</p>
+      <form action="" method="get" class="v-form">
+        <p class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+          <span class="error">Please enter a valid email address.</span>
+        </p>
+        <p class="field">
+          <label for="handle">Handle — 3 to 16 characters, lowercase</label>
+          <input type="text" id="handle" name="handle" required pattern="[a-z0-9\-]{3,16}" autocomplete="username">
+          <span class="error">Lowercase letters, digits, and dashes only.</span>
+        </p>
+        <button type="submit" class="primary">Submit</button>
+      </form>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>&lt;input type="email" required&gt;
+
+input:user-invalid { border-color: red; }
+input:user-invalid ~ .error { display: block; }</code></pre>
+      <p>The input type and constraint attributes are the rules; the browser is the validator
+        and blocks invalid submission on its own.</p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

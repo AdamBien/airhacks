@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A dropdown menu with light dismiss and top-layer rendering — zero JavaScript.">
+  <title>Popover API — HTML and CSS Instead of JavaScript</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="overlays.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav aria-label="Site">
+      <a class="brand" href="../">html+css<span>/spa</span></a>
+      <a href="../">← All demos</a>
+    </nav>
+  </header>
+  <main id="main">
+    <p class="bc-tag">overlays</p>
+    <h1>Popover API</h1>
+    <p class="baseline baseline-newly">Baseline: Newly available · since 2025-01</p>
+    <p class="replaces"><strong>Replaces:</strong> click-toggle state, outside-click listeners,
+      Escape handlers, and z-index management. The <code>popover</code> attribute gives all of it
+      to any element; <code>popovertarget</code> wires the button.</p>
+
+    <section class="demo" aria-label="Popover demo">
+      <p>Open the menu, then dismiss it by pressing <kbd>Escape</kbd> or clicking anywhere outside.</p>
+      <button type="button" class="primary" popovertarget="demo-menu">Open menu</button>
+      <nav popover id="demo-menu" aria-label="Demo menu">
+        <ul class="menu">
+          <li><a href="#main">Profile</a></li>
+          <li><a href="#main">Settings</a></li>
+          <li><a href="#main">Sign out</a></li>
+        </ul>
+      </nav>
+    </section>
+
+    <section aria-labelledby="markup-heading">
+      <h2 id="markup-heading">The entire implementation</h2>
+      <pre><code>&lt;button popovertarget="demo-menu"&gt;Open menu&lt;/button&gt;
+
+&lt;nav popover id="demo-menu"&gt;
+  …menu links…
+&lt;/nav&gt;</code></pre>
+      <p>Top-layer rendering, toggling, light dismiss, and focus handling are browser behavior —
+        the menu needs no script and no positioning library.</p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>No JavaScript on this page — view source to verify.</p>
+  </footer>
+</body>
+</html>

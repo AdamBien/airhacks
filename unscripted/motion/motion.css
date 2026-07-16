@@ -1,0 +1,168 @@
+/* Motion BC — demo styles.
+   Support floor: cross-document view transitions — Limited (Chrome 126+); @starting-style +
+   transition-behavior — Newly (2024-08); scroll-driven animations — Limited (Chrome 115+);
+   ::scroll-button/::scroll-marker — Limited (Chrome 135+). */
+
+/* view-transition continuity (R1) */
+
+.vt-card {
+  view-transition-name: vt-card;
+  background: var(--gradient);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  color: light-dark(white, oklch(15% 0.025 275));
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.vt-card-small {
+  inline-size: 8rem;
+  aspect-ratio: 1;
+}
+
+.vt-card-large {
+  inline-size: 100%;
+  block-size: 14rem;
+  font-size: 1.4rem;
+}
+
+/* starting-style enter/exit (R2) */
+
+.toast {
+  position: fixed;
+  inset: auto var(--space-2) var(--space-2) auto;
+  margin: 0;
+  border-color: var(--accent);
+  opacity: 0;
+  translate: 0 1rem;
+  transition:
+    opacity 0.35s,
+    translate 0.35s,
+    display 0.35s allow-discrete,
+    overlay 0.35s allow-discrete;
+}
+
+.toast:popover-open {
+  opacity: 1;
+  translate: 0 0;
+
+  @starting-style {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}
+
+/* scroll-driven animations (R3) */
+
+.progress {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 4px;
+  z-index: 6;
+  background: var(--gradient);
+  transform-origin: 0 50%;
+  animation: grow linear both;
+  animation-timeline: scroll();
+}
+
+@keyframes grow {
+  from { scale: 0 1; }
+  to { scale: 1 1; }
+}
+
+.reveal {
+  animation: rise linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 60%;
+}
+
+@keyframes rise {
+  from { opacity: 0; translate: 0 2.5rem; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+.spacer-copy p { margin-block-end: var(--space-3); max-inline-size: 44rem; }
+
+/* CSS carousel (R4) */
+
+.carousel {
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 75%;
+  gap: var(--space-2);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: var(--space-2);
+  anchor-name: --carousel;
+  scroll-marker-group: after;
+  margin-inline: 3rem;
+  padding-block-end: var(--space-1);
+}
+
+.carousel li {
+  scroll-snap-align: center;
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  block-size: 11rem;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: light-dark(white, oklch(15% 0.025 275));
+}
+
+.slide-1 { background: linear-gradient(135deg, oklch(60% 0.22 290), oklch(70% 0.15 250)); }
+.slide-2 { background: linear-gradient(135deg, oklch(65% 0.15 220), oklch(75% 0.13 180)); }
+.slide-3 { background: linear-gradient(135deg, oklch(65% 0.17 150), oklch(78% 0.14 110)); }
+.slide-4 { background: linear-gradient(135deg, oklch(70% 0.14 85), oklch(70% 0.16 45)); }
+.slide-5 { background: linear-gradient(135deg, oklch(60% 0.19 20), oklch(60% 0.21 320)); }
+
+.carousel::scroll-button(*) {
+  position: absolute;
+  position-anchor: --carousel;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  inline-size: 2.4rem;
+  block-size: 2.4rem;
+  cursor: pointer;
+}
+
+.carousel::scroll-button(*):hover { border-color: var(--accent); }
+
+.carousel::scroll-button(*):disabled { opacity: 0.35; cursor: default; }
+
+.carousel::scroll-button(inline-start) {
+  content: "←" / "Previous slide";
+  position-area: inline-start center;
+}
+
+.carousel::scroll-button(inline-end) {
+  content: "→" / "Next slide";
+  position-area: inline-end center;
+}
+
+.carousel::scroll-marker-group {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  padding-block: var(--space-2);
+}
+
+.carousel li::scroll-marker {
+  content: "";
+  inline-size: 0.7rem;
+  block-size: 0.7rem;
+  border-radius: 50%;
+  border: 1px solid var(--text-muted);
+  cursor: pointer;
+}
+
+.carousel li::scroll-marker:target-current {
+  background: var(--accent);
+  border-color: var(--accent);
+}
