@@ -1,22 +1,63 @@
 :root {
-  --color-primary: #00d1b2;
-  --color-primary-hover: #00c4a7;
-  --color-on-primary: #062a25;
-  --color-secondary: #3273dc;
-  --color-neutral: #f5f5f5;
-  --color-neutral-hover: #eeeeee;
-  --color-on-neutral: #000000b3;
-  --color-surface: #ffffff;
-  --color-on-surface: #4a4a4a;
-  --color-on-surface-strong: #363636;
-  --color-danger: #cc0f35;
-  --color-danger-surface: #feecf0;
-  --color-accent-border: #ccf3ec;
+  --color-primary: #f7f908;
+  --color-primary-hover: #dedf07;
+  --color-on-primary: #000000;
+  --color-secondary: #00aacd;
+  --color-neutral: #121212;
+  --color-neutral-hover: #242424;
+  --color-on-neutral: #f3f3f3;
+  --color-surface: #000000;
+  --color-on-surface: #f3f3f3;
+  --color-on-surface-strong: #ffffff;
+  --color-on-surface-muted: #a1a1a1;
+  --color-danger: #ff3c3c;
+  --color-danger-surface: #2a0a10;
+  --color-accent-border: #3b3b3b;
+  --color-outline: #f7f908;
+  --font-family: 'Gravity', 'Inter', 'Poppins', sans-serif;
+  --font-weight-bold: 700;
+  --font-weight-book: 350;
+  --shadow-accent: 2px 2px 0 var(--color-secondary);
   --spacing-xs: 4px;
   --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
   --spacing-xl: 32px;
-  --rounded-sm: 2px;
+  --spacing-xxl: 40px;
+  --rounded-sm: 4px;
   --rounded-md: 4px;
+}
+
+/* light scheme: system preference or explicit choice via data-theme.
+   the two identical blocks are the Widely Available pattern —
+   light-dark() would dedupe them but is only Newly Available */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --color-secondary: #007a94;
+    --color-neutral: #f3f3f3;
+    --color-neutral-hover: #e8e8e8;
+    --color-on-neutral: #1a1a1a;
+    --color-surface: #ffffff;
+    --color-on-surface: #363636;
+    --color-on-surface-strong: #000000;
+    --color-on-surface-muted: #6b6b6b;
+    --color-danger: #cc0f35;
+    --color-danger-surface: #feecf0;
+    --color-accent-border: #dbdbdb;
+    --color-outline: #363636;
+  }
+}
+:root[data-theme="light"] {
+  --color-secondary: #007a94;
+  --color-neutral: #f3f3f3;
+  --color-neutral-hover: #e8e8e8;
+  --color-on-neutral: #1a1a1a;
+  --color-surface: #ffffff;
+  --color-on-surface: #363636;
+  --color-on-surface-strong: #000000;
+  --color-on-surface-muted: #6b6b6b;
+  --color-danger: #cc0f35;
+  --color-danger-surface: #feecf0;
+  --color-accent-border: #dbdbdb;
+  --color-outline: #363636;
 }

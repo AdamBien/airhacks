@@ -1,0 +1,33 @@
+:root {
+  --color-primary: #f7f908;
+  --color-secondary: #00aacd;
+  --color-neutral: #000000;
+  --color-surface: #121212;
+  --color-on-surface: #ffffff;
+  --color-on-surface-variant: #f3f3f3;
+  --color-on-surface-muted: #a1a1a1;
+  --font-family: 'Gravity', 'Inter', 'Poppins', sans-serif;
+  --font-weight-bold: 700;
+  --font-weight-book: 350;
+  --font-size-headline-lg: 36px;
+  --font-size-title-md: 16px;
+  --font-size-body-md: 16px;
+  --font-size-body-sm: 14px;
+  --font-size-label-lg: 16px;
+  --font-size-label-md: 14px;
+  --font-size-label-sm: 12px;
+  --line-height-tight: 1.12;
+  --line-height-body: 1.5;
+  --letter-spacing-headline: -0.01em;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 40px;
+  --rounded-sm: 4px;
+  --shadow-accent: 2px 2px 0 var(--color-secondary);
+  --scrim-top: linear-gradient(rgb(0 0 0 / 0.85), transparent);
+  --scrim-bottom: linear-gradient(transparent, var(--color-neutral));
+  --scrim-inline: linear-gradient(to right, var(--color-neutral) 33%, transparent 67%);
+}
