@@ -63,3 +63,4 @@ codex mcp add chrome-devtools -- npx chrome-devtools-mcp@latest
 # Install
 /plugin install chrome-devtools-mcp@chrome-devtools-plugins
 
+https://github.com/adamBien/unscripted - HTML + CSS over JavaScript
