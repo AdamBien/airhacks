@@ -6,9 +6,9 @@ This file provides guidance to AI coding agents (Claude Code, Codex, Gemini CLI,
 
 This is a web component-based single-page application following the Boundary Control Entity (BCE) architectural pattern. The application uses minimal tooling and essential dependencies for building non-trivial web applications.
 
-## Template Usage
+## Business Component
 
-This repository is a brownfield template. The `bookmarks` BC (`app/src/bookmarks/`) is a sample that demonstrates BCE layering. When the user starts building their own features, remove or replace it rather than extending it. Coupling points to clean up: imports and route registration in `app/src/app.js`, reducer registration in `app/src/store.js`, the page title in `app/src/index.html`, and the Playwright specs in `tests/tests/bce.design.spec.js` and `codecoverage/tests/bce.design.spec.js`.
+The `treetable` BC (`app/src/treetable/`) is this project's business component. Its capability spec is `app/src/treetable/package-info.md` (SBCE): the code and the Playwright specs in `tests/tests/treetable.spec.js` and `codecoverage/tests/treetable.spec.js` converge to it, with statement ids `Rn.m` traced in test titles. Extend the spec first, then the code. Coupling points when adding a BC: imports and route registration in `app/src/app.js`, reducer registration in `app/src/store.js`, the page title in `app/src/index.html`.
 
 ## Development Commands
 

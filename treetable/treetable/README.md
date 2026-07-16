@@ -30,7 +30,7 @@ The component is standards-based: a semantic `<table>` with treegrid ARIA semant
 
 | business component | responsibility |
 |---|---|
-| [treetable](app/src/treetable/package-info.md) | Render hierarchical rows as a table — expand and collapse subtrees, edit value cells in place. |
+| [treetable](app/src/treetable/package-info.md) | Render hierarchical rows as a table — expand and collapse subtrees, add and rename nodes, edit value cells in place. |
 <!-- sbce:generated:end -->
 
 # foundation: bce.design
@@ -115,13 +115,11 @@ Client-side routing is implemented with web standards: the [Navigation API](http
 
 ```javascript
 initRouter(document.querySelector('.view'), [
-    { path: '/',                 component: 'b-list' },
-    { path: '/add',              component: 'b-bookmarks' },
-    { path: '/edit/:bookmarkId', component: 'b-bookmarks' }
+    { path: '/', component: 'b-treetable' }
 ]);
 ```
 
-Navigation is plain HTML: any `<a href="/add">` whose URL matches a route is intercepted by the Navigation API and rendered client-side — no `Router.go()`, no link components. URLPattern uses the same `:param` syntax as router libraries (both inherit it from `path-to-regexp`); named path parameters are passed to the routed component as attributes. The edit view demonstrates the pattern: the list renders `<a href="/edit/${bookmark.id}">`, the router creates `<b-bookmarks bookmarkid="...">`, and the component loads the bookmark into the form through the control layer.
+Navigation is plain HTML: any `<a href="...">` whose URL matches a route is intercepted by the Navigation API and rendered client-side — no `Router.go()`, no link components. URLPattern uses the same `:param` syntax as router libraries (both inherit it from `path-to-regexp`); named path parameters (`/edit/:id`) are passed to the routed component as attributes, readable via `this.getAttribute('id')`.
 
 Deliberate non-features: URLs matching no route fall through to regular browser navigation (external links keep working), and reloads are never intercepted (reload means reload). Both imply the serving requirement above — unknown paths must fall back to `index.html`.
 
@@ -141,17 +139,17 @@ Boundary Control Entity (BCE) pattern organizes code by responsibility:
 - **Entity**: State management and data models - domain objects
 
 In this project:
-- `bookmarks/boundary/` - UI components like List.js, Add.js
-- `bookmarks/control/` - Logic like CRUDControl.js
-- `bookmarks/entity/` - State like BookmarksReducer.js
+- `treetable/boundary/` - the TreeTable element ([Treetable.js](app/src/treetable/boundary/Treetable.js))
+- `treetable/control/` - expand / collapse and edit actions ([TreetableControl.js](app/src/treetable/control/TreetableControl.js))
+- `treetable/entity/` - tree state and reducer ([TreetableReducer.js](app/src/treetable/entity/TreetableReducer.js))
 
-The `bookmarks` BC is the sample business component inherited from the bce.design template; it keeps the project runnable and testable until the `treetable` BC (`treetable/boundary/` for the TreeTable element, `treetable/control/` for expand / collapse and edit actions, `treetable/entity/` for the tree reducer) replaces it. Replacing it touches four coupling points: the imports and the route registrations in `app/src/app.js`, the `bookmarks` reducer registration in `app/src/store.js`, the `<h1>` title in `app/src/index.html`, and the e2e specs in `tests/` and `codecoverage/`.
+The `treetable` BC replaced the template's `bookmarks` sample; its boundary contract lives in [package-info.md](app/src/treetable/package-info.md) — the capability spec that the code and the e2e tests trace to, statement by statement.
 
 BCE eliminates naming debates and provides instant code organization, helping avoid [Parkinson's law of triviality](https://en.wikipedia.org/wiki/Law_of_triviality). [Learn more about BCE](https://en.wikipedia.org/wiki/Entity-control-boundary)
 
 ## unidirectional data flow
 
-State always travels the same cycle — the view never mutates state directly. A boundary web component (`Add.js`) forwards user input to the control layer (`CRUDControl.js`), which dispatches an action to the store; the entity layer reducer (`BookmarksReducer.js`) computes the next state, and the store notifies all subscribed components (`BElement.js`), which re-render via lit-html:
+State always travels the same cycle — the view never mutates state directly. The boundary web component (`Treetable.js`) forwards user events to the control layer (`TreetableControl.js`), which dispatches an action to the store; the entity layer reducer (`TreetableReducer.js`) computes the next state, and the store notifies all subscribed components (`BElement.js`), which re-render via lit-html:
 
 ```mermaid
 graph LR

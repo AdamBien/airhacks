@@ -6,10 +6,10 @@
  */
 import { configureStore } from "@reduxjs/toolkit";
 import { load } from "./localstorage/control/StorageControl.js";
-import { bookmarks } from "./bookmarks/entity/BookmarksReducer.js"
+import { treetable } from "./treetable/entity/TreetableReducer.js"
 
 const reducer = {
-    bookmarks
+    treetable
 }
 const preloadedState = load();
 const config = preloadedState ? { reducer, preloadedState } : {reducer};

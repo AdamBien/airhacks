@@ -1,10 +1,12 @@
 # Treetable
-> Render hierarchical rows as a table — expand and collapse subtrees, edit value cells in place.
+> Render hierarchical rows as a table — expand and collapse subtrees, add and rename nodes, edit value cells in place.
 
 ## Boundary
 - `show-tree` — render the persisted (or freshly seeded sample) tree as a table
 - `toggle-row` — expand or collapse a row's subtree
 - `edit-cell` — change a value cell's content in place
+- `add-node` — append a new row, as a root or as a child of an existing row
+- `rename-node` — change a row's name in place
 
 ## Requirements
 
@@ -28,14 +30,27 @@
 - R3.2 — When an edit is committed (Enter or focus leaving the input), the BC shall store the new value and display it.
 - R3.3 — If an edit is cancelled (Escape), then the BC shall discard the input and restore the unchanged value.
 - R3.4 — When the treetable is reloaded, the BC shall display all previously committed values.
-- R3.5 — If a hierarchy cell is activated, then the BC shall not enter edit mode. _(why: the hierarchy column navigates the tree; its labels are not value cells)_
+
+<!-- R3.5 retired: hierarchy cells are now editable via rename-node (R5) -->
+
+### R4: Add a node
+- R4.1 — When the add-node action is activated, the BC shall append a new root row named "new node" with empty value cells.
+- R4.2 — When a row's add-child action is activated, the BC shall append a new child row named "new node" with empty value cells under that row. _(why: creation stays a one-click append — the name is given afterwards by renaming in place)_
+- R4.3 — While a row is collapsed, when a child is added to it, the BC shall expand the row so the new child is visible.
+- R4.4 — When the treetable is reloaded, the BC shall still display previously added rows.
+
+### R5: Rename a node
+- R5.1 — When a row's name is activated, the BC shall replace the displayed name with a text input holding the current name.
+- R5.2 — When a rename is committed (Enter or focus leaving the input), the BC shall store the new name and display it.
+- R5.3 — If a rename is cancelled (Escape), then the BC shall restore the unchanged name.
+- R5.4 — If an empty name is committed, then the BC shall keep the previous name. _(why: a nameless row cannot be found or renamed again)_
+- R5.5 — When the treetable is reloaded, the BC shall display all previously committed names.
 
 ## Entities
 - Tree, Row, Column
 
 ## Out of scope
 - Full treegrid keyboard navigation (arrow-key traversal between rows and cells)
-- Structural editing — adding, removing, or moving rows
+- Structural editing — removing or moving rows
 - Typed cell inputs (numbers, dates, selects) — text only
-- Editing the hierarchy column (row labels)
 - Sorting, filtering, row selection

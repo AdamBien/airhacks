@@ -112,21 +112,89 @@ nav a:hover{
     color: var(--color-on-surface-strong);
 }
 
-b-preview{
-    padding-top: var(--spacing-md);
-    padding-bottom: var(--spacing-md);
-    grid-area: view;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+b-treetable{
+    display: block;
+    padding-top: var(--spacing-lg);
 }
-
-b-add form{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-md);
-    width: min(40ch, 100%);
+b-treetable table{
+    width: 100%;
+    border-collapse: collapse;
+}
+b-treetable th, b-treetable td{
+    text-align: start;
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-accent-border);
+}
+b-treetable thead th{
+    color: var(--color-on-surface-strong);
+    border-bottom: 2px solid var(--color-primary);
+}
+b-treetable tbody tr:hover{
+    background-color: var(--color-neutral);
+}
+/* hierarchy column: indent by tree depth (--level set per row) */
+b-treetable th[scope="row"]{
+    font-weight: 400;
+    color: var(--color-on-surface-strong);
+    padding-inline-start: calc(var(--spacing-sm) + (var(--level) - 1) * var(--spacing-lg));
+}
+b-treetable button.toggle, b-treetable button.add-child{
+    font: inherit;
+    width: 1.5em;
+    margin-inline-end: var(--spacing-sm);
+    padding: 0;
+    border: none;
+    border-radius: var(--rounded-sm);
+    background-color: transparent;
+    color: var(--color-secondary);
+    cursor: pointer;
+}
+b-treetable button.toggle:hover, b-treetable button.add-child:hover{
+    background-color: var(--color-neutral-hover);
+}
+/* reveal the add-child affordance on row hover and on keyboard focus */
+b-treetable button.add-child{
+    margin-inline-start: var(--spacing-sm);
+    margin-inline-end: 0;
+    opacity: 0;
+}
+b-treetable tr:hover button.add-child, b-treetable button.add-child:focus-visible{
+    opacity: 1;
+}
+b-treetable button.add-node{
+    font: inherit;
+    height: 32px;
+    padding: 0 var(--spacing-md);
+    border: none;
+    border-radius: var(--rounded-md);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    cursor: pointer;
+}
+b-treetable button.add-node:hover{
+    background-color: color-mix(in oklab, var(--color-primary), black 8%);
+}
+b-treetable td[tabindex], b-treetable span.name{
+    cursor: text;
+}
+b-treetable input.name-edit{
+    display: inline-block;
+    width: auto;
+    height: auto;
+    padding: 0 var(--spacing-sm);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--rounded-sm);
+    box-shadow: none;
+}
+b-treetable td.editing{
+    padding: 0;
+}
+b-treetable td.editing input{
+    height: auto;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-primary);
+    border-radius: 0;
+    box-shadow: none;
 }
 label{
     display: grid;
@@ -168,52 +236,3 @@ form button:hover{
     background-color: color-mix(in oklab, var(--color-primary), black 8%);
 }
 
-b-list{
-    width: 100%;
-    padding-top: var(--spacing-lg);
-}
-b-list ol{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-b-list li{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-sm);
-    border-radius: var(--rounded-md);
-}
-b-list li:hover{
-    background-color: var(--color-neutral);
-}
-b-list li > span{
-    flex: 1;
-}
-
-b-list li > a, b-list li > button{
-    font: inherit;
-    font-size: 12px;
-    display: inline-flex;
-    align-items: center;
-    height: 30px;
-    padding: 0 var(--spacing-sm);
-    border: none;
-    border-radius: var(--rounded-sm);
-    cursor: pointer;
-}
-b-list li > a{
-    background-color: var(--color-neutral);
-    color: var(--color-on-neutral);
-}
-b-list li > a:hover{
-    background-color: var(--color-neutral-hover);
-}
-b-list li > button{
-    background-color: var(--color-danger-surface);
-    color: var(--color-danger);
-}
-b-list li > button:focus-visible{
-    outline-color: var(--color-danger);
-}

@@ -6,3 +6,4 @@
  */
 export declare function html(strings: TemplateStringsArray, ...values: unknown[]): unknown;
 export declare function render(value: unknown, container: Element | DocumentFragment): unknown;
+export declare const nothing: unknown;

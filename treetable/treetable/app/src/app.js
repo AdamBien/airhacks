@@ -3,8 +3,7 @@
  * To deactivate localStorage persistence, comment out or remove the store.subscribe() block.
  */
 import { initRouter } from "./router.js";
-import './bookmarks/boundary/Bookmarks.js';
-import './bookmarks/boundary/List.js';
+import './treetable/boundary/Treetable.js';
 import store from "./store.js";
 import { save } from "./localstorage/control/StorageControl.js";
 
@@ -16,8 +15,6 @@ store.subscribe(_ => {
     save(state);
 })
 initRouter(document.querySelector('.view'), [
-    { path: '/',                 component: 'b-list' },
-    { path: '/add',              component: 'b-bookmarks' },
-    { path: '/edit/:bookmarkId', component: 'b-bookmarks' }
+    { path: '/', component: 'b-treetable' }
 ]);
 console.log("router initialized");
