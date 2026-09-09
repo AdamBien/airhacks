@@ -4,7 +4,11 @@ Backend for the ALDI eshop, built with Quarkus and MicroProfile on the BCE archi
 
 BCE-structured 👉 [bce.design](https://bce.design) | AI-assisted with 👉 [airails.dev](https://airails.dev)
 
-<!-- sbce:generated:start — projection of the specs; do not edit; `apply` regenerates from the per-BC package docs -->
+<!-- sbce:generated:start — projection of the specs; do not edit; `apply` regenerates from the system doc + per-BC package docs -->
+> Let a customer buy ALDI products online.
+
+**Vision:** Make the weekly ALDI shop a five-minute affair.
+
 ## Capabilities
 
 - **catalog** — let a customer browse the products on offer · [`spec`](service/src/main/java/airhacks/eshop/catalog/package-info.java)
@@ -19,6 +23,18 @@ BCE-structured 👉 [bce.design](https://bce.design) | AI-assisted with 👉 [ai
 
 - Money is always integer cents.
 - Product data is seeded in-memory; no persistence yet.
+
+## Non-functional requirements
+
+Declared targets, not yet verified. An NFR that becomes testable graduates to a tested `Sn` system invariant in the [system doc](service/src/main/java/airhacks/eshop/package-info.java).
+
+- **Availability:** 99.9% monthly; browsing degrades gracefully when downstream systems fail.
+- **Performance:** catalog reads within 200 ms — graduated to invariant `S2`; p99 tracked via OTEL in production. Checkout budget: p99 under 1 s, declared once a checkout BC exists. Cacheability — graduated to invariant `S1`.
+- **Capacity:** sustains the weekly-offer publication spike at 10x average load.
+- **Scalability:** service instances are stateless; scale horizontally.
+- **Security:** TLS for all traffic; OWASP ASVS level 2 as the review baseline; no secrets or PII in logs.
+- **Privacy:** GDPR — data minimization, no customer data stored without a declared purpose.
+- **Observability:** OTEL traces, metrics, and logs; liveness/readiness probes stay wired to real dependencies.
 
 ## Getting Started
 

@@ -10,6 +10,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("products")
 @RegisterRestClient(configKey = "base_uri")
@@ -23,4 +24,8 @@ public interface ProductsResourceClient {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     JsonObject findProduct(@PathParam("id") String id);
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    Response listProductsRaw();
 }

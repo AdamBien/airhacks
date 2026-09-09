@@ -42,3 +42,6 @@ https://github.com/AdamBien/z - Zero-dependency Java 25 project catalog
 https://github.com/AdamBien/quarkus-microprofile - Java backend quickstarter. Works best with LLMs
 
 https://github.com/AdamBien/java-cli-app - Template project for building zero-dependency Java CLI applications with zb
+
+
+https://shiro.apache.org/permissions.html

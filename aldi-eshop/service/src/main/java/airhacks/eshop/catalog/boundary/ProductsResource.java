@@ -21,6 +21,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.CacheControl;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -39,7 +40,7 @@ public class ProductsResource {
                 .stream()
                 .map(Product::toJSON)
                 .collect(JsonCollectors.toJsonArray());
-        return Response.ok(products).build();
+        return Response.ok(products).cacheControl(catalogCacheControl()).build();
     }
 
     @GET
@@ -48,6 +49,12 @@ public class ProductsResource {
     public Response findProduct(@PathParam("id") String id) {
         var product = this.store.find(id)
                 .orElseThrow(() -> new NotFoundException("no product with id: " + id));
-        return Response.ok(product.toJSON()).build();
+        return Response.ok(product.toJSON()).cacheControl(catalogCacheControl()).build();
+    }
+
+    static CacheControl catalogCacheControl() {
+        var cacheControl = new CacheControl();
+        cacheControl.setMaxAge(60);
+        return cacheControl;
     }
 }
