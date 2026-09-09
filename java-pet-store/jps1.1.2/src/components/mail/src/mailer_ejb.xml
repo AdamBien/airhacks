@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE ejb-jar PUBLIC '-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 1.1//EN' 'http://java.sun.com/j2ee/dtds/ejb-jar_1_1.dtd'>
+
+<ejb-jar>
+  <description>This component allows you to send mail</description>
+  <display-name>Mail Component</display-name>
+  <enterprise-beans>
+
+    <session>
+      <description>This ejb allows you to send mail</description>
+      <display-name>TheMailer</display-name>
+      <ejb-name>TheMailer</ejb-name>
+      <home>com.sun.j2ee.blueprints.mail.ejb.MailerHome</home>
+      <remote>com.sun.j2ee.blueprints.mail.ejb.Mailer</remote>
+      <ejb-class>com.sun.j2ee.blueprints.mail.ejb.MailerEJB</ejb-class>
+      <session-type>Stateless</session-type>
+      <transaction-type>Container</transaction-type>
+      <resource-ref>
+        <res-ref-name>mail/MailSession</res-ref-name>
+        <res-type>javax.mail.Session</res-type>
+        <res-auth>Container</res-auth>
+      </resource-ref>
+    </session>
+
+  </enterprise-beans>
+
+  <assembly-descriptor>
+    <container-transaction>
+      <method>
+        <ejb-name>TheMailer</ejb-name>
+          <method-intf>Remote</method-intf>
+          <method-name>sendMail</method-name>
+          <method-params>
+            <method-param>com.sun.j2ee.blueprints.mail.ejb.EMailMessage</method-param>
+          </method-params>
+      </method>
+      <trans-attribute>NotSupported</trans-attribute>
+    </container-transaction>
+  </assembly-descriptor>
+
+  <ejb-client-jar>mailerEjb_client.jar</ejb-client-jar>
+</ejb-jar>

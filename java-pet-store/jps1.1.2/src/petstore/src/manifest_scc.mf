@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Class-Path: ../../components/shoppingcart/build/shoppingcartEjb_client.jar ../../components/customer/build/customerEjb_client.jar ../../components/inventory/build/inventoryEjb_client.jar ../../components/mail/build/mailerEjb_client.jar ../../components/personalization/build/personalizationEjb_client.jar ../../components/signon/build/signonEjb_client.jar

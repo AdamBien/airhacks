@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.8.4.5 2001/04/02 18:00:12 lblair Exp $                -->
+<!-- =================================================================== -->
+
+<project name="javapetstoredemo" default="core" basedir=".">
+
+  <target name="init">
+    <!-- change this property to use a compiler other than javac. -->
+    <property name="build.compiler" value="classic"/>
+
+    <!-- The tracer util home directory of the workspace -->
+    <property name="util.home" value="../../util/tracer"/>
+
+    <!-- The tracer util src directory of the workspace -->
+    <property name="util.src" value="${util.home}/src"/>
+
+    <!-- The destination directory for the tracer util build -->
+    <property name="util.build" value="${util.home}/build"/>
+
+    <!-- The destination directory for the tracer util compiled classes. -->
+    <property name="util.classbindir" value="${util.build}/classes"/>
+    <!-- The root directory of the workspace -->
+    <property name="mail.home" value=".."/>
+
+    <!-- The destination directory for the build -->
+    <property name="mail.build" value="${mail.home}/build"/>
+
+    <property name="mail.src" value="${mail.home}/src"/>
+
+    <!-- The destination directory for all the compiled classes. -->
+    <property name="mail.classbindir" value="${mail.build}/classes"/>
+
+    <!-- The destination directory for all the javadocs. -->
+    <property name="mail.dstdocdir" value="${mail.build}/docs/api"/>
+
+    <!-- The classpath used for building the workspace. -->
+    <property name="mail.classpath" value="${util.classbindir}:${mail.classbindir}:${j2ee.home}/lib/j2ee.jar"/>
+
+    <property name="mail.ejbjar" value="${mail.build}/mailerEjb.jar"/>
+    <property name="mail.ejbclientjar" value="${mail.build}/mailerEjb_client.jar"/>
+  </target>
+
+  <target name="compile_util_classes" depends="init">
+    <mkdir dir="${util.classbindir}"/>
+    <javac srcdir="${util.src}"
+           destdir="${util.classbindir}"
+           classpath="${util.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="compile_classes" depends="init">
+    <mkdir dir="${mail.classbindir}"/>
+    <javac srcdir="${mail.src}"
+           destdir="${mail.classbindir}"
+           classpath="${mail.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="mailejbjar" depends="init">
+    <property name="mail.buildjardir" value="${mail.home}/build/ejbjar"/>
+    <mkdir dir="${mail.buildjardir}/META-INF"/>
+    <copydir src="${mail.classbindir}" dest="${mail.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${mail.buildjardir}" />
+    <copyfile src="mailer_ejb.xml" dest="${mail.buildjardir}/META-INF/ejb-jar.xml" />
+    <delete file="${mail.ejbjar}"/>
+    <jar jarfile="${mail.ejbjar}" basedir="${mail.buildjardir}"/>
+    <deltree dir="${mail.buildjardir}"/>
+  </target>
+
+  <target name="mailejbclientjar" depends="init">
+    <property name="mail.buildjardir" value="${mail.home}/build/ejbjar"/>
+    <copydir src="${mail.classbindir}" dest="${mail.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${mail.buildjardir}" />
+    <delete file="${mail.buildjardir}/com/sun/j2ee/blueprints/mail/ejb/MailerEJB.class"/>
+    <delete file="${mail.ejbclientjar}"/>
+    <jar jarfile="${mail.ejbclientjar}" basedir="${mail.buildjardir}"/>
+    <deltree dir="${mail.buildjardir}"/>
+  </target>
+
+  <target name="javadocs" depends="init">
+    <mkdir dir="${mail.dstdocdir}"/>
+    <javadoc packagenames="com.sun.j2ee.blueprints.mail.*"
+             sourcepath="${mail.src}"
+             classpath="${mail.classpath}"
+             destdir="${mail.dstdocdir}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="Mail Component API"
+             doctitle="Mail Component"
+             bottom="Copyright &#169; 2001 Sun Microsystems Inc. All Rights Reserved."
+    />
+  </target>
+
+  <target name="clean">
+    <deltree dir="${mail.build}"/>
+    <deltree dir="${util.build}"/>
+  </target>
+
+  <target name="core" depends="compile_util_classes, compile_classes, mailejbjar, mailejbclientjar" />
+  <target name="all" depends="compile_util_classes, compile_classes, mailejbjar, mailejbclientjar, javadocs" />
+  <target name="clientjar" depends="compile_util_classes, compile_classes, mailejbclientjar" />
+
+</project>

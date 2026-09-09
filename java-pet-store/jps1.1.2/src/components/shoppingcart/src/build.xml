@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.8.4.5 2001/04/02 18:00:13 lblair Exp $               -->
+<!-- =================================================================== -->
+
+<project name="javapetstoredemo" default="core" basedir=".">
+
+  <target name="init">
+    <!-- change this property to use a compiler other than javac. -->
+    <property name="build.compiler" value="classic"/>
+
+    <!-- The tracer util home directory of the workspace -->
+    <property name="util.home" value="../../util/tracer"/>
+
+    <!-- The tracer util src directory of the workspace -->
+    <property name="util.src" value="${util.home}/src"/>
+
+    <!-- The destination directory for the tracer util build -->
+    <property name="util.build" value="${util.home}/build"/>
+
+    <!-- The destination directory for the tracer util compiled classes. -->
+    <property name="util.classbindir" value="${util.build}/classes"/>
+
+    <!-- The root directory of the workspace -->
+    <property name="shoppingcart.home" value=".."/>
+
+    <!-- The destination directory for the build -->
+    <property name="shoppingcart.build" value="${shoppingcart.home}/build"/>
+
+    <property name="shoppingcart.src" value="${shoppingcart.home}/src"/>
+
+    <!-- The destination directory for all the compiled classes. -->
+    <property name="shoppingcart.classbindir" value="${shoppingcart.build}/classes"/>
+
+    <!-- The destination directory for all the javadocs. -->
+    <property name="shoppingcart.dstdocdir" value="${shoppingcart.build}/docs/api"/>
+
+    <!-- The classpath used for building the workspace. -->
+    <property name="shoppingcart.classpath" value="${util.classbindir}:${shoppingcart.classbindir}:${j2ee.home}/lib/j2ee.jar"/>
+
+    <property name="shoppingcart.ejbjar" value="${shoppingcart.build}/shoppingcartEjb.jar"/>
+    <property name="shoppingcart.ejbclientjar" value="${shoppingcart.build}/shoppingcartEjb_client.jar"/>
+  </target>
+
+  <target name="compile_util_classes" depends="init">
+    <mkdir dir="${util.classbindir}"/>
+    <javac srcdir="${util.src}"
+           destdir="${util.classbindir}"
+           classpath="${util.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="compile_classes" depends="init">
+    <mkdir dir="${shoppingcart.classbindir}"/>
+    <javac srcdir="${shoppingcart.src}"
+           destdir="${shoppingcart.classbindir}"
+           classpath="${shoppingcart.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="shoppingcartejbjar" depends="init">
+    <property name="shoppingcart.buildjardir" value="${shoppingcart.home}/build/ejbjar"/>
+    <mkdir dir="${shoppingcart.buildjardir}/META-INF"/>
+    <copydir src="${shoppingcart.classbindir}" dest="${shoppingcart.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${shoppingcart.buildjardir}" />
+    <copyfile src="shoppingcart_ejb.xml" dest="${shoppingcart.buildjardir}/META-INF/ejb-jar.xml" />
+    <delete file="${shoppingcart.ejbjar}"/>
+    <jar jarfile="${shoppingcart.ejbjar}" basedir="${shoppingcart.buildjardir}"/>
+    <deltree dir="${shoppingcart.buildjardir}"/>
+  </target>
+
+  <target name="shoppingcartejbclientjar" depends="init">
+    <property name="shoppingcart.buildjardir" value="${shoppingcart.home}/build/ejbjar"/>
+    <copydir src="${shoppingcart.classbindir}" dest="${shoppingcart.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${shoppingcart.buildjardir}" />
+    <delete file="${shoppingcart.buildjardir}/com/sun/j2ee/blueprints/shoppingcart/cart/ejb/ShoppingCartEJB.class"/>
+    <delete file="${shoppingcart.buildjardir}/com/sun/j2ee/blueprints/shoppingcart/catalog/ejb/CatalogEJB.class"/>
+    <delete file="${shoppingcart.ejbclientjar}"/>
+    <jar jarfile="${shoppingcart.ejbclientjar}" basedir="${shoppingcart.buildjardir}"/>
+    <deltree dir="${shoppingcart.buildjardir}"/>
+  </target>
+
+  <!-- target name="javadocs" depends="compile_classes" -->
+  <target name="javadocs" depends="init">
+    <mkdir dir="${shoppingcart.dstdocdir}"/>
+    <javadoc packagenames="com.sun.j2ee.blueprints.*"
+             sourcepath="${shoppingcart.src}"
+             classpath="${shoppingcart.classpath}"
+             destdir="${shoppingcart.dstdocdir}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="Shopping Cart Component API"
+             doctitle="Shopping Cart Component"
+             bottom="Copyright &#169; 2001 Sun Microsystems Inc. All Rights Reserved."
+    />
+  </target>
+
+  <target name="clean">
+    <deltree dir="${shoppingcart.build}"/>
+    <deltree dir="${util.build}"/>
+  </target>
+
+  <target name="core" depends="compile_util_classes, compile_classes, shoppingcartejbjar, shoppingcartejbclientjar" />
+  <target name="all" depends="compile_util_classes, compile_classes, shoppingcartejbjar, shoppingcartejbclientjar, javadocs" />
+  <target name="clientjar" depends="compile_util_classes, compile_classes, shoppingcartejbclientjar" />
+
+</project>

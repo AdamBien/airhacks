@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+        PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+	"http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<!-- a tab library descriptor -->
+
+<taglib>
+  <tlibversion>1.0</tlibversion>
+  <jspversion>1.1</jspversion>
+  <shortname>j2ee</shortname>
+  <info>
+	Java Pet Store Demo custom tags
+  </info>
+  <!-- stock tag -->
+  <tag>
+    <name>inStock</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.util.StockTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+	A tag used to determine whether or not an item is in stock
+    </info>
+
+    <attribute>
+      <name>itemId</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>quantity</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>true</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>false</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- insert tag -->
+  <tag>
+    <name>insert</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.InsertTag</tagclass>
+
+    <bodycontent>JSP</bodycontent>
+    <info>
+	An insertion tag
+    </info>
+
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>parameter</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- banner tags -->
+  <tag>
+    <name>banner</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.banner.BannerTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+      A tag whose body is processed if the banner personalization option
+      is on for the logged in user.  Should appear only in pages in which
+      the ProfileMgrWebImpl bean is being used.  See tag handler comments
+      for usage.
+    </info>
+  </tag>
+
+  <tag>
+    <name>bannerImg</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.banner.BannerImgTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+      A tag that just prints out a url for the banner string returned by
+      the ProfileMgrWebImpl bean.  Should be nested inside banner tag.
+    </info>
+  </tag>
+
+
+  <!-- list tags -->
+  <tag>
+    <name>searchList</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.list.SearchListTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+      A tag that for displaying search results
+    </info>
+ 
+    <!-- no default -->
+    <attribute>
+      <name>numItems</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+      
+    <!-- default is 1 -->
+    <attribute>
+      <name>startIndex</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <!-- what to display if list is empty -->
+    <attribute>
+      <name>emptyList</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>searchText</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+
+  <!-- list tags -->
+  <tag>
+    <name>productList</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.list.ProductListTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+      A tag that implements a my list, fetching a list from the
+      ProfileMgrWebImpl bean using the given number of items and starting
+      index.  Should appear only in pages in which the ProfileMgrWebImpl bean
+      is being used. 
+    </info>
+ 
+    <!-- no default -->
+    <attribute>
+      <name>numItems</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+      
+    <!-- default is 1 -->
+    <attribute>
+      <name>startIndex</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>category</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>productItemList</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.list.ProductItemListTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+      A tag that implements a list of items associated with a product
+    </info>
+ 
+    <!-- no default -->
+    <attribute>
+      <name>numItems</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+      
+    <!-- default is 1 -->
+    <attribute>
+      <name>startIndex</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <!-- default is "Product List is Empty" -->
+    <attribute>
+      <name>emptyList</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>productId</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+
+  <tag>
+    <name>productItemAttribute</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.list.ProductItemAttributeTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+      A tag to print out attributes of a Product Item object.  It should appear
+      in an items tag.  Depending on the value of the attribute specified,
+      a different string is printed.  Possible values are "name", "id", "productId",
+      "unitcost", "listcost", "productAttribute" and "description".
+    </info>
+
+    <!-- default is "name" -->
+    <attribute>
+      <name>attribute</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>myList</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.list.MyListTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+      A tag that implements a my list, fetching a list from the
+      ProfileMgrWebImpl bean using the given number of items and starting
+      index.  Should appear only in pages in which the ProfileMgrWebImpl bean
+      is being used. 
+    </info>
+ 
+    <!-- no default -->
+    <attribute>
+      <name>numItems</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+      
+    <!-- default is 1 -->
+    <attribute>
+      <name>startIndex</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>items</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.list.ItemsTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+      The inner tag in a list tag in which the items actually appear.  The
+      body of this tag is processed once for each item actually in the list.
+      This tag merely keeps a copy of the current item for the inner tags to
+      refer to.  Must appear in a list tag.
+    </info>
+  </tag>
+
+  <tag>
+    <name>productAttribute</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.list.ProductAttributeTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+      A tag to print out attributes of a Product object.  It should appear
+      in an items tag.  Depending on the value of the attribute specified,
+      a different string is printed.  Possible values are "name", "id",
+      and "description".
+    </info>
+
+    <!-- default is "name" -->
+    <attribute>
+      <name>attribute</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>nextForm</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.list.NextFormTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+      Prints out a form which, when submitted will reload the page, with
+      the list displaying the next bunch of items.  The action attribute
+      should be set to the url recognized by the requestmappings.xml file
+      as the current page, e.g. "editaccount" (not the actual path, e.g. 
+      editaccount.jsp).  Should appear in a list tag.  The body shouldn't
+      be processed if there are no more items to fetch (sort of works right
+      now but not quite).
+    </info>
+
+    <!-- no default -->
+    <attribute>
+      <name>action</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>prevForm</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.list.PrevFormTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+      Similar to a nextForm tag, but loads the page with the previous bunch
+      of items.  The body won't be processed if the list is at the beginning.
+    </info>
+
+    <!-- no default -->
+    <attribute>
+      <name>action</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- cart tag -->
+  <tag>
+    <name>cart</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.list.CartListTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+      A tag that implements a my list, fetching a shopping cart list from the
+      ShoppingCartWebImpl bean using the given number of items and starting
+      index. 
+    </info>
+ 
+    <!-- no default -->
+    <attribute>
+      <name>numItems</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+      
+    <!-- default is 1 -->
+    <attribute>
+      <name>startIndex</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <!-- Message displayed when shopping cart is empty -->
+    <attribute>
+      <name>cartEmptyMessage</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>cartAttribute</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.list.CartItemAttributeTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+      A tag to print out attributes of a CartItem object.  It should appear
+      in an items tag.  Depending on the value of the attribute specified,
+      a different string is printed.  Possible values are "name", "itemid",
+      and "productid", "attribute", "quantity", "unitcost", "totalcost".
+    </info>
+
+    <!-- default is "name" -->
+    <attribute>
+      <name>attribute</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>true</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>false</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>productDetails</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.ProductDetailsTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+    </info>
+  </tag>
+
+  <tag>
+    <name>prodDetailsAttr</name>
+    <tagclass>com.sun.j2ee.blueprints.petstore.taglib.ProductDetailsAttributeTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+    </info>
+
+    <!-- default is "name" -->
+    <attribute>
+      <name>attribute</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+</taglib>
+

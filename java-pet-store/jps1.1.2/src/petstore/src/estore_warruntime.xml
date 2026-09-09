@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<j2ee-ri-specific-information>
+  <server-name></server-name>
+  <rolemapping />
+
+  <web>
+    <display-name>WebTier</display-name>
+    <context-root>estore</context-root>
+    <resource-ref>
+      <res-ref-name>jdbc/EstoreDataSource</res-ref-name>
+      <jndi-name>jdbc/Cloudscape</jndi-name>
+      <default-resource-principal>
+        <name>estoreuser</name>
+        <password>estore</password>
+      </default-resource-principal>
+    </resource-ref>
+    <ejb-ref>
+      <ejb-ref-name>ejb/catalog/Catalog</ejb-ref-name>
+      <jndi-name>estore/catalog</jndi-name>
+    </ejb-ref>
+    <ejb-ref>
+      <ejb-ref-name>ejb/cart/Cart</ejb-ref-name>
+      <jndi-name>estore/cart</jndi-name>
+    </ejb-ref>
+    <ejb-ref>
+      <ejb-ref-name>ejb/customer/Customer</ejb-ref-name>
+      <jndi-name>estore/customer</jndi-name>
+    </ejb-ref>
+    <ejb-ref>
+      <ejb-ref-name>ejb/profilemgr/ProfileMgr</ejb-ref-name>
+      <jndi-name>estore/profilemgr</jndi-name>
+    </ejb-ref>
+    <ejb-ref>
+      <ejb-ref-name>ejb/scc/Scc</ejb-ref-name>
+      <jndi-name>estore/scc</jndi-name>
+    </ejb-ref>
+    <ejb-ref>
+      <ejb-ref-name>ejb/inventory/Inventory</ejb-ref-name>
+      <jndi-name>estore/inventory</jndi-name>
+    </ejb-ref>
+  </web>
+</j2ee-ri-specific-information>
+

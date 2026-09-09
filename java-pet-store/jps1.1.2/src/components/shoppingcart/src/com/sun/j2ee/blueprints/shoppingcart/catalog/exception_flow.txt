@@ -1,0 +1,9 @@
+CatalogDAO -> CatalogEJB :
+==========================
+
+CatalogDAOSysEx for all irrecoverable system exceptions (like SQLExceptions)
+
+CatalogEJB -> apps :
+====================
+
+Passes up CatalogDAOSysEx as EJBEx

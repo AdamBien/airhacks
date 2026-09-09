@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.6.4.5 2001/04/02 18:00:12 lblair Exp $                -->
+<!-- =================================================================== -->
+
+<project name="inventorycomponent" default="core" basedir=".">
+
+  <target name="init">
+    <!-- change this property to use a compiler other than javac. -->
+    <property name="build.compiler" value="classic"/>
+
+    <!-- The tracer util home directory of the workspace -->
+    <property name="util.home" value="../../util/tracer"/>
+
+    <!-- The tracer util src directory of the workspace -->
+    <property name="util.src" value="${util.home}/src"/>
+
+    <!-- The destination directory for the tracer util build -->
+    <property name="util.build" value="${util.home}/build"/>
+
+    <!-- The destination directory for the tracer util compiled classes. -->
+    <property name="util.classbindir" value="${util.build}/classes"/>
+
+    <!-- The root directory of the workspace -->
+    <property name="inventory.home" value=".."/>
+
+    <!-- The destination directory for the build -->
+    <property name="inventory.build" value="${inventory.home}/build"/>
+
+    <property name="inventory.src" value="${inventory.home}/src"/>
+
+    <!-- The destination directory for all the compiled classes. -->
+    <property name="inventory.classbindir" value="${inventory.build}/classes"/>
+
+    <!-- The destination directory for all the javadocs. -->
+    <property name="inventory.dstdocdir" value="${inventory.build}/docs/api"/>
+
+    <!-- The classpath used for building the workspace. -->
+    <property name="inventory.classpath" value="${util.classbindir}:${inventory.classbindir}:${j2ee.home}/lib/j2ee.jar"/>
+
+    <property name="inventory.ejbjar" value="${inventory.build}/inventoryEjb.jar"/>
+    <property name="inventory.ejbclientjar" value="${inventory.build}/inventoryEjb_client.jar"/>
+  </target>
+
+  <target name="compile_util_classes" depends="init">
+    <mkdir dir="${util.classbindir}"/>
+    <javac srcdir="${util.src}"
+           destdir="${util.classbindir}"
+           classpath="${util.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="compile_classes" depends="init">
+    <mkdir dir="${inventory.classbindir}"/>
+    <javac srcdir="${inventory.src}"
+           destdir="${inventory.classbindir}"
+           classpath="${inventory.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="inventoryejbjar" depends="init">
+    <property name="inventory.buildjardir" value="${inventory.home}/build/ejbjar"/>
+    <mkdir dir="${inventory.buildjardir}/META-INF"/>
+    <copydir src="${inventory.classbindir}" dest="${inventory.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${inventory.buildjardir}" />
+    <copyfile src="inventory_ejb.xml" dest="${inventory.buildjardir}/META-INF/ejb-jar.xml" />
+    <delete file="${inventory.ejbjar}"/>
+    <jar jarfile="${inventory.ejbjar}" basedir="${inventory.buildjardir}"/>
+    <deltree dir="${inventory.buildjardir}"/>
+  </target>
+
+  <target name="inventoryejbclientjar" depends="init">
+    <property name="inventory.buildjardir" value="${inventory.home}/build/ejbjar"/>
+    <copydir src="${inventory.classbindir}" dest="${inventory.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${inventory.buildjardir}" />
+    <delete file="${inventory.buildjardir}/com/sun/j2ee/blueprints/inventory/ejb/InventoryEJB.class"/>
+    <delete file="${inventory.ejbclientjar}"/>
+    <jar jarfile="${inventory.ejbclientjar}" basedir="${inventory.buildjardir}"/>
+    <deltree dir="${inventory.buildjardir}"/>
+  </target>
+
+  <target name="javadocs" depends="init">
+    <mkdir dir="${inventory.dstdocdir}"/>
+    <javadoc packagenames="com.sun.j2ee.blueprints.inventory.*"
+             sourcepath="${inventory.src}"
+             classpath="${inventory.classpath}"
+             destdir="${inventory.dstdocdir}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="Inventory Component API"
+             doctitle="Inventory Component"
+             bottom="Copyright &#169; 2001 Sun Microsystems Inc. All Rights Reserved."
+    />
+  </target>
+
+  <target name="clean">
+    <deltree dir="${inventory.build}"/>
+    <deltree dir="${util.build}"/>
+  </target>
+
+  <target name="core" depends="compile_util_classes, compile_classes, inventoryejbjar, inventoryejbclientjar" />
+  <target name="all" depends="compile_util_classes, compile_classes,inventoryejbjar, inventoryejbclientjar, javadocs" />
+  <target name="clientjar" depends="compile_util_classes, compile_classes, inventoryejbclientjar" />
+
+</project>

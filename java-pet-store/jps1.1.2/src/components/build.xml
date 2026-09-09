@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.2.4.2 2001/02/27 10:07:41 vijaysr Exp $                -->
+<!-- =================================================================== -->
+
+<project name="components" default="core" basedir=".">
+
+  <target name="init">
+    <property name="component.basedir" value="."/>
+    <property name="tracer.home" value="${component.basedir}/util/tracer"/>
+    <property name="customer.home" value="${component.basedir}/customer"/>
+    <property name="personalization.home" value="${component.basedir}/personalization"/>
+    <property name="inventory.home" value="${component.basedir}/inventory"/>
+    <property name="signon.home" value="${component.basedir}/signon"/>
+    <property name="shoppingcart.home" value="${component.basedir}/shoppingcart"/>
+    <property name="mail.home" value="${component.basedir}/mail"/>
+  </target>
+
+  <target name="core" depends="init">
+    <ant antfile="${tracer.home}/src/build.xml" dir="${tracer.home}/src" target="core" />
+    <ant antfile="${customer.home}/src/build.xml" dir="${customer.home}/src" target="core" />
+    <ant antfile="${personalization.home}/src/build.xml" dir="${personalization.home}/src" target="core" />
+    <ant antfile="${inventory.home}/src/build.xml" dir="${inventory.home}/src" target="core" />
+    <ant antfile="${signon.home}/src/build.xml" dir="${signon.home}/src" target="core"/>
+    <ant antfile="${shoppingcart.home}/src/build.xml" dir="${shoppingcart.home}/src" target="core" />
+    <ant antfile="${mail.home}/src/build.xml" dir="${mail.home}/src" target="core" />
+  </target>
+
+  <target name="clean" depends="init">
+    <ant antfile="${tracer.home}/src/build.xml" dir="${tracer.home}/src" target="clean" />
+    <ant antfile="${customer.home}/src/build.xml" dir="${customer.home}/src" target="clean" />
+    <ant antfile="${personalization.home}/src/build.xml" dir="${personalization.home}/src" target="clean" />
+    <ant antfile="${inventory.home}/src/build.xml" dir="${inventory.home}/src" target="clean" />
+    <ant antfile="${signon.home}/src/build.xml" dir="${signon.home}/src" target="clean" />
+    <ant antfile="${shoppingcart.home}/src/build.xml" dir="${shoppingcart.home}/src" target="clean" />
+    <ant antfile="${mail.home}/src/build.xml" dir="${mail.home}/src" target="clean" />
+  </target>
+
+</project>

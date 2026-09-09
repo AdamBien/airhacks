@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.9.4.5 2001/04/02 18:00:11 lblair Exp $                -->
+<!-- =================================================================== -->
+
+<project name="customercomponent" default="core" basedir=".">
+
+  <target name="init">
+    <!-- change this property to use a compiler other than javac. -->
+    <property name="build.compiler" value="classic"/>
+
+    <!-- The tracer util home directory of the workspace -->
+    <property name="util.home" value="../../util/tracer"/>
+
+    <!-- The tracer util src directory of the workspace -->
+    <property name="util.src" value="${util.home}/src"/>
+
+    <!-- The destination directory for the tracer util build -->
+    <property name="util.build" value="${util.home}/build"/>
+
+    <!-- The destination directory for the tracer util compiled classes. -->
+    <property name="util.classbindir" value="${util.build}/classes"/>
+
+    <!-- The root directory of the workspace -->
+    <property name="customer.home" value=".."/>
+
+    <!-- The destination directory for the build -->
+    <property name="customer.build" value="${customer.home}/build"/>
+
+    <property name="customer.src" value="${customer.home}/src"/>
+
+    <!-- The destination directory for all the compiled classes. -->
+    <property name="customer.classbindir" value="${customer.build}/classes"/>
+
+    <!-- The destination directory for all the javadocs. -->
+    <property name="customer.dstdocdir" value="${customer.build}/docs/api"/>
+
+    <!-- The classpath used for building the workspace. -->
+    <property name="customer.classpath" value="${util.classbindir}:${customer.classbindir}:${j2ee.home}/lib/j2ee.jar"/>
+
+    <property name="customer.ejbjar" value="${customer.build}/customerEjb.jar"/>
+    <property name="customer.ejbclientjar" value="${customer.build}/customerEjb_client.jar"/>
+  </target>
+
+  <target name="compile_util_classes" depends="init">
+    <mkdir dir="${util.classbindir}"/>
+    <javac srcdir="${util.src}"
+           destdir="${util.classbindir}"
+           classpath="${util.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="compile_classes" depends="init">
+    <mkdir dir="${customer.classbindir}"/>
+    <javac srcdir="${customer.src}"
+           destdir="${customer.classbindir}"
+           classpath="${customer.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="customerejbjar" depends="init">
+    <property name="customer.buildjardir" value="${customer.home}/build/ejbjar"/>
+    <mkdir dir="${customer.buildjardir}/META-INF"/>
+    <copydir src="${customer.classbindir}" dest="${customer.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${customer.buildjardir}" />
+    <copyfile src="customer_ejb.xml" dest="${customer.buildjardir}/META-INF/ejb-jar.xml" />
+    <delete file="${customer.ejbjar}"/>
+    <jar jarfile="${customer.ejbjar}" basedir="${customer.buildjardir}"/>
+    <deltree dir="${customer.buildjardir}"/>
+  </target>
+
+  <target name="customerejbclientjar" depends="init">
+    <property name="customer.buildjardir" value="${customer.home}/build/ejbjar"/>
+    <copydir src="${customer.classbindir}" dest="${customer.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${customer.buildjardir}" />
+    <delete file="${customer.buildjardir}/com/sun/j2ee/blueprints/customer/customer/ejb/CustomerEJB.class"/>
+    <delete file="${customer.buildjardir}/com/sun/j2ee/blueprints/customer/order/ejb/OrderEJB.class"/>
+    <delete file="${customer.buildjardir}/com/sun/j2ee/blueprints/customer/account/ejb/AccountEJB.class"/>
+    <delete file="${customer.ejbclientjar}"/>
+    <jar jarfile="${customer.ejbclientjar}" basedir="${customer.buildjardir}"/>
+    <deltree dir="${customer.buildjardir}"/>
+  </target>
+
+  <target name="javadocs" depends="init">
+    <mkdir dir="${customer.dstdocdir}"/>
+    <javadoc packagenames="com.sun.j2ee.blueprints.customer.*"
+             sourcepath="${customer.src}"
+             classpath="${customer.classpath}"
+             destdir="${customer.dstdocdir}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="customer Component API"
+             doctitle="customer Component"
+             bottom="Copyright &#169; 2001 Sun Microsystems Inc. All Rights Reserved."
+    />
+  </target>
+
+  <target name="clean">
+    <deltree dir="${customer.build}"/>
+    <deltree dir="${util.build}"/>
+  </target>
+
+  <target name="core" depends="compile_util_classes, compile_classes, customerejbjar, customerejbclientjar" />
+  <target name="all" depends="compile_util_classes, compile_classes, customerejbjar, customerejbclientjar, javadocs" />
+  <target name="clientjar" depends="compile_util_classes, compile_classes, customerejbclientjar" />
+
+</project>

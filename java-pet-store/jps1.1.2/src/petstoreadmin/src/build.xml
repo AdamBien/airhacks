@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.5.4.6 2001/04/05 21:34:12 lblair Exp $              -->
+<!-- =================================================================== -->
+
+<project name="petstoreadmin" default="core" basedir=".">
+
+  <target name="init">
+    <!-- change this property to use a compiler other than javac. -->
+    <property name="build.compiler" value="classic"/>
+
+    <!-- The root directory of the workspace -->
+    <property name="admin.home" value=".."/>
+
+    <!-- The root directory of the petstore workspace -->
+    <property name="petstore.home" value="../../petstore"/>
+
+    <!-- The root directory of the order workspace -->
+    <property name="order.home" value="../../components/customer"/>
+
+    <!-- The destination directory for the build -->
+    <property name="admin.build" value="${admin.home}/build"/>
+    <property name="admin.src" value="${admin.home}/src"/>
+
+    <!-- The destination directory for all the compiled classes. -->
+    <property name="admin.classbindir" value="${admin.build}/classes"/>
+
+    <!-- The classpath used for building the workspace. -->
+    <property name="admin.classpath" value="${admin.classbindir}:${j2ee.home}/lib/j2ee.jar:${petstore.home}/build/petstoreEjb.jar:${admin.home}/src/lib/parser.jar:${admin.home}/src/lib/jaxp.jar"/>
+    <property name="admin.ejbjar" value="${admin.build}/petstoreadminEjb.jar"/>
+    <property name="admin.ejbclientjar" value="${admin.build}/petstoreadminEjb_client.jar"/>
+    <property name="admin.war" value="${admin.build}/petstoreadmin.war"/>
+    <property name="admin.ear" value="${admin.build}/petstoreadmin.ear"/>
+  </target>
+
+  <target name="compile_classes" depends="init">
+    <mkdir dir="${admin.classbindir}"/>
+    <copydir src="${order.home}/build/classes/com/sun/j2ee/blueprints/customer/order/model"
+             dest="${admin.classbindir}/com/sun/j2ee/blueprints/customer/order/model"/>
+    <copydir src="${order.home}/build/classes/com/sun/j2ee/blueprints/customer/util"
+             dest="${admin.classbindir}/com/sun/j2ee/blueprints/customer/util"/>
+    <copyfile src="${petstore.home}/build/classes/com/sun/j2ee/blueprints/petstore/util/JSPUtil.class"
+             dest="${admin.classbindir}/com/sun/j2ee/blueprints/petstore/util/JSPUtil.class"/>
+    <javac srcdir="${admin.src}"
+           destdir="${admin.classbindir}"
+           classpath="${admin.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="ejbjar" depends="init">
+    <property name="admin.buildjardir" value="${admin.build}/ejbjar"/>
+    <expand src="${admin.home}/src/lib/parser.jar" dest="${admin.build}/ejbjar" />
+    <expand src="${admin.home}/src/lib/jaxp.jar" dest="${admin.build}/ejbjar" />
+    <mkdir dir="${admin.buildjardir}/META-INF"/>
+    <copydir src="${admin.classbindir}" dest="${admin.buildjardir}" />
+    <copyfile src="admin_ejb.xml" dest="${admin.buildjardir}/META-INF/ejb-jar.xml" />
+    <delete file="${admin.ejbjar}"/>
+    <jar jarfile="${admin.ejbjar}" basedir="${admin.buildjardir}"/>
+    <deltree dir="${admin.buildjardir}"/>
+  </target>
+
+  <target name="ejbclientjar" depends="init">
+    <property name="admin.buildjardir" value="${admin.build}/ejbjar"/>
+    <copydir src="${admin.classbindir}" dest="${admin.buildjardir}" />
+    <delete file="${admin.buildjardir}/com/sun/j2ee/blueprints/petstoreadmin/control/ejb/AdminClientControllerEJB.class"/>
+    <delete file="${admin.ejbclientjar}"/>
+    <jar jarfile="${admin.ejbclientjar}" basedir="${admin.buildjardir}"/>
+    <deltree dir="${admin.buildjardir}"/>
+  </target>
+
+  <target name="war" depends="init">
+    <copydir src="${admin.classbindir}" dest="docroot/WEB-INF/classes" excludes="cvs"/>
+    <mkdir dir="docroot/WEB-INF/lib"/>
+    <copyfile src="${admin.home}/src/lib/jaxp.jar" dest="docroot/WEB-INF/lib/jaxp.jar" />
+    <copyfile src="${admin.home}/src/lib/parser.jar" dest="docroot/WEB-INF/lib/parser.jar" />
+    <copyfile src="${admin.ejbclientjar}" dest="docroot/WEB-INF/lib/petstoreadminEjb_client.jar" />
+    <delete file="${admin.war}"/>
+    <jar jarfile="${admin.war}" basedir="docroot" excludes="cvs" />
+    <deltree dir="docroot/WEB-INF/classes"/>
+    <deltree dir="docroot/WEB-INF/lib"/>
+  </target>
+
+  <target name="ear" depends="init">
+    <property name="ear.contents" value="${admin.ejbjar}:${admin.war}"/>
+    <java classname="com.sun.enterprise.tools.packager.Main"
+          fork="yes"
+          classpath="${admin.classpath}"
+          args="-enterpriseArchive ${ear.contents} admin ${admin.ear}"/>
+  </target>
+
+  <target name="runtime" depends="init">
+    <java classname="com.sun.enterprise.tools.packager.Main"
+          fork="yes"
+          classpath="${admin.classpath}"
+          args="-setRuntime ${admin.ear} admin_warruntime.xml"/>
+    <java classname="com.sun.enterprise.tools.packager.Main"
+          fork="yes"
+          classpath="${admin.classpath}"
+          args="-setRuntime ${admin.ear} admin_ejbruntime.xml"/>
+  </target>
+
+  <!-- target name="javadocs" depends="compile_classes" -->
+  <target name="javadocs" depends="init">
+    <property name="admin.dstdocdir" value="${admin.build}/docs/api"/>
+    <mkdir dir="${admin.dstdocdir}"/>
+    <javadoc packagenames="com.sun.j2ee.blueprints.*"
+             sourcepath="${admin.src}"
+             classpath="${admin.classpath}"
+             destdir="${admin.dstdocdir}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="Java Pet Store Demo Admin API"
+             doctitle="Java Pet Store Demo Admin"
+             bottom="Copyright &#169; 2001 Sun Microsystems Inc. All Rights Reserved."
+    />
+  </target>
+
+  <target name="clean">
+    <deltree dir="${admin.build}"/>
+  </target>
+
+  <target name="deploy">
+    <java classname="com.sun.enterprise.tools.deployment.main.Main"
+          jvmargs="-Dorg.omg.CORBA.ORBInitialPort=1050 -Dcom.sun.enterprise.home=${j2ee.home} -Djava.security.policy=${j2ee.home}/lib/security/java.policy"
+          args="-deploy ${admin.ear} local"/>
+  </target>
+
+  <target name="coredeploy" depends="core,deploy" />
+  <target name="core" depends="compile_classes,ejbjar,ejbclientjar,war,ear,runtime" />
+  <target name="all" depends="compile_classes,war,ejbjar,ejbclientjar,ear,runtime,javadocs" />
+  <target name="clientjar" depends="compile_classes, ejbclientjar" />
+
+</project>

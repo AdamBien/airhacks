@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.1.2.4 2001/04/02 18:00:12 lblair Exp $                -->
+<!-- =================================================================== -->
+
+<project name="personalizationcomponent" default="core" basedir=".">
+
+  <target name="init">
+    <!-- change this property to use a compiler other than javac. -->
+    <property name="build.compiler" value="classic"/>
+
+    <!-- The tracer util home directory of the workspace -->
+    <property name="util.home" value="../../util/tracer"/>
+
+    <!-- The tracer util src directory of the workspace -->
+    <property name="util.src" value="${util.home}/src"/>
+
+    <!-- The destination directory for the tracer util build -->
+    <property name="util.build" value="${util.home}/build"/>
+
+    <!-- The destination directory for the tracer util compiled classes. -->
+    <property name="util.classbindir" value="${util.build}/classes"/>
+
+    <!-- The root directory of the workspace -->
+    <property name="personalization.home" value=".."/>
+
+    <!-- The destination directory for the build -->
+    <property name="personalization.build" value="${personalization.home}/build"/>
+
+    <property name="personalization.src" value="${personalization.home}/src"/>
+
+    <!-- The destination directory for all the compiled classes. -->
+    <property name="personalization.classbindir" value="${personalization.build}/classes"/>
+
+    <!-- The destination directory for all the javadocs. -->
+    <property name="personalization.dstdocdir" value="${personalization.build}/docs/api"/>
+
+    <!-- The classpath used for building the workspace. -->
+    <property name="personalization.classpath" value="${util.classbindir}:${personalization.classbindir}:${j2ee.home}/lib/j2ee.jar"/>
+
+    <property name="personalization.ejbjar" value="${personalization.build}/personalizationEjb.jar"/>
+    <property name="personalization.ejbclientjar" value="${personalization.build}/personalizationEjb_client.jar"/>
+  </target>
+
+  <target name="compile_util_classes" depends="init">
+    <mkdir dir="${util.classbindir}"/>
+    <javac srcdir="${util.src}"
+           destdir="${util.classbindir}"
+           classpath="${util.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="compile_classes" depends="init">
+    <mkdir dir="${personalization.classbindir}"/>
+    <javac srcdir="${personalization.src}"
+           destdir="${personalization.classbindir}"
+           classpath="${personalization.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="personalizationejbjar" depends="init">
+    <property name="personalization.buildjardir" value="${personalization.home}/build/ejbjar"/>
+    <mkdir dir="${personalization.buildjardir}/META-INF"/>
+    <copydir src="${personalization.classbindir}" dest="${personalization.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${personalization.buildjardir}" />
+    <copyfile src="personalization_ejb.xml" dest="${personalization.buildjardir}/META-INF/ejb-jar.xml" />
+    <delete file="${personalization.ejbjar}"/>
+    <jar jarfile="${personalization.ejbjar}" basedir="${personalization.buildjardir}"/>
+    <deltree dir="${personalization.buildjardir}"/>
+  </target>
+
+  <target name="personalizationejbclientjar" depends="init">
+    <property name="personalization.buildjardir" value="${personalization.home}/build/ejbjar"/>
+    <copydir src="${personalization.classbindir}" dest="${personalization.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${personalization.buildjardir}" />
+    <delete file="${personalization.buildjardir}/com/sun/j2ee/blueprints/personalization/profilemgr/ejb/ProfileMgrEJB.class"/>
+    <delete file="${personalization.ejbclientjar}"/>
+    <jar jarfile="${personalization.ejbclientjar}" basedir="${personalization.buildjardir}"/>
+    <deltree dir="${personalization.buildjardir}"/>
+  </target>
+
+  <target name="javadocs" depends="init">
+    <mkdir dir="${personalization.dstdocdir}"/>
+    <javadoc packagenames="com.sun.j2ee.blueprints.personalization.*"
+             sourcepath="${personalization.src}"
+             classpath="${personalization.classpath}"
+             destdir="${personalization.dstdocdir}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="Personalization Component API"
+             doctitle="Personalization Component"
+             bottom="Copyright &#169; 2001 Sun Microsystems Inc. All Rights Reserved."
+    />
+  </target>
+
+  <target name="clean">
+    <deltree dir="${personalization.build}"/>
+    <deltree dir="${util.build}"/>
+  </target>
+
+  <target name="core" depends="compile_util_classes, compile_classes, personalizationejbjar, personalizationejbclientjar" />
+  <target name="all" depends="compile_util_classes, compile_classes, personalizationejbjar, personalizationejbclientjar, javadocs" />
+  <target name="clientjar" depends="compile_util_classes, compile_classes, personalizationejbclientjar" />
+
+</project>

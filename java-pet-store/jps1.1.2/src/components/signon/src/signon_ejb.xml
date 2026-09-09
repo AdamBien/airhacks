@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE ejb-jar PUBLIC '-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 1.1//EN' 'http://java.sun.com/j2ee/dtds/ejb-jar_1_1.dtd'>
+
+<ejb-jar>
+  <description>This component is used to maintain the sign on information for a user.</description>
+  <display-name>SignOn Component</display-name>
+
+  <enterprise-beans>
+    <entity>
+      <description>The SignOn EJB keeps track username and password</description>
+      <display-name>The SignOn</display-name>
+      <ejb-name>TheSignOn</ejb-name>
+      <home>com.sun.j2ee.blueprints.signon.ejb.SignOnHome</home>
+      <remote>com.sun.j2ee.blueprints.signon.ejb.SignOn</remote>
+      <ejb-class>com.sun.j2ee.blueprints.signon.ejb.SignOnEJB</ejb-class>
+      <persistence-type>Bean</persistence-type>
+      <prim-key-class>java.lang.String</prim-key-class>
+      <reentrant>False</reentrant>
+      <env-entry>
+        <env-entry-name>ejb/signon/SignonDAOClass</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>com.sun.j2ee.blueprints.signon.dao.SignOnDAOImpl</env-entry-value>
+      </env-entry>
+      <resource-ref>
+        <res-ref-name>jdbc/SignOnDataSource</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+      </resource-ref>
+    </entity>
+  </enterprise-beans>
+
+  <assembly-descriptor>
+
+    <container-transaction>
+      <method>
+        <ejb-name>TheSignOn</ejb-name>
+        <method-intf>Home</method-intf>
+        <method-name>remove</method-name>
+        <method-params>
+          <method-param>java.lang.Object</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheSignOn</ejb-name>
+        <method-intf>Home</method-intf>
+        <method-name>remove</method-name>
+        <method-params>
+          <method-param>javax.ejb.Handle</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+     <method>
+       <ejb-name>TheSignOn</ejb-name>
+       <method-intf>Remote</method-intf>
+       <method-name>remove</method-name>
+       <method-params />
+     </method>
+     <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+
+    <container-transaction>
+      <method>
+        <ejb-name>TheSignOn</ejb-name>
+        <method-intf>Home</method-intf>
+        <method-name>create</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+          <method-param>java.lang.String</method-param>
+         </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+
+
+    <container-transaction>
+      <method>
+        <ejb-name>TheSignOn</ejb-name>
+        <method-intf>Home</method-intf>
+        <method-name>findByPrimaryKey</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+
+    <container-transaction>
+      <method>
+        <ejb-name>TheSignOn</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>updatePassWord</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheSignOn</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getDetails</method-name>
+        <method-params />
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+  </assembly-descriptor>
+
+  <ejb-client-jar>signonEjb_client.jar</ejb-client-jar>
+</ejb-jar>

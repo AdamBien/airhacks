@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE ejb-jar PUBLIC '-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 1.1//EN' 'http://java.sun.com/j2ee/dtds/ejb-jar_1_1.dtd'>
+
+<ejb-jar>
+  <description>This component represents the set of EJBs related to the
+                PetStore web tier</description>
+  <display-name>Petstore EJB Component</display-name>
+  <enterprise-beans>
+
+    <session>
+      <display-name>The Shopping Client Controller</display-name>
+      <ejb-name>TheShoppingClientController</ejb-name>
+      <home>com.sun.j2ee.blueprints.petstore.control.ejb.ShoppingClientControllerHome</home>
+      <remote>com.sun.j2ee.blueprints.petstore.control.ejb.ShoppingClientController</remote>
+      <ejb-class>com.sun.j2ee.blueprints.petstore.control.ejb.ShoppingClientControllerEJB</ejb-class>
+      <session-type>Stateful</session-type>
+      <transaction-type>Container</transaction-type>
+
+      <env-entry>
+        <env-entry-name>ejb/mail/SendConfirmationMail</env-entry-name>
+        <env-entry-type>java.lang.Boolean</env-entry-type>
+        <env-entry-value>false</env-entry-value>
+      </env-entry>
+      <env-entry>
+        <env-entry-name>event/SignoutEvent</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>com.sun.j2ee.blueprints.petstore.control.ejb.SignoutHandler</env-entry-value>
+      </env-entry>
+      <env-entry>
+        <env-entry-name>event/SigninEvent</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>com.sun.j2ee.blueprints.petstore.control.ejb.SigninHandler</env-entry-value>
+      </env-entry>
+      <env-entry>
+        <env-entry-name>event/AccountEvent</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>com.sun.j2ee.blueprints.petstore.control.ejb.AccountHandler</env-entry-value>
+      </env-entry>
+      <env-entry>
+        <env-entry-name>event/CartEvent</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>com.sun.j2ee.blueprints.petstore.control.ejb.CartHandler</env-entry-value>
+      </env-entry>
+      <env-entry>
+        <env-entry-name>event/OrderEvent</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>com.sun.j2ee.blueprints.petstore.control.ejb.OrderHandler</env-entry-value>
+      </env-entry>
+
+      <ejb-ref>
+        <ejb-ref-name>ejb/mail/Mailer</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <home>com.sun.j2ee.blueprints.mail.ejb.MailerHome</home>
+        <remote>com.sun.j2ee.blueprints.mail.ejb.Mailer</remote>
+        <ejb-link>TheMailer</ejb-link>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/catalog/Catalog</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <home>com.sun.j2ee.blueprints.shoppingcart.catalog.ejb.CatalogHome</home>
+        <remote>com.sun.j2ee.blueprints.shoppingcart.catalog.ejb.Catalog</remote>
+        <ejb-link>TheCatalog</ejb-link>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/cart/Cart</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <home>com.sun.j2ee.blueprints.shoppingcart.cart.ejb.ShoppingCartHome</home>
+        <remote>com.sun.j2ee.blueprints.shoppingcart.cart.ejb.ShoppingCart</remote>
+        <ejb-link>TheCart</ejb-link>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/profilemgr/ProfileMgr</ejb-ref-name>
+        <ejb-ref-type>Entity</ejb-ref-type>
+        <home>com.sun.j2ee.blueprints.personalization.profilemgr.ejb.ProfileMgrHome</home>
+        <remote>com.sun.j2ee.blueprints.personalization.profilemgr.ejb.ProfileMgr</remote>
+        <ejb-link>TheProfileMgr</ejb-link>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/signon/Signon</ejb-ref-name>
+        <ejb-ref-type>Entity</ejb-ref-type>
+        <home>com.sun.j2ee.blueprints.signon.ejb.SignOnHome</home>
+        <remote>com.sun.j2ee.blueprints.signon.ejb.SignOn</remote>
+        <ejb-link>TheSignOn</ejb-link>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/customer/Customer</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <home>com.sun.j2ee.blueprints.customer.customer.ejb.CustomerHome</home>
+        <remote>com.sun.j2ee.blueprints.customer.customer.ejb.Customer</remote>
+        <ejb-link>TheCustomer</ejb-link>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/inventory/Inventory</ejb-ref-name>
+        <ejb-ref-type>Entity</ejb-ref-type>
+        <home>com.sun.j2ee.blueprints.inventory.ejb.InventoryHome</home>
+        <remote>com.sun.j2ee.blueprints.inventory.ejb.Inventory</remote>
+        <ejb-link>TheInventory</ejb-link>
+      </ejb-ref>
+    </session>
+
+  </enterprise-beans>
+
+  <assembly-descriptor>
+    <container-transaction>
+      <method>
+        <ejb-name>TheShoppingClientController</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>handleEvent</method-name>
+        <method-params>
+          <method-param>com.sun.j2ee.blueprints.petstore.control.event.EStoreEvent</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheShoppingClientController</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getShoppingCart</method-name>
+        <method-params />
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheShoppingClientController</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getOrder</method-name>
+        <method-params>
+          <method-param>int</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheShoppingClientController</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getProfileMgr</method-name>
+        <method-params />
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheShoppingClientController</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getCustomer</method-name>
+        <method-params />
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+
+  </assembly-descriptor>
+
+</ejb-jar>
+

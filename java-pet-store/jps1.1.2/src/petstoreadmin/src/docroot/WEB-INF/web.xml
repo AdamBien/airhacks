@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app PUBLIC '-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN' 'http://java.sun.com/j2ee/dtds/web-app_2.2.dtd'>
+
+<web-app>
+  <display-name>AdminWebTier</display-name>
+  <description>WebTier for the Admin Client for the PetStore</description>
+
+  <servlet>
+    <servlet-name>AdminRequestProcessor</servlet-name>
+    <display-name>AdminRequestProcessor</display-name>
+    <servlet-class>com.sun.j2ee.blueprints.petstoreadmin.control.web.AdminRequestProcessor</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>AdminRequestProcessor</servlet-name>
+    <url-pattern>/AdminRequestProcessor</url-pattern>
+  </servlet-mapping>
+
+  <session-config>
+    <session-timeout>54</session-timeout>
+  </session-config>
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+  <resource-ref>
+    <res-ref-name>jdbc/EstoreDataSource</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>MySecureBit0</web-resource-name>
+      <url-pattern>/AdminRequestProcessor</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>administrator</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <realm-name>default</realm-name>
+    <form-login-config>
+      <form-login-page>/admin/login.jsp</form-login-page>
+      <form-error-page>/admin/error.jsp</form-error-page>
+    </form-login-config>
+  </login-config>
+
+  <security-role>
+    <role-name>administrator</role-name>
+  </security-role>
+
+  <ejb-ref>
+    <ejb-ref-name>ejb/acc/Acc</ejb-ref-name>
+    <ejb-ref-type>Session</ejb-ref-type>
+    <home>com.sun.j2ee.blueprints.petstoreadmin.control.ejb.AdminClientControllerHome</home>
+    <remote>com.sun.j2ee.blueprints.petstoreadmin.control.ejb.AdminClientController</remote>
+  </ejb-ref>
+
+</web-app>

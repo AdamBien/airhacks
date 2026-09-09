@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<j2ee-ri-specific-information>
+  <server-name></server-name>
+  <rolemapping>
+    <role name="administrator">
+      <principals>
+        <principal>
+          <name>jps_admin</name>
+        </principal>
+      </principals>
+      <groups>
+        <group name="administrator_group" />
+      </groups>
+    </role>
+  </rolemapping>
+
+  <web>
+    <display-name>AdminWebTier</display-name>
+    <context-root>admin</context-root>
+    <resource-ref>
+      <res-ref-name>jdbc/EstoreDataSource</res-ref-name>
+      <jndi-name>jdbc/Cloudscape</jndi-name>
+      <default-resource-principal>
+        <name>estoreuser</name>
+        <password>estore</password>
+      </default-resource-principal>
+    </resource-ref>
+    <ejb-ref>
+      <ejb-ref-name>ejb/acc/Acc</ejb-ref-name>
+      <jndi-name>estore/acc</jndi-name>
+    </ejb-ref>
+  </web>
+</j2ee-ri-specific-information>

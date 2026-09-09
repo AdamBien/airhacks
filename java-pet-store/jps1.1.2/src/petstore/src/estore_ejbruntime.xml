@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<j2ee-ri-specific-information>
+  <server-name></server-name>
+  <rolemapping />
+
+  <enterprise-beans>
+    <ejb>
+      <ejb-name>TheOrder</ejb-name>
+      <jndi-name>estore/order</jndi-name>
+      <resource-ref>
+        <res-ref-name>jdbc/EstoreDataSource</res-ref-name>
+        <jndi-name>jdbc/Cloudscape</jndi-name>
+        <default-resource-principal>
+          <name>estoreuser</name>
+          <password>estore</password>
+        </default-resource-principal>
+      </resource-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/account/Account</ejb-ref-name>
+        <jndi-name>estore/account</jndi-name>
+      </ejb-ref>
+    </ejb>
+
+    <ejb>
+      <ejb-name>TheCustomer</ejb-name>
+      <jndi-name>estore/customer</jndi-name>
+      <ejb-ref>
+      <ejb-ref-name>ejb/account/Account</ejb-ref-name>
+        <jndi-name>estore/account</jndi-name>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/order/Order</ejb-ref-name>
+        <jndi-name>estore/order</jndi-name>
+      </ejb-ref>
+    </ejb>
+
+    <ejb>
+      <ejb-name>TheShoppingClientController</ejb-name>
+      <jndi-name>estore/scc</jndi-name>
+      <ejb-ref>
+        <ejb-ref-name>ejb/mail/Mailer</ejb-ref-name>
+        <jndi-name>estore/mailer</jndi-name>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/catalog/Catalog</ejb-ref-name>
+        <jndi-name>estore/catalog</jndi-name>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/cart/Cart</ejb-ref-name>
+        <jndi-name>estore/cart</jndi-name>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/customer/Customer</ejb-ref-name>
+        <jndi-name>estore/customer</jndi-name>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/inventory/Inventory</ejb-ref-name>
+        <jndi-name>estore/inventory</jndi-name>
+      </ejb-ref>
+      <ejb-ref>
+        <ejb-ref-name>ejb/profilemgr/ProfileMgr</ejb-ref-name>
+        <jndi-name>estore/profilemgr</jndi-name>
+      </ejb-ref>
+       <ejb-ref>
+        <ejb-ref-name>ejb/signon/Signon</ejb-ref-name>
+        <jndi-name>estore/signon</jndi-name>
+      </ejb-ref>
+    </ejb>
+
+    <ejb>
+      <ejb-name>TheCatalog</ejb-name>
+      <jndi-name>estore/catalog</jndi-name>
+      <resource-ref>
+        <res-ref-name>jdbc/EstoreDataSource</res-ref-name>
+        <jndi-name>jdbc/Cloudscape</jndi-name>
+        <default-resource-principal>
+          <name>estoreuser</name>
+          <password>estore</password>
+        </default-resource-principal>
+      </resource-ref>
+    </ejb>
+
+    <ejb>
+      <ejb-name>TheMailer</ejb-name>
+      <jndi-name>estore/mailer</jndi-name>
+      <resource-ref>
+        <res-ref-name>mail/MailSession</res-ref-name>
+        <jndi-name>mail/Session</jndi-name>
+        <mail-configuration>
+          <name>YourName</name>
+          <mail-from>orders@javapetstoredemo.com</mail-from>
+          <mail-host>YourMailServer</mail-host>
+        </mail-configuration>
+      </resource-ref>
+    </ejb>
+
+    <ejb>
+      <ejb-name>TheCart</ejb-name>
+      <jndi-name>estore/cart</jndi-name>
+      <ejb-ref>
+        <ejb-ref-name>ejb/catalog/Catalog</ejb-ref-name>
+        <jndi-name>estore/catalog</jndi-name>
+      </ejb-ref>
+    </ejb>
+
+    <ejb>
+      <ejb-name>TheInventory</ejb-name>
+      <jndi-name>estore/inventory</jndi-name>
+      <resource-ref>
+        <res-ref-name>jdbc/InventoryDataSource</res-ref-name>
+        <jndi-name>jdbc/Cloudscape</jndi-name>
+        <default-resource-principal>
+          <name>estoreuser</name>
+          <password>estore</password>
+        </default-resource-principal>
+      </resource-ref>
+    </ejb>
+
+    <ejb>
+      <ejb-name>TheAccount</ejb-name>
+      <jndi-name>estore/account</jndi-name>
+      <resource-ref>
+        <res-ref-name>jdbc/EstoreDataSource</res-ref-name>
+        <jndi-name>jdbc/Cloudscape</jndi-name>
+        <default-resource-principal>
+          <name>estoreuser</name>
+          <password>estore</password>
+        </default-resource-principal>
+      </resource-ref>
+    </ejb>
+
+    <ejb>
+      <ejb-name>TheProfileMgr</ejb-name>
+      <jndi-name>estore/profilemgr</jndi-name>
+      <resource-ref>
+        <res-ref-name>jdbc/EstoreDataSource</res-ref-name>
+        <jndi-name>jdbc/Cloudscape</jndi-name>
+        <default-resource-principal>
+          <name>estoreuser</name>
+          <password>estore</password>
+        </default-resource-principal>
+      </resource-ref>
+    </ejb>
+
+    <ejb>
+      <ejb-name>TheSignOn</ejb-name>
+      <jndi-name>estore/signon</jndi-name>
+      <resource-ref>
+        <res-ref-name>jdbc/SignOnDataSource</res-ref-name>
+        <jndi-name>jdbc/Cloudscape</jndi-name>
+        <default-resource-principal>
+          <name>estoreuser</name>
+          <password>estore</password>
+        </default-resource-principal>
+      </resource-ref>
+    </ejb>
+
+  </enterprise-beans>
+
+</j2ee-ri-specific-information>
+

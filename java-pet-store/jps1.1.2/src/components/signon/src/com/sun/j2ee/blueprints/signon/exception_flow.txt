@@ -1,0 +1,17 @@
+The flow of exceptions in the SignOn component is as follows :
+
+DAO -> EJB :
+
+* All SQLExceptions thrown up as SignOnDAOSysException
+* Exceptions when a username is not found passed up as SignONDAOFinderException
+* Exception when username is already present is passed up as SignOnDupKeyException
+* When create / remove fails because of other recoverable errors it is passed up as SignOnDAODBUpdateException
+* All other recoverable app exceptions (like bad field et al) passed up as SignOnDAOAppException
+
+EJB -> to ejb users :
+
+* SignOnDAOSysEx received is converted to EJBException
+* SignOnDAOAppEx received is converted to SignOnAppException
+* SignOnDAODupKey converted to DupKey
+* SignOnDAOFinder converted to Finder
+* SignOnDAODBUpdateEx converted to Create / remove as the case may be

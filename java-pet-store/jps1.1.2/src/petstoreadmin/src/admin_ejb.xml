@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE ejb-jar PUBLIC '-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 1.1//EN' 'http://java.sun.com/j2ee/dtds/ejb-jar_1_1.dtd'>
+
+<ejb-jar>
+  <description>The Administration component provides a mechanism for an
+        administrator to approve|deny pending orders</description>
+  <display-name>Administrator Component</display-name>
+  <enterprise-beans>
+
+    <session>
+      <description>The Admin Client Controller</description>
+      <display-name>TheAdminClientController</display-name>
+      <ejb-name>TheAdminClientController</ejb-name>
+      <home>com.sun.j2ee.blueprints.petstoreadmin.control.ejb.AdminClientControllerHome</home>
+      <remote>com.sun.j2ee.blueprints.petstoreadmin.control.ejb.AdminClientController</remote>
+      <ejb-class>com.sun.j2ee.blueprints.petstoreadmin.control.ejb.AdminClientControllerEJB</ejb-class>
+      <session-type>Stateless</session-type>
+      <transaction-type>Container</transaction-type>
+      <env-entry>
+        <env-entry-name>user/AdminId</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>jps_admin</env-entry-value>
+      </env-entry>
+      <security-role-ref>
+        <role-name>administrator</role-name>
+        <role-link>administrator</role-link>
+      </security-role-ref>
+      <resource-ref>
+        <res-ref-name>jdbc/EstoreDataSource</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+      </resource-ref>
+    </session>
+  </enterprise-beans>
+
+  <assembly-descriptor>
+    <security-role>
+      <role-name>administrator</role-name>
+    </security-role>
+
+    <method-permission>
+       <role-name>administrator</role-name>
+       <method>
+         <ejb-name>TheAdminClientController</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>setOrdersStatus</method-name>
+         <method-params>
+            <method-param>java.util.ArrayList</method-param>
+         </method-params>
+      </method>
+    </method-permission>
+
+    <container-transaction>
+      <method>
+        <ejb-name>TheAdminClientController</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getPendingOrders</method-name>
+        <method-params>
+          <method-param>java.util.Locale</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheAdminClientController</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>setOrdersStatus</method-name>
+        <method-params>
+          <method-param>java.util.ArrayList</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+  </assembly-descriptor>
+
+  <ejb-client-jar>petstoreadminEjb_client.jar</ejb-client-jar>
+</ejb-jar>

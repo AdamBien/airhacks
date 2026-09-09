@@ -1,0 +1,110 @@
+Release Notes for J2EE[tm] Blueprints: Java[tm] Pet Store 1.1.2
+===============================================================
+
+KNOWN ISSUES
+------------
+
+This section describes known issues with Java Pet Store 1.1.2. Please
+read these notes before installing Java Pet Store.
+
+- Anytime you wish to rebuild the Java Pet Store Administrator, you
+  must first rebuild the Java Pet Store.
+
+- Whenever you deploy the Java Pet Store applications (or any other
+  application, for that matter) on the J2EE Reference Implementation
+  (J2EE RI), you should always check to see if an application with the
+  same name has already been deployed.
+
+  For example, if an (older) Java Pet Store application is currently
+  deployed with the display name "petstore", then you should undeploy
+  that application before deploying a newer Java Pet Store application
+  with the same name.
+
+- To deploy the Java Pet Store Administrator on J2EE RI 1.3, follow
+  these steps:
+
+  1. Start the deployment tool.
+
+  2. From the menu, select File > Open to bring up a file dialog. Go
+     to the root directory of the Java Pet Store bundle and select the
+     petstoreadmin.ear.
+
+  3. A node named admin should appear in the Applications tree on the
+     left panel of the window. Select its child, AdminWebTier.
+
+  4. Select the Security tabbed pane in the right panel.
+
+  5. Click the Settings... button in the top right corner to bring up
+     the form-based login dialog. From the Login Page drop-down box,
+     select /login.jsp. From the Error Page drop-down box, select
+     /error.jsp. Click OK.
+
+  6. Click the Edit... button in the bottom right corner to bring up
+     the authorized roles dialog. Select the administrator entry and
+     click OK.
+
+  7. From the menu, select File > Save to save your changes.
+
+  8. From the menu, select Tools > Deploy to deploy the application.
+
+- To run the Java Pet Store Administrator's StarOffice and Excel
+  demos on J2EE RI 1.3, follow the steps below. Let $JPS_HOME denote
+  the root directory of the Java Pet Store bundle. (Win32 users should
+  replace the path separator '/' with '\' where appropriate.)
+
+  1. Install the Java API for XML Processing (JAXP), version
+     1.1. (Earlier versions will not work.) You can download this from
+     http://java.sun.com/xml/download.html.
+
+  2. Replace parser.jar in $JPS_HOME/src/petstoreadmin/src/lib/ with
+     the JAXP 1.1 crimson.jar.
+
+  3. Replace jaxp.jar in $JPS_HOME/src/petstoreadmin/src/lib/ with the
+     JAXP 1.1 jaxp.jar.
+
+  4. Replace all references to parser.jar in
+     $JPS_HOME/src/petstoreadmin/src/build.xml with crimson.jar.
+
+  5. Find the following line in the class
+     com.sun.j2ee.blueprints.petstoreadmin.control.web.ManageOrdersBean:
+
+     import com.sun.xml.tree.XmlDocument;
+
+     Replace "com.sun.xml" with "org.apache.crimson".
+
+  6. Rebuild the Java Pet Store Administrator and deploy the rebuilt
+     application when running the StarOffice or Excel demo.
+
+- The Java Pet Store Administrator's Excel demo is designed to work
+  only with English orders at this time. It will not work with
+  Japanese orders.
+
+- The Java Pet Store's Japanese database tables are designed to be
+  used only with Cloudscape at this time. They will not work with
+  either Oracle or Sybase.
+
+WHAT'S NEW
+----------
+
+- The Java Pet Store deploys on the J2EE RI 1.3 without modification.
+
+- The Japanese version of the Pet Store is even more localized.
+
+- JavaDoc documentation has been enhanced for the Java Pet Store
+  components.
+
+- Application-level and system-level exception-handling has also been
+  improved on all tiers.
+
+- Mini-application: The Blueprints Mailer, a J2EE mini-application
+  (see mailerapp.ear) is included. This is the first of many smaller
+  J2EE applications targeted at J2SE application developers who want
+  to learn how to develop J2EE applications.
+
+- Enhanced portability: Web-tier form-based-login and the
+  J2EESecurityAdapter class have been removed. The application now
+  uses a servlet-based sign-in/sign-out architecture. Client view JARs
+  for the EJB components have also been included.
+
+- Easier installation of database tables: The Java Pet Store provides
+  an interactive tool for installing its database tables.

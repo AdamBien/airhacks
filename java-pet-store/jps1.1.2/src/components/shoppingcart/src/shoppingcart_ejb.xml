@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE ejb-jar PUBLIC '-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 1.1//EN' 'http://java.sun.com/j2ee/dtds/ejb-jar_1_1.dtd'>
+
+<ejb-jar>
+  <description>This component contains the cart and catalog ejb components</description>
+  <display-name>ShoppingCart Component</display-name>
+  <enterprise-beans>
+
+    <session>
+      <description>This is the Catalog ejb</description>
+      <display-name>The Catalog</display-name>
+      <ejb-name>TheCatalog</ejb-name>
+      <home>com.sun.j2ee.blueprints.shoppingcart.catalog.ejb.CatalogHome</home>
+      <remote>com.sun.j2ee.blueprints.shoppingcart.catalog.ejb.Catalog</remote>
+      <ejb-class>com.sun.j2ee.blueprints.shoppingcart.catalog.ejb.CatalogEJB</ejb-class>
+      <session-type>Stateless</session-type>
+      <transaction-type>Container</transaction-type>
+      <env-entry>
+        <env-entry-name>ejb/catalog/CatalogDAOClass</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>com.sun.j2ee.blueprints.shoppingcart.catalog.dao.CatalogDAOImpl</env-entry-value>
+      </env-entry>
+      <resource-ref>
+        <res-ref-name>jdbc/EstoreDataSource</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+      </resource-ref>
+    </session>
+
+    <session>
+      <description>This is the Cart ejb</description>
+      <display-name>The Cart</display-name>
+      <ejb-name>TheCart</ejb-name>
+      <home>com.sun.j2ee.blueprints.shoppingcart.cart.ejb.ShoppingCartHome</home>
+      <remote>com.sun.j2ee.blueprints.shoppingcart.cart.ejb.ShoppingCart</remote>
+      <ejb-class>com.sun.j2ee.blueprints.shoppingcart.cart.ejb.ShoppingCartEJB</ejb-class>
+      <session-type>Stateful</session-type>
+      <transaction-type>Container</transaction-type>
+      <ejb-ref>
+        <ejb-ref-name>ejb/catalog/Catalog</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <home>com.sun.j2ee.blueprints.shoppingcart.catalog.ejb.CatalogHome</home>
+        <remote>com.sun.j2ee.blueprints.shoppingcart.catalog.ejb.Catalog</remote>
+        <ejb-link>TheCatalog</ejb-link>
+      </ejb-ref>
+    </session>
+
+  </enterprise-beans>
+
+  <assembly-descriptor>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCatalog</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getItem</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+          <method-param>java.util.Locale</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCatalog</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>searchProducts</method-name>
+        <method-params>
+          <method-param>java.util.Collection</method-param>
+          <method-param>int</method-param>
+          <method-param>int</method-param>
+          <method-param>java.util.Locale</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCatalog</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getProduct</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+          <method-param>java.util.Locale</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCatalog</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getProducts</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+          <method-param>int</method-param>
+          <method-param>int</method-param>
+          <method-param>java.util.Locale</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCatalog</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getCategory</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+          <method-param>java.util.Locale</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCatalog</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getItems</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+          <method-param>int</method-param>
+          <method-param>int</method-param>
+          <method-param>java.util.Locale</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCatalog</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getCategories</method-name>
+        <method-params>
+          <method-param>int</method-param>
+          <method-param>int</method-param>
+          <method-param>java.util.Locale</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+
+    <container-transaction>
+      <method>
+        <ejb-name>TheCart</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>updateItemQty</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+          <method-param>int</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCart</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>deleteItem</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCart</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>empty</method-name>
+        <method-params />
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCart</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>addItem</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+          <method-param>int</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCart</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>addItem</method-name>
+        <method-params>
+          <method-param>java.lang.String</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+    <container-transaction>
+      <method>
+        <ejb-name>TheCart</ejb-name>
+        <method-intf>Remote</method-intf>
+        <method-name>getDetails</method-name>
+        <method-params>
+          <method-param>java.util.Locale</method-param>
+        </method-params>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+  </assembly-descriptor>
+
+  <ejb-client-jar>shoppingcartEjb_client.jar</ejb-client-jar>
+</ejb-jar>
+

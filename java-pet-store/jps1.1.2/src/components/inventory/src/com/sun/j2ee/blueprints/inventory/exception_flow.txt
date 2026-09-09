@@ -1,0 +1,18 @@
+Exception Flow from DAO -> EJB
+==============================
+
+- NamingEx thrown up as InventoryDAOSysException
+- SQL exceptions thrownup as InventoryDAOSysException
+- user errors (empty field et al) passed up as InventoryDAOAppException
+- errors while database update caused by user error passed up as InventoryDAODBUpdateException
+- Absence of a row with given primary key passed up as InventoryDAOFinderException
+
+
+Exception Flow from EJB up
+==========================
+
+- InventoryDAOSysExceptions thrown up as EJBException
+- InventoryDAOFinderEx thrown up as FinderEx
+- InventoryDAODBUpdate thrown up as RemoveEx / as the case may be (depending
+  in calling context)
+- ejbLoad and ejbStore methods convert App exceptions from DAO into EJBException because these methods cannot have any other signature

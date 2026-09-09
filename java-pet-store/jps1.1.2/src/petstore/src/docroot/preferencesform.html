@@ -1,0 +1,54 @@
+<%--
+ % A set of form fields, that prompt for personalization preferences.
+ % This expects to be includes in the context of a FORM tag.  Right now
+ % the categories for favorite cateogory are hard-coded.
+--%>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td></td>
+    <td>
+      I want MyPetStore to be in
+      <select name="language" size="1">
+        <option value="English" selected>English</option>
+        <option value="Japanese">Japanese</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td>
+      My favorite category is
+      <select name="favorite_category" size="1">
+        <option value="birds" selected>Birds</option>
+        <option value="cats">Cats</option>
+        <option value="dogs">Dogs</option>
+        <option value="fish">Fish</option>
+        <option value="reptiles">Reptiles</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      &nbsp;
+      <input type=checkbox name="myList_on" checked>
+      &nbsp;
+    </td>
+    <td>Yes, I want to enable the MyList feature.  <i>MyList makes your
+        favorite items and categories more prominent as you shop.</i></td>
+  </tr>
+
+  <tr>
+    <td>
+      &nbsp;
+      <input type=checkbox name="banners_on" checked>
+      &nbsp;
+    </td>
+    <td>Yes, I want to enable advertisement banners.  <i>Java Pet Store
+        will display advertisements for sites or products as you shop,
+        which are based on your interests and purchases.</i></td>
+  </tr>
+</table>
+

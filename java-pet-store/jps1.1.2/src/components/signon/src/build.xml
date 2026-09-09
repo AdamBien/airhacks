@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.1.2.6 2001/04/02 18:00:13 lblair Exp $                -->
+<!-- =================================================================== -->
+
+<project name="signoncomponent" default="core" basedir=".">
+
+  <target name="init">
+    <!-- change this property to use a compiler other than javac. -->
+    <property name="build.compiler" value="classic"/>
+
+    <!-- The tracer util home directory of the workspace -->
+    <property name="util.home" value="../../util/tracer"/>
+
+    <!-- The tracer util src directory of the workspace -->
+    <property name="util.src" value="${util.home}/src"/>
+
+    <!-- The destination directory for the tracer util build -->
+    <property name="util.build" value="${util.home}/build"/>
+
+    <!-- The destination directory for the tracer util compiled classes. -->
+    <property name="util.classbindir" value="${util.build}/classes"/>
+
+    <!-- The root directory of the workspace -->
+    <property name="signon.home" value=".."/>
+
+    <!-- The destination directory for the build -->
+    <property name="signon.build" value="${signon.home}/build"/>
+
+    <property name="signon.src" value="${signon.home}/src"/>
+
+    <!-- The destination directory for all the compiled classes. -->
+    <property name="signon.classbindir" value="${signon.build}/classes"/>
+
+    <!-- The destination directory for all the javadocs. -->
+    <property name="signon.dstdocdir" value="${signon.build}/docs/api"/>
+
+    <!-- The classpath used for building the workspace. -->
+    <property name="signon.classpath" value="${util.classbindir}:${signon.classbindir}:${j2ee.home}/lib/j2ee.jar"/>
+
+    <property name="signon.ejbjar" value="${signon.build}/signonEjb.jar"/>
+    <property name="signon.ejbclientjar" value="${signon.build}/signonEjb_client.jar"/>
+  </target>
+
+  <target name="compile_util_classes" depends="init">
+    <mkdir dir="${util.classbindir}"/>
+    <javac srcdir="${util.src}"
+           destdir="${util.classbindir}"
+           classpath="${util.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="compile_classes" depends="init">
+    <mkdir dir="${signon.classbindir}"/>
+    <javac srcdir="${signon.src}"
+           destdir="${signon.classbindir}"
+           classpath="${signon.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="signonejbjar" depends="init">
+    <property name="signon.buildjardir" value="${signon.home}/build/ejbjar"/>
+    <mkdir dir="${signon.buildjardir}/META-INF"/>
+    <copydir src="${signon.classbindir}" dest="${signon.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${signon.buildjardir}" />
+    <copyfile src="signon_ejb.xml" dest="${signon.buildjardir}/META-INF/ejb-jar.xml" />
+    <delete file="${signon.ejbjar}"/>
+    <jar jarfile="${signon.ejbjar}" basedir="${signon.buildjardir}"/>
+    <deltree dir="${signon.buildjardir}"/>
+  </target>
+
+  <target name="signonejbclientjar" depends="init">
+    <property name="signon.buildjardir" value="${signon.home}/build/ejbjar"/>
+    <copydir src="${signon.classbindir}" dest="${signon.buildjardir}" />
+    <copydir src="${util.classbindir}" dest="${signon.buildjardir}" />
+    <delete file="${signon.buildjardir}/com/sun/j2ee/blueprints/signon/ejb/SignOnEJB.class"/>
+    <delete file="${signon.ejbclientjar}"/>
+    <jar jarfile="${signon.ejbclientjar}" basedir="${signon.buildjardir}"/>
+    <deltree dir="${signon.buildjardir}"/>
+  </target>
+
+  <target name="javadocs" depends="init">
+    <mkdir dir="${signon.dstdocdir}"/>
+    <javadoc packagenames="com.sun.j2ee.blueprints.signon.*"
+             sourcepath="${signon.src}"
+             classpath="${signon.classpath}"
+             destdir="${signon.dstdocdir}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="SignOn Component API"
+             doctitle="SignOn Component"
+             bottom="Copyright &#169; 2001 Sun Microsystems Inc. All Rights Reserved."
+    />
+  </target>
+
+  <target name="clean">
+    <deltree dir="${signon.build}"/>
+    <deltree dir="${util.build}"/>
+  </target>
+
+  <target name="core" depends="compile_util_classes, compile_classes, signonejbjar, signonejbclientjar" />
+  <target name="all" depends="compile_util_classes, compile_classes, signonejbjar, signonejbclientjar, javadocs" />
+  <target name="clientjar" depends="compile_util_classes, compile_classes, signonejbclientjar" />
+
+</project>

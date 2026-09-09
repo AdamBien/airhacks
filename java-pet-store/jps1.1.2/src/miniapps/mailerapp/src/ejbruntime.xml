@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<j2ee-ri-specific-information>
+  <server-name>dummyserver</server-name>
+  <description>This app uses the Mailer component that allows you to send
+        mail so the mail configuration for the J2EE server is set</description>
+  <rolemapping />
+  <enterprise-beans>
+    <ejb>
+      <ejb-name>TheMailer</ejb-name>
+      <jndi-name>mailerapp/mailer</jndi-name>
+      <resource-ref>
+        <res-ref-name>mail/MailSession</res-ref-name>
+        <jndi-name>mail/Session</jndi-name>
+        <mail-configuration>
+          <name>YourName</name>
+          <mail-from>mailer_mini_app@javapetstoredemo.com</mail-from>
+          <mail-host>YourMailServer</mail-host>
+        </mail-configuration>
+      </resource-ref>
+    </ejb>
+  </enterprise-beans>
+</j2ee-ri-specific-information>
+

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<request-mappings>
+    <screen-definition url="/WEB-INF/xml/screendefinitions.xml" language="en_US"/>
+    <screen-definition url="/WEB-INF/xml/ja/screendefinitions.xml" language="ja_JP"/>
+
+    <default-screen>MAIN</default-screen>
+    <signin-screen>SIGN_IN</signin-screen>
+    <signin-error-screen>SIGN_IN_ERROR</signin-error-screen>
+    <url-mapping url="/main" screen="MAIN"/>
+    <url-mapping url="/search" screen="SEARCH"/>
+    <url-mapping url="/category" screen="CATEGORY"/>
+    <url-mapping url="/product" screen="PRODUCT"/>
+    <url-mapping url="/catalog" screen="CATALOG"/>
+    <url-mapping url="/error" screen="ERROR"/>
+    <url-mapping url="/accountcreated" screen="ACCOUNT_CREATED"/>
+    <url-mapping url="/createnewaccount" screen="CREATE_ACCOUNT"/>
+    <url-mapping url="/editaccount" screen="EDIT_ACCOUNT" requiresSignin="true"/>
+    <url-mapping url="/accountedited" screen="ACCOUNT_UPDATED"/>
+
+    <url-mapping url="/signin" screen ="SIGN_IN_SUCCESS" requiresSignin="true"/>
+
+
+    <url-mapping url="/signout" screen="SIGN_OUT" useRequestHandler="true" >
+      <request-handler-class>com.sun.j2ee.blueprints.petstore.control.web.handlers.SignoutHandler</request-handler-class>
+    </url-mapping>
+
+    <url-mapping url="/language" screen="MAIN" useRequestHandler="true" >
+      <request-handler-class>com.sun.j2ee.blueprints.petstore.control.web.handlers.LanguageHandler</request-handler-class>
+    </url-mapping>
+
+    <url-mapping url="/help" screen="HELP"/>
+    <url-mapping url="/checkout" screen="CHECK_OUT"/>
+    <url-mapping url="/placeorder" screen="PLACE_ORDER" requiresSignin="true"/>
+    <url-mapping url="/productdetails" screen="PRODUCT_DETAILS"/>
+    <url-mapping url="/verifysignin" screen="SIGN_IN_SUCCESS" useRequestHandler="true" useFlowHandler="true">
+        <request-handler-class>com.sun.j2ee.blueprints.petstore.control.web.handlers.SigninHandler</request-handler-class>
+        <flow-handler class="com.sun.j2ee.blueprints.petstore.control.web.handlers.SigninFlowHandler">
+            <handler-result result="2" screen="SIGN_IN_ERROR"/>
+            <handler-result result="1" screen="SIGN_IN_SUCCESS"/>
+        </flow-handler>
+   </url-mapping>
+    <url-mapping url="/validateshippinginformation" useRequestHandler="true" useFlowHandler="true" requiresSignin="true">
+        <request-handler-class>com.sun.j2ee.blueprints.petstore.control.web.handlers.ExtractShippingInformationHandler</request-handler-class>
+        <flow-handler class="com.sun.j2ee.blueprints.petstore.control.web.handlers.ShippingFlowHandler">
+            <handler-result result="1" screen="VALIDATE_BILLING_INFORMATION"/>
+            <handler-result result="2" screen="MISSING_FORM_DATA"/>
+      </flow-handler>
+   </url-mapping>
+
+    <url-mapping url="/validatebillinginformation" screen="VALIDATE_BILLING_INFORMATION" useRequestHandler="true" useFlowHandler="true" requiresSignin="true">
+       <request-handler-class>com.sun.j2ee.blueprints.petstore.control.web.handlers.ExtractBillingInformationHandler</request-handler-class>
+       <flow-handler class="com.sun.j2ee.blueprints.petstore.control.web.handlers.AccountFlowHandler">
+         <handler-result result="1" screen="ENTER_SHIPPING_INFORMATION"/>
+         <handler-result result="2" screen="VALIDATE_BILLING_INFORMATION"/>
+         <handler-result result="3" screen="MISSING_FORM_DATA"/>
+      </flow-handler>
+   </url-mapping>
+    <url-mapping url="/entershippingaddress" useRequestHandler="true" useFlowHandler="true" requiresSignin="true">
+     <request-handler-class>com.sun.j2ee.blueprints.petstore.control.web.handlers.ExtractShippingInformationHandler</request-handler-class>
+       <flow-handler class="com.sun.j2ee.blueprints.petstore.control.web.handlers.ShippingFlowHandler">
+         <handler-result result="1" screen="ENTER_SHIPPING_INFORMATION"/>
+         <handler-result result="2" screen="MISSING_FORM_DATA"/>
+      </flow-handler>
+    </url-mapping>
+
+    <url-mapping url="/validatenewaccount" screen="ACCOUNT_CREATED" useRequestHandler="true" useFlowHandler="true">
+       <request-handler-class>com.sun.j2ee.blueprints.petstore.control.web.handlers.AccountHandler</request-handler-class>
+       <flow-handler class="com.sun.j2ee.blueprints.petstore.control.web.handlers.AccountFlowHandler">
+         <handler-result result="1" screen="ACCOUNT_CREATED"/>
+         <handler-result result="2" screen="ACCOUNT_CREATED"/>
+         <handler-result result="3" screen="MISSING_FORM_DATA"/>
+      </flow-handler>
+   </url-mapping>
+
+    <url-mapping url="/updateaccount" screen="ACCOUNT_UPDATED" useRequestHandler="true">
+      <request-handler-class>com.sun.j2ee.blueprints.petstore.control.web.handlers.AccountHandler</request-handler-class>
+    </url-mapping>
+
+    <url-mapping url="/missingformdata" screen="MISSING_FORM_DATA"/>
+
+
+    <url-mapping url="/commitorder" useRequestHandler="true" screen="COMMIT_ORDER" requiresSignin="true">
+      <request-handler-class>com.sun.j2ee.blueprints.petstore.control.web.handlers.OrderHandler</request-handler-class>
+    </url-mapping>
+
+    <url-mapping url="/cart" useRequestHandler="true" screen="CART">
+      <request-handler-class>com.sun.j2ee.blueprints.petstore.control.web.handlers.CartHandler</request-handler-class>
+    </url-mapping>
+
+    <exception-mapping exception-class="com.sun.j2ee.blueprints.petstore.control.exceptions.SigninFailedException" screen="SIGN_IN_ERROR"/>
+    <exception-mapping exception-class="com.sun.j2ee.blueprints.petstore.control.exceptions.DuplicateAccountException" screen="DUPLICATE_ACCOUNT"/>
+    <exception-mapping exception-class="com.sun.j2ee.blueprints.petstore.control.exceptions.GeneralFailureException" screen="ERROR"/>
+
+</request-mappings >
+
+
+
+

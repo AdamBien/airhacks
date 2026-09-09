@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.1.2.8 2001/04/09 23:58:20 brydon Exp $           -->
+<!-- =================================================================== -->
+
+<project name="mailerapp" default="core" basedir=".">
+
+  <target name="init">
+    <!-- change this property to use a compiler other than javac. -->
+    <property name="build.compiler" value="classic"/>
+
+    <!-- The root directory of the application workspace -->
+    <property name="app.home" value=".."/>
+
+    <!-- The destination directory for the build -->
+    <property name="app.src" value="${app.home}/src"/>
+    <property name="app.build" value="${app.home}/build"/>
+
+    <!-- The destination directory for all the compiled classes. -->
+    <property name="app.classbindir" value="docroot/WEB-INF/classes"/>
+    <property name="mail_component.basedir" value="../../../components/mail"/>
+    <property name="mail_component.classbindir" value="${mail_component.basedir}/build/classes"/>
+
+    <!-- The classpath used for building the workspace. -->
+    <property name="j2ee.classpath" value="${j2ee.home}/lib/j2ee.jar"/>
+    <property name="app.classpath" value="${mail_component.classbindir}:${app.classbindir}:${j2ee.classpath}"/>
+
+    <!-- The names of the war, jar, and ear files -->
+    <property name="app.war" value="${app.build}/mailerapp.war"/>
+    <property name="app.ejbjar" value="${app.build}/mailerappEjb.jar"/>
+    <property name="app.ear" value="${app.build}/mailerapp.ear"/>
+  </target>
+
+
+  <target name="components" depends="init">
+   <ant antfile="${mail_component.basedir}/src/build.xml" dir="${mail_component.basedir}/src" target="core"/>
+  </target>
+
+  <target name="compile_classes" depends="init">
+    <mkdir dir="${app.classbindir}"/>
+    <javac srcdir="${app.src}"
+           destdir="${app.classbindir}"
+           classpath="${app.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="war" depends="init">
+    <mkdir dir="docroot/WEB-INF/lib"/>
+    <mkdir dir="${app.build}"/>
+    <copyfile src="${mail_component.basedir}/build/mailerEjb_client.jar" dest="docroot/WEB-INF/lib/mailerEjb_client.jar"/>
+    <delete file="${app.war}"/>
+    <jar jarfile="${app.war}" basedir="docroot" excludes="cvs"/>
+    <deltree dir="docroot/WEB-INF/classes"/>
+    <deltree dir="docroot/WEB-INF/lib"/>
+  </target>
+
+  <target name="ejbjar" depends="init">
+    <copyfile src="${mail_component.basedir}/build/mailerEjb.jar" dest="${app.ejbjar}"/>
+    <copyfile src="${mail_component.basedir}/build/mailerEjb_client.jar" dest="${app.build}/mailerEjb_client.jar"/>
+   </target>
+
+  <target name="ear" depends="init">
+    <property name="ear.contents" value="${app.ejbjar}:${app.war}"/>
+    <delete file="${app.ear}"/>
+    <java classname="com.sun.enterprise.tools.packager.Main"
+          fork="yes"
+          classpath="${j2ee.classpath}"
+          args="-enterpriseArchive ${ear.contents} mail ${app.ear}"/>
+    <!-- set runtime descriptor for the ejb -->
+    <java classname="com.sun.enterprise.tools.packager.Main"
+          fork="yes"
+          classpath="${j2ee.classpath}"
+          args="-setRuntime ${app.ear} warruntime.xml"/>
+    <!-- set runtime descriptor for the web-tier -->
+    <java classname="com.sun.enterprise.tools.packager.Main"
+          fork="yes"
+          classpath="${j2ee.classpath}"
+          args="-setRuntime ${app.ear} ejbruntime.xml"/>
+    <delete file="${app.build}/mailerEjb_client.jar"/>
+  </target>
+
+  <target name="clean">
+   <ant antfile="${mail_component.basedir}/src/build.xml" dir="${mail_component.basedir}/src" target="clean"/>
+   <deltree dir="${app.build}"/>
+  </target>
+
+  <target name="deploy">
+    <java classname="com.sun.enterprise.tools.deployment.main.Main"
+          jvmargs="-Dorg.omg.CORBA.ORBInitialPort=1050 -Dcom.sun.enterprise.home=${j2ee.home} -Djava.security.policy=${j2ee.home}/lib/security/java.policy"
+          args="-deploy ${app.ear} local"/>
+  </target>
+
+  <target name="core" depends="components, compile_classes, war, ejbjar, ear" />
+
+</project>

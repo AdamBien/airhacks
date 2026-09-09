@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.2.4.1 2001/03/14 23:49:07 brydon Exp $                -->
+<!-- =================================================================== -->
+
+<project name="util" default="core" basedir=".">
+
+  <target name="init">
+    <!-- change this property to use a compiler other than javac. -->
+    <property name="build.compiler" value="classic"/>
+
+    <!-- The root directory of the workspace -->
+    <property name="tracer.home" value=".."/>
+
+    <!-- The destination directory for the build -->
+    <property name="tracer.build" value="${tracer.home}/build"/>
+
+    <property name="tracer.src" value="."/>
+
+    <!-- The destination directory for all the compiled classes. -->
+    <property name="tracer.classbindir" value="${tracer.build}/classes"/>
+
+    <!-- The destination directory for all the javadocs. -->
+    <property name="tracer.dstdocdir" value="${tracer.build}/docs/api"/>
+
+    <!-- The classpath used for building the workspace. -->
+    <property name="tracer.classpath" value="${tracer.classbindir}:${j2ee.home}/lib/j2ee.jar"/>
+  </target>
+
+  <target name="compile_classes" depends="init">
+    <mkdir dir="${tracer.classbindir}"/>
+    <javac srcdir="${tracer.src}"
+           destdir="${tracer.classbindir}"
+           classpath="${tracer.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="javadocs" depends="init">
+    <mkdir dir="${tracer.dstdocdir}"/>
+    <javadoc packagenames="com.sun.j2ee.blueprints.util.tracer.*"
+             sourcepath="${tracer.src}"
+             classpath="${tracer.classpath}"
+             destdir="${tracer.dstdocdir}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="util Component API"
+             doctitle="util Component"
+             bottom="Copyright &#169; 2001 Sun Microsystems Inc. All Rights Reserved."
+    />
+  </target>
+
+  <target name="clean">
+    <deltree dir="${tracer.build}"/>
+  </target>
+
+  <target name="core" depends="compile_classes" />
+  <target name="all" depends="compile_classes,javadocs" />
+
+</project>

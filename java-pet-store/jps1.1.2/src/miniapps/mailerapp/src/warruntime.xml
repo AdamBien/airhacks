@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<j2ee-ri-specific-information>
+  <server-name>dummyserver</server-name>
+  <description>This app uses the Mailer component that allows
+       you to send mail</description>
+  <rolemapping />
+  <web>
+    <display-name>WebTier</display-name>
+    <context-root>mailerapp</context-root>
+    <ejb-ref>
+      <ejb-ref-name>ejb/mailer</ejb-ref-name>
+      <jndi-name>mailerapp/mailer</jndi-name>
+    </ejb-ref>
+  </web>
+</j2ee-ri-specific-information>
+

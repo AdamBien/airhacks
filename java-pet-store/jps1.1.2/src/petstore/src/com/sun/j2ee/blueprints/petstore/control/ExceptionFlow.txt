@@ -1,0 +1,63 @@
+This is a small writeup on the exceptions received by the petstore app from
+the components and how these exceptions are thrown up :
+
+The list of exceptions thrown by components are listed below. Bote that SQLEx
+are treated as system exceptions, as of now.
+
+customer/customer :
+
+    FinderException when an account or an order of given ID is not found
+    CreateException when an account or an order cant be created
+    DuplicateKeyException when an account with the same id is already present
+    CustomerAppException when there is some user error (like wrong fields)
+    RemoteException for all system errors
+
+inventory :
+
+    RemoteException for all system errors
+    FinderException when the item with given ID is not found
+
+Mailer :
+
+    MailerAppException for all revoerable errors
+    CreateException if Mailer cant be created
+    RemoteException for system errors
+
+ProfileMgr :
+
+    DuplicateKeyException is profile is present for the given user already
+    CreateException if profile cant be created
+    ProfileMgrAppException when there is a user error
+    FinderException when a profile could not be loaded
+    RemoteException for system errors
+
+shoppingcart/cart, shoppingcart/catalog :
+
+    CreateException if cart/catalog cant be created
+    RemoteException for system errors
+
+signon :
+
+    DuplicateKeyException if an user is already present
+    CreateException if an user, password entry could not be created
+    FinderException if given user is not found
+    SignOnAppException for user errors
+    RemoteException for system errors
+
+Here is how the component exceptions are converted by the petstore handlers :
+
+. RemoteExceptions are converted to GeneralFailureExceptions with the error
+  message set to what was received from below.
+
+. FinderExceptions are converted to EStoreFinderException
+. DupKeyExceptions are converted to EStoreDupKeyException
+. CreateExceptions are converted to EStoreCreateException
+. ???AppExceptions are converted to EStoreAppException
+
+  The error messages in all the above app exceptions will be set to what was
+  the particulat error which can be used by the jsp page to display a generic
+  error message followed by this specific error.
+
+The following additional specific app exceptions are thrown :
+
+. SigninFailedException if the passwords do not match

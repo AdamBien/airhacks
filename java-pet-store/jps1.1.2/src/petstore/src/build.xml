@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.21.4.8 2001/04/05 18:52:32 lblair Exp $              -->
+<!-- =================================================================== -->
+
+<project name="javapetstoredemo" default="core" basedir=".">
+
+  <target name="init">
+    <!-- change this property to use a compiler other than javac. -->
+    <property name="build.compiler" value="classic"/>
+
+    <!-- The root directory of the workspace -->
+    <property name="petstore.home" value=".."/>
+
+    <!-- The destination directory for the build -->
+    <property name="petstore.build" value="${petstore.home}/build"/>
+    <property name="petstore.buildjardir" value="${petstore.home}/build/ejbjar"/>
+
+    <property name="petstore.src" value="${petstore.home}/src"/>
+
+    <!-- The destination directory for all the compiled classes. -->
+    <property name="petstore.classbindir" value="${petstore.build}/classes"/>
+    <property name="petstore.component.basedir" value="../../components"/>
+    <property name="petstore.srcdocroot" value="${petstore.src}/docroot"/>
+
+    <!-- Component home locations and class bin directories -->
+    <property name="tracer.home" value="${petstore.component.basedir}/util/tracer"/>
+    <property name="tracer.classbindir" value="${tracer.home}/build/classes"/>
+    <property name="customer.home" value="${petstore.component.basedir}/customer"/>
+    <property name="customer.classbindir" value="${customer.home}/build/classes"/>
+    <property name="personalization.home" value="${petstore.component.basedir}/personalization"/>
+    <property name="personalization.classbindir" value="${personalization.home}/build/classes"/>
+    <property name="inventory.home" value="${petstore.component.basedir}/inventory"/>
+    <property name="inventory.classbindir" value="${inventory.home}/build/classes"/>
+    <property name="shoppingcart.home" value="${petstore.component.basedir}/shoppingcart"/>
+    <property name="shoppingcart.classbindir" value="${shoppingcart.home}/build/classes"/>
+    <property name="mail.home" value="${petstore.component.basedir}/mail"/>
+    <property name="mail.classbindir" value="${mail.home}/build/classes"/>
+    <property name="signon.home" value="${petstore.component.basedir}/signon"/>
+    <property name="signon.classbindir" value="${signon.home}/build/classes"/>
+
+    <!-- The destination directory for all the javadocs. -->
+    <property name="petstore.dstdocdir" value="${petstore.build}/docs/api"/>
+
+    <!-- The classpath used for building the workspace. -->
+    <property name="j2ee.classpath" value="${j2ee.home}/lib/j2ee.jar"/>
+    <property name="petstore.classpath" value="${petstore.classbindir}:${mail.classbindir}:${signon.classbindir}:${shoppingcart.classbindir}:${inventory.classbindir}:${customer.classbindir}:${personalization.classbindir}:${tracer.classbindir}:${j2ee.classpath}:${petstore.home}/src/lib/jaxp.jar"/>
+
+    <property name="petstore.ejbjar" value="${petstore.build}/petstoreEjb.jar"/>
+    <property name="petstore.inventoryejbjar" value="${petstore.component.basedir}/inventory/build/inventoryEjb.jar"/>
+    <property name="petstore.mailerejbjar" value="${petstore.component.basedir}/mail/build/mailerEjb.jar"/>
+    <property name="petstore.signonejbjar" value="${petstore.component.basedir}/signon/build/signonEjb.jar"/>
+    <property name="petstore.customerejbjar" value="${petstore.component.basedir}/customer/build/customerEjb.jar"/>
+    <property name="petstore.personalizationejbjar" value="${petstore.component.basedir}/personalization/build/personalizationEjb.jar"/>
+    <property name="petstore.shoppingcartejbjar" value="${petstore.component.basedir}/shoppingcart/build/shoppingcartEjb.jar"/>
+    <property name="petstore.war" value="${petstore.build}/petstore.war"/>
+    <property name="petstore.ear" value="${petstore.build}/petstore.ear"/>
+
+    <!-- Component client view jars -->
+    <property name="customer.build" value="${customer.home}/build"/>
+    <property name="customer.clientjar" value="${customer.build}/customerEjb_client.jar"/>
+    <property name="personalization.build" value="${personalization.home}/build"/>
+    <property name="personalization.clientjar" value="${personalization.build}/personalizationEjb_client.jar"/>
+    <property name="inventory.build" value="${inventory.home}/build"/>
+    <property name="inventory.clientjar" value="${inventory.build}/inventoryEjb_client.jar"/>
+    <property name="shoppingcart.build" value="${shoppingcart.home}/build"/>
+    <property name="shoppingcart.clientjar" value="${shoppingcart.build}/shoppingcartEjb_client.jar"/>
+    <property name="mail.build" value="${mail.home}/build"/>
+    <property name="mail.clientjar" value="${mail.build}/mailerEjb_client.jar"/>
+    <property name="signon.build" value="${signon.home}/build"/>
+    <property name="signon.clientjar" value="${signon.build}/signonEjb_client.jar"/>
+  </target>
+
+  <target name="compile_classes" depends="init">
+    <mkdir dir="${petstore.classbindir}"/>
+    <copydir src="${tracer.classbindir}" dest="${petstore.classbindir}"/>
+    <javac srcdir="${petstore.src}"
+           destdir="${petstore.classbindir}"
+           classpath="${petstore.classpath}"
+           includes="com/**"/>
+  </target>
+
+  <target name="ejbjar" depends="init">
+    <mkdir dir="${petstore.buildjardir}/META-INF"/>
+    <expand src="${petstore.home}/src/lib/jaxp.jar" dest="${petstore.classbindir}" />
+    <expand src="${petstore.home}/src/lib/parser.jar" dest="${petstore.classbindir}" />
+    <copydir src="${petstore.classbindir}" dest="${petstore.buildjardir}" />
+    <copyfile src="estore_ejb.xml" dest="${petstore.buildjardir}/META-INF/ejb-jar.xml" />
+    <delete file="${petstore.ejbjar}"/>
+    <jar jarfile="${petstore.ejbjar}" basedir="${petstore.buildjardir}" manifest="manifest_scc.mf"/>
+    <deltree dir="${petstore.buildjardir}"/>
+  </target>
+
+  <target name="war" depends="init">
+    <copydir src="${petstore.classbindir}" dest="docroot/WEB-INF/classes" excludes="cvs"/>
+    <mkdir dir="docroot/WEB-INF/lib"/>
+    <copyfile src="${petstore.home}/src/lib/jaxp.jar" dest="docroot/WEB-INF/lib/jaxp.jar" />
+    <copyfile src="${petstore.home}/src/lib/parser.jar" dest="docroot/WEB-INF/lib/parser.jar" />
+    <copyfile src="${customer.clientjar}" dest="docroot/WEB-INF/lib/customerEjb_client.jar" />
+    <copyfile src="${personalization.clientjar}" dest="docroot/WEB-INF/lib/personalizationEjb_client.jar" />
+    <copyfile src="${inventory.clientjar}" dest="docroot/WEB-INF/lib/inventoryEjb_client.jar" />
+    <copyfile src="${shoppingcart.clientjar}" dest="docroot/WEB-INF/lib/shoppingcartEjb_client.jar" />
+    <copyfile src="${mail.clientjar}" dest="docroot/WEB-INF/lib/mailerEjb_client.jar" />
+    <copyfile src="${signon.clientjar}" dest="docroot/WEB-INF/lib/signonEjb_client.jar" />
+    <delete file="${petstore.war}"/>
+    <jar jarfile="${petstore.war}" basedir="docroot" excludes="cvs" />
+    <deltree dir="docroot/WEB-INF/classes"/>
+    <deltree dir="docroot/WEB-INF/lib"/>
+  </target>
+
+ <!-- Save for future workaround due to RI bug 4434156
+ <target name="ear" depends="init">
+    <mkdir dir="${petstore.buildjardir}"/>
+    <mkdir dir="${petstore.buildjardir}/META-INF"/>
+    <copyfile src="MANIFEST.MF" dest="${petstore.buildjardir}/META-INF/MANIFEST.MF" />
+    <copyfile src="application.xml" dest="${petstore.buildjardir}/META-INF/application.xml" />
+    <copyfile src="${petstore.ejbjar}" dest="${petstore.buildjardir}/petstoreEjb.jar" />
+    <copyfile src="${petstore.mailerejbjar}" dest="${petstore.buildjardir}/mailerEjb.jar" />
+    <copyfile src="${petstore.signonejbjar}" dest="${petstore.buildjardir}/signonEjb.jar" />
+    <copyfile src="${petstore.inventoryejbjar}" dest="${petstore.buildjardir}/inventoryEjb.jar" />
+    <copyfile src="${petstore.customerejbjar}" dest="${petstore.buildjardir}/customerEjb.jar" />
+    <copyfile src="${petstore.personalizationejbjar}" dest="${petstore.buildjardir}/personalizationEjb.jar" />
+    <copyfile src="${petstore.shoppingcartejbjar}" dest="${petstore.buildjardir}/shoppingcartEjb.jar" />
+    <copyfile src="${petstore.war}" dest="${petstore.buildjardir}/petstore.war" />
+    <delete file="${petstore.ear}"/>
+    <jar jarfile="${petstore.ear}" basedir="${petstore.buildjardir}" />
+    <deltree dir="${petstore.builddjardir}"/>
+  </target>
+  -->
+
+  <target name="ear" depends="init">
+    <property name="ear.contents" value="${petstore.ejbjar}:${petstore.mailerejbjar}:${petstore.signonejbjar}:${petstore.inventoryejbjar}:${petstore.customerejbjar}:${petstore.personalizationejbjar}:${petstore.shoppingcartejbjar}:${petstore.war}"/>
+    <delete file="${petstore.ear}"/>
+    <java classname="com.sun.enterprise.tools.packager.Main"
+          fork="yes"
+          classpath="${j2ee.classpath}"
+          args="-enterpriseArchive ${ear.contents} petstore ${petstore.ear}"/>
+  </target>
+
+  <target name="runtime" depends="init">
+    <java classname="com.sun.enterprise.tools.packager.Main"
+          fork="yes"
+          classpath="${j2ee.classpath}"
+          args="-setRuntime ${petstore.ear} estore_warruntime.xml"/>
+    <java classname="com.sun.enterprise.tools.packager.Main"
+          fork="yes"
+          classpath="${j2ee.classpath}"
+          args="-setRuntime ${petstore.ear} estore_ejbruntime.xml"/>
+  </target>
+
+  <target name="javadocs" depends="init">
+    <mkdir dir="${petstore.dstdocdir}"/>
+    <javadoc packagenames="com.sun.j2ee.blueprints.*"
+             sourcepath="${petstore.src}"
+             classpath="${petstore.classpath}"
+             destdir="${petstore.dstdocdir}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="Java Pet Store Demo API"
+             doctitle="Java Pet Store Demo"
+             bottom="Copyright &#169; 2001 Sun Microsystems Inc. All Rights Reserved."
+    />
+  </target>
+
+  <target name="components">
+   <ant antfile="${tracer.home}/src/build.xml" dir="${tracer.home}/src" target="core" />
+   <ant antfile="${customer.home}/src/build.xml" dir="${customer.home}/src" target="core" />
+   <ant antfile="${personalization.home}/src/build.xml" dir="${personalization.home}/src" target="core" />
+   <ant antfile="${inventory.home}/src/build.xml" dir="${inventory.home}/src" target="core" />
+   <ant antfile="${shoppingcart.home}/src/build.xml" dir="${shoppingcart.home}/src" target="core" />
+   <ant antfile="${mail.home}/src/build.xml" dir="${mail.home}/src" target="core" />
+   <ant antfile="${signon.home}/src/build.xml" dir="${signon.home}/src" target="core" />
+  </target>
+
+  <target name="cleanall" depends="clean">
+   <ant antfile="${tracer.home}/src/build.xml" dir="${tracer.home}/src" target="clean" />
+   <ant antfile="${customer.home}/src/build.xml" dir="${customer.home}/src" target="clean" />
+   <ant antfile="${personalization.home}/src/build.xml" dir="${personalization.home}/src" target="clean" />
+   <ant antfile="${inventory.home}/src/build.xml" dir="${inventory.home}/src" target="clean" />
+   <ant antfile="${shoppingcart.home}/src/build.xml" dir="${shoppingcart.home}/src" target="clean" />
+   <ant antfile="${mail.home}/src/build.xml" dir="${mail.home}/src" target="clean" />
+   <ant antfile="${signon.home}/src/build.xml" dir="${signon.home}/src" target="clean" />
+  </target>
+
+  <target name="clean">
+    <deltree dir="${petstore.build}"/>
+    <deltree dir="${petstore.dstdocdir}"/>
+  </target>
+
+  <target name="deploy">
+    <java classname="com.sun.enterprise.tools.deployment.main.Main"
+          jvmargs="-Dorg.omg.CORBA.ORBInitialPort=1050 -Dcom.sun.enterprise.home=${j2ee.home} -Djava.security.policy=${j2ee.home}/lib/security/java.policy"
+          args="-deploy ${petstore.ear} local"/>
+  </target>
+
+  <target name="petstoreonly" depends="compile_classes,war,ejbjar,ear,runtime" />
+  <target name="core" depends="components,compile_classes,war,ejbjar,ear,runtime" />
+  <target name="coredeploy" depends="core,deploy" />
+  <target name="all" depends="components,compile_classes,war,ejbjar,ear,runtime,javadocs" />
+  <target name="waronly" depends="compile_classes,war" />
+
+</project>

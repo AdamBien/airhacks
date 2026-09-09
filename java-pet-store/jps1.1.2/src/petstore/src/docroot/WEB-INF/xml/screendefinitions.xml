@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<screen-definitions>
+
+  <template>/template.jsp</template>
+
+  <screen>
+    <screen-name>MAIN</screen-name>
+    <parameter key="HtmlTitle" value="Welcome to Java Pet Store Demo" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/index.jsp" direct="false"/>
+    <parameter key="HtmlPetFooter" value="/petfooter.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_overview_j2ee.jsp" direct="true"/>
+  </screen>
+
+
+  <screen>
+    <screen-name>ERROR</screen-name>
+    <parameter key="HtmlTitle" value="Error" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/errorpage.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_all.html" direct="true"/>
+  </screen>
+
+  <screen>
+    <screen-name>SEARCH</screen-name>
+    <parameter key="HtmlTitle" value="Search" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/search.jsp" direct="false"/>
+    <parameter key="HtmlPetFooter" value="/petfooter.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_jsp_bigpicture.jsp" direct="true"/>
+  </screen>
+
+  <screen>
+    <screen-name>CART</screen-name>
+    <parameter key="HtmlTitle" value="Cart" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/cart.jsp" direct="false"/>
+    <parameter key="HtmlPetFooter" value="/petfooter.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_ejb_components.jsp" direct="true"/>
+  </screen>
+
+   <screen>
+    <screen-name>CATALOG</screen-name>
+    <parameter key="HtmlTitle" value="Catalog" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/splash.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_database_j2ee.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>CATEGORY</screen-name>
+    <parameter key="HtmlTitle" value="Product Category" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/productcategory.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_dynamic_generation_j2ee.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>PRODUCT</screen-name>
+    <parameter key="HtmlTitle" value="Product Category" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/product.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_jsp_bigpicture.jsp" direct="true"/>
+  </screen>
+
+   <screen>
+    <screen-name>PRODUCT_DETAILS</screen-name>
+    <parameter key="HtmlTitle" value="Product Information" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/productdetails.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_jsp_components_j2ee.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>ACCOUNT_CREATED</screen-name>
+    <parameter key="HtmlTitle" value="Account Created" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/accountcreationsuccess.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_account_ejb.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>ACCOUNT_UPDATED</screen-name>
+    <parameter key="HtmlTitle" value="Account Updated" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/accountupdatesuccess.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_account_ejb.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>CREATE_ACCOUNT</screen-name>
+    <parameter key="HtmlTitle" value="Create New Account" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/createnewaccount.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_account_ejb.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>EDIT_ACCOUNT</screen-name>
+    <parameter key="HtmlTitle" value="Edit Account" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/editaccount.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_account_ejb.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>HELP</screen-name>
+    <parameter key="HtmlTitle" value="Help" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/help.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_ejb_bigpicture.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>CHECK_OUT</screen-name>
+    <parameter key="HtmlTitle" value="Check Out" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/checkout.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_security_j2ee.jsp" direct="true"/>
+    </screen>
+
+   <screen>
+    <screen-name>PLACE_ORDER</screen-name>
+    <parameter key="HtmlTitle" value="Enter Your Information" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/enteruserdata.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_security_j2ee.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>ENTER_ACCOUNT_INFORMATION</screen-name>
+    <parameter key="HtmlTitle" value="Enter Account Information" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/entershippingaddress.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_security_j2ee.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>ENTER_SHIPPING_INFORMATION</screen-name>
+    <parameter key="HtmlTitle" value="Enter Shipping Information" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/entershippingaddress.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_security_j2ee.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>VALIDATE_BILLING_INFORMATION</screen-name>
+    <parameter key="HtmlTitle" value="Confirm Shipping Data" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/confirmshippingdata.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_database_j2ee.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>COMMIT_ORDER</screen-name>
+    <parameter key="HtmlTitle" value="Order Shipped" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/shiporder.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_order_commit.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>MISSING_FORM_DATA</screen-name>
+    <parameter key="HtmlTitle" value="Missing Form Data" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/missingformdata.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_overview_j2ee.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>DUPLICATE_ACCOUNT</screen-name>
+    <parameter key="HtmlTitle" value="Duplicate Account Error" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/duplicateaccount.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_overview_j2ee.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>SIGN_IN</screen-name>
+    <parameter key="HtmlTitle" value="Sign In" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/signin.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_security_j2ee.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>SIGN_IN_SUCCESS</screen-name>
+    <parameter key="HtmlTitle" value="Welcome" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/signinsuccess.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_security_j2ee.jsp" direct="true"/>
+  </screen>
+
+   <screen>
+    <screen-name>SIGN_IN_ERROR</screen-name>
+    <parameter key="HtmlTitle" value="Sign In" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/error.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_security_j2ee.jsp" direct="true"/>
+   </screen>
+
+   <screen>
+    <screen-name>SIGN_OUT</screen-name>
+    <parameter key="HtmlTitle" value="Sign Off" direct="true"/>
+    <parameter key="HtmlBanner" value="/banner.jsp" direct="false"/>
+    <parameter key="HtmlTopIndex" value="/topindex.jsp" direct="false"/>
+    <parameter key="HtmlBody" value="/signoff.jsp" direct="false"/>
+    <parameter key="HtmlFooter" value="/footer.jsp" direct="false"/>
+    <parameter key="Annotation" value="/estore/annotation/ann_security_j2ee.jsp" direct="true"/>
+   </screen>
+
+</screen-definitions>
