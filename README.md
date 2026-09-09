@@ -10,6 +10,8 @@ See you at upcoming https://airhacks.live events!
 
 in-person workshops at Munich Airport: https://airhacks.university
 
+online video courses (BCE): https://airhacks.io
+
 adam bien / airhacks links: https://airhacks.industries
 
 airhacks on eventbrite: https://airhacks.eventbrite.com
