@@ -1,8 +1,9 @@
-# Candidate Concepts — Java Pet Store 1.1.2
+# Concepts — Java Pet Store 1.1.2
 
-Step 3 of `migration/PLAN.md` (concept extraction), 2026-09-09. These are
-**candidates, not verdicts** — every concept carries its evidence so the
-domain expert (step 4, clarifier session) can confirm, rename, merge, or kill it.
+Steps 1–2 of `migration/PLAN.md`: extraction (2026-09-09) and clarifier session
+with the domain expert (2026-09-09). Each concept carries its evidence plus the
+**Clarified** decision from the expert session. This is now the vocabulary input
+for `/bc-carver` (step 3).
 
 ## Sources mined
 
@@ -23,8 +24,9 @@ Not mined (out of scope here): runtime behavior (step 2), DB schema, `populate` 
 - **Evidence:** `signon` component (`SignOn`, `SignOnEJB`); `SigninEvent`/`SignoutEvent`;
   `SigninFlowHandler`, `SignoutHandler`; `signin.jsp`, `signoff.jsp`, `signinsuccess.jsp`.
 - **Noise stripped:** 18 files reduce to one concept with two intents.
-- **For clarifier:** is sign-on truly separate from Customer Account, or one concept the
-  J2EE security model forced apart?
+- **Clarified: leaves the domain.** Credential storage is replaced by an external
+  IdP (OIDC, Keycloak-style). No sign-on BC; the new system consumes identity,
+  it does not own it. The `signon` component ports to nothing.
 
 ### 2. Customer Account
 - **Vocabulary:** account, customer, contact information, address, credit card,
@@ -34,8 +36,9 @@ Not mined (out of scope here): runtime behavior (step 2), DB schema, `populate` 
   `createnewaccount.jsp`, `editaccount.jsp`, `duplicateaccount.jsp`, `changeaddressform.jsp`.
 - **Caveat:** the `customer` component also contains all of **Order** (below) — Sun's
   component boundary is packaging, not domain. Strong carve signal.
-- **For clarifier:** does "duplicate account" (its own JSP) imply account-id uniqueness
-  rules worth a requirement?
+- **Clarified: stays, minus credentials.** Account identity comes from the external
+  IdP subject; the BC owns contact information, addresses, and payment data.
+  Duplicate-account handling becomes the IdP's problem, not a domain requirement.
 
 ### 3. Catalog
 - **Vocabulary:** category, product, item, search, browse, product details,
@@ -43,17 +46,18 @@ Not mined (out of scope here): runtime behavior (step 2), DB schema, `populate` 
 - **Evidence:** `Catalog`, `Category`, `Product`, `Item`, `ListChunk`, `CatalogDAO` —
   all **misfiled inside the `shoppingcart` component**; `CatalogHandler`, `ListHandler`;
   `search.jsp`, `product.jsp`, `productcategory.jsp`, `productdetails.jsp`.
-- **Status:** already carved — maps to the existing catalog BC in `../../aldi-eshop`
-  ("initial catalog BC creation" commit). Verify the Category→Product→Item hierarchy
-  and pagination made it across.
+- **Status:** to carve, like every other BC. The Category→Product→Item hierarchy
+  and `ListChunk` pagination are the vocabulary to preserve.
 
 ### 4. Shopping Cart
 - **Vocabulary:** cart, cart item, quantity; intents ADD_ITEM / DELETE_ITEM / UPDATE_ITEM
   (verbatim constants in `CartEvent`).
 - **Evidence:** `ShoppingCart`, `CartItem`, `ShoppingCartModel`; `CartHandler`;
   `cart.jsp`, `carttable.jsp`.
-- **For clarifier:** cart lifetime (session-only vs. persisted per account?) — the
-  stateful session bean suggests session-only; needs behavioral confirmation (step 2).
+- **Clarified: persisted per customer.** The cart survives sessions and devices,
+  keyed by customer id — a deliberate upgrade over the legacy stateful session bean.
+  Legacy behavior (session-only) is *not* the spec here; characterization of cart
+  expiry is therefore not required.
 
 ### 5. Order & Checkout
 - **Vocabulary:** order, line item, order id, order date, total price, status
@@ -66,9 +70,12 @@ Not mined (out of scope here): runtime behavior (step 2), DB schema, `populate` 
   `ShippingFlowHandler`; `checkout.jsp`, `entershippingaddress.jsp`,
   `confirmshippingdata.jsp`, `shiporder.jsp`; multi-DB `OrderDAO` variants
   (CS/Oracle/Sybase — pure infrastructure noise).
-- **For clarifier:** full status lifecycle (only `pending` is visible in code —
-  what are the terminal states?); what "express order" changes vs. normal checkout;
-  is UPDATE/DELETE_ORDER reachable by customers or dead code?
+- **Clarified:** status lifecycle is **`pending → shipped`** — no approve/deny step;
+  the admin "approval" UI was decorative. **Express order stays** as an order variant:
+  checkout using stored address/card, a requirement in the order spec. Order placement
+  **publishes an event** (consumed by notification, see concept 9). UPDATE/DELETE_ORDER
+  reachability still unknown — verify against the revived instance (plan step 5) before
+  speccing customer-facing order mutation.
 
 ### 6. Order Fulfillment (back office)
 - **Vocabulary:** pending orders, manage orders, approve/deny (implied by
@@ -77,17 +84,20 @@ Not mined (out of scope here): runtime behavior (step 2), DB schema, `populate` 
   `PendingOrders` (orderId, userId, itemId, itemQty, orderDate, orderAmount)
   exporting via StarOffice/UNO (`ExcelXML.xls` in repo root); `pendingorders.jsp`,
   `manageorders.jsp`.
-- **For clarifier:** what an approval actually did (charge card? release shipment?);
-  whether the spreadsheet export is a behavior to keep or a 2001 artifact to drop. ⚑
-- **Carve note:** likely a separate BC (different actor: admin, not shopper).
+- **Clarified:** no approval semantics — fulfillment ships pending orders
+  (`pending → shipped`). **Both the pending-orders view and the export stay**:
+  the spreadsheet download is real business behavior, reimplemented cleanly
+  (CSV/Excel) without the StarOffice/UNO plumbing.
+- **Carve note:** separate BC confirmed (different actor: admin, not shopper).
 
 ### 7. Inventory
 - **Vocabulary:** item id, quantity on hand.
 - **Evidence:** `inventory` component — `InventoryModel` is exactly
   `{itemId, quantity}`; 14 files for two fields (pattern-noise poster child).
-- **For clarifier:** when is stock decremented — at order creation or at
-  fulfillment approval? (Determines whether Inventory belongs inside
-  Fulfillment or stands alone.)
+- **Clarified: standalone BC with reservation semantics.** Stock is reserved/
+  decremented **at order creation**, not at fulfillment. This adds vocabulary the
+  legacy never had (reservation, release on cancellation?) — the inventory spec
+  must define what happens to reservations of orders that never ship.
 
 ### 8. Personalization / Profile
 - **Vocabulary:** profile, language preference, favorite category,
@@ -96,15 +106,16 @@ Not mined (out of scope here): runtime behavior (step 2), DB schema, `populate` 
   (`langPref`, `favCategory`, `myListOpt`, `bannerOpt`); `ProfileMgr*` (17 files
   of DAO/EJB noise around those four fields); `mylist.jsp`, `preferencesform.jsp`,
   `banner.jsp`, taglibs `banner`/`list`.
-- **For clarifier:** keep as own BC or fold the four preferences into
-  Customer Account? ("ProfileMgr" is a name to kill either way.)
+- **Clarified: own BC.** Personalization stays separate (room to grow into
+  recommendations). "ProfileMgr" the name is dead; the concept lives.
 
 ### 9. Order Notification
 - **Vocabulary:** e-mail message, order confirmation mail.
 - **Evidence:** `mail` component (`EMailMessage`, `Mailer`); `MailAction` — "builds
   content for an order and sends an email to the customer"; `mailerapp.ear` miniapp.
-- **Carve note:** classic downstream reaction to an order event — candidate for an
-  async integration, not a standalone BC.
+- **Clarified: async adapter, not a BC.** The Order BC publishes an order-placed
+  event; a thin notification adapter consumes it and sends the confirmation mail.
+  No standalone mail BC; `mailerapp.ear` ports to nothing.
 
 ### 10. Localization (cross-cutting)
 - **Vocabulary:** locale, language change.
@@ -120,11 +131,31 @@ Not mined (out of scope here): runtime behavior (step 2), DB schema, `populate` 
 the `ann_*.jsp` annotated-tutorial pages, `populate` (DB seeding tool),
 StarOffice/UNO plumbing. Roughly 130 of 233 classes carry no domain vocabulary.
 
-## Cross-component observations for the carver (step 5)
+## Clarified BC candidates — input for `/bc-carver` (step 3)
+
+| BC candidate | Status | Key clarified decision |
+|---|---|---|
+| catalog | to carve | Category→Product→Item hierarchy + pagination (`ListChunk`) |
+| customer-account | to carve | identity from external IdP; owns contact/address/payment |
+| shopping-cart | to carve | persisted per customer (deliberate upgrade over legacy) |
+| order | to carve | `pending → shipped`; express variant; publishes order-placed event |
+| fulfillment | to carve | admin actor; ships pending orders; keeps view + modern export |
+| inventory | to carve | standalone; reservation at order creation (new vocabulary — spec must define release) |
+| personalization | to carve | own BC; four preferences, room for recommendations |
+
+**Not BCs:** sign-on (external IdP), notification (async adapter on the order-placed
+event), localization (cross-cutting concern).
+
+## Cross-component observations for the carver
 
 - **Sun components ≠ BCs, proven twice:** Catalog lives inside `shoppingcart`;
   Order lives inside `customer`. Do not carve along the folder lines.
-- **Actor split:** shopper (signon, account, catalog, cart, order), back office
-  (fulfillment, inventory?), system (notification). A reasonable first-cut BC axis.
+- **Actor split confirmed by clarification:** shopper (account, catalog, cart, order,
+  personalization), back office (fulfillment, inventory), system (notification adapter).
 - **Event names are the best vocabulary in the codebase** — six events name intents
   more honestly than any of the 48 pattern-named classes.
+
+## Remaining unknown (deferred to characterization, plan step 5)
+
+- Whether customer-facing UPDATE/DELETE_ORDER is reachable in the legacy UI or dead
+  code — decides if the order spec includes customer order mutation.
