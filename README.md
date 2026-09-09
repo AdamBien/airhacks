@@ -47,3 +47,5 @@ https://github.com/AdamBien/java-cli-app - Template project for building zero-de
 https://shiro.apache.org/permissions.html
 
 https://github.com/cedar-policy/cedar-spec
+
+https://alistairmavin.com/ears/
