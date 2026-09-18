@@ -6,7 +6,9 @@ https://airhacks.live communication repository
 
 Use: `https://github.com/AdamBien/airhacks.git` for initial creation and `git pull` to update the local repository.
 
-See you at upcoming https://airhacks.live events! 
+See you at upcoming https://airhacks.live events!
+
+https://airhacks.io - Free BCE course on YT
 
 in-person workshops at Munich Airport: https://airhacks.university
 
@@ -24,15 +26,7 @@ https://airails.dev - Guidelines (skills, agents and guardrails) for Agentic dev
 
 https://sbce.dev - Spec-driven Boundary-Control-Entity development where the spec lives in code, not markdown
 
-https://airhacks.live - Live virtual workshops with Adam Bien for Java and cloud development training
-
-https://airhacks.university - One-day in-person workshop at Munich Airport on architect-grade Java development with LLMs
-
-https://adam-bien.com - Adam Bien's homepage
-
 https://github.com/AdamBien/ebank - The running example of the course: a Quarkus, MicroProfile and Jakarta EE banking system organized with BCE
-
-https://airhacks.io - Free BCE course on YT
 
 https://github.com/AdamBien/quarkus-microprofile - quickstarter for brownfield LLM projects
 
