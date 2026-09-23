@@ -38,3 +38,5 @@ https://github.com/AdamBien/quarkus-microprofile - Java backend quickstarter. Wo
 https://github.com/AdamBien/java-cli-app - Template project for building zero-dependency Java CLI applications with zb
 
 https://alistairmavin.com/ears/
+
+https://github.com/AdamBien/bce.design
