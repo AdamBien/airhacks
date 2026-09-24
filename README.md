@@ -16,6 +16,8 @@ airhacks on eventbrite: https://airhacks.eventbrite.com
 
 airhacks on meetup: https://www.meetup.com/airhacks
 
+free course "The Screaming Architecture For Humans and LLMs": https://airhacks.io
+
 # links & resources
 
 https://bce.design - Boundary Control Entity design pattern for maintainable software architecture
