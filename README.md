@@ -18,3 +18,16 @@ airhacks on meetup: https://www.meetup.com/airhacks
 
 # links & resources
 
+https://bce.design - Boundary Control Entity design pattern for maintainable software architecture
+
+https://airails.dev - Guidelines (skills, agents and guardrails) for Agentic development
+
+https://sbce.space - Spec-driven Boundary-Control-Entity development where the spec lives in code, not markdown
+
+https://github.com/AdamBien/jmarkdoc - Zero-dependency Java tool for generating documentation from Markdown files in source code repositories
+
+https://github.com/AdamBien/zsmith - Zero-dependency LLM agent implement with Java 25+
+
+https://github.com/AdamBien/lightmetal - Zero-dependency local LLM inference with Java 25+
+
+
