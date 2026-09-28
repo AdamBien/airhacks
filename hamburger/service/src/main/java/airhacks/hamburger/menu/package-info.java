@@ -1,5 +1,5 @@
 /// # Menu
-/// > Expose the fixed set of hamburgers the shop sells, each with a price in cents.
+/// > Expose the fixed set of hamburgers the shop sells, each with calories and a price in cents.
 ///
 /// ## Boundary
 /// - `list-menu` — return every menu item
