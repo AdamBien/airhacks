@@ -27,6 +27,21 @@ class YieldPlanTest {
         assertThat(YieldPlan.tonnes(parse(json))).isEqualTo(Optional.ofNullable(expected));
     }
 
+    @ParameterizedTest(name = "{0} -> {1}")
+    @CsvSource(nullValues = "absent", value = {
+            "50, 50",
+            "1, 1",
+            "50.0, 50",
+            "0, absent",
+            "-5, absent",
+            "2.5, absent",
+            "'\"50\"', absent",
+            "3000000000, absent"
+    })
+    void stoneSize(String json, Integer expected) {
+        assertThat(YieldPlan.stoneSize(parse(json))).isEqualTo(Optional.ofNullable(expected));
+    }
+
     @ParameterizedTest(name = "{0}")
     @CsvSource(nullValues = "absent", value = {
             "2026-10-22, 2026-10-22",

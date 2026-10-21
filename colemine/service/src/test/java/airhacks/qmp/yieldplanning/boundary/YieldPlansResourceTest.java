@@ -56,11 +56,15 @@ class YieldPlansResourceTest {
     }
 
     static JsonObject plan(LocalDate day, long tonnes) {
-        return new YieldPlan(day, tonnes).toJSON();
+        return plan(day, tonnes, 50);
     }
 
-    static JsonObject tonnes(Object tonnes) {
-        return Json.createObjectBuilder(Map.of(YieldPlan.TONNES, tonnes)).build();
+    static JsonObject plan(LocalDate day, long tonnes, int stoneSize) {
+        return new YieldPlan(day, tonnes, stoneSize).toJSON();
+    }
+
+    static JsonObject revision(Map<String, Object> fields) {
+        return Json.createObjectBuilder(fields).build();
     }
 
     void preplan(LocalDate... days) {
@@ -80,13 +84,14 @@ class YieldPlansResourceTest {
     static Stream<Arguments> planDayCases() {
         var invalid = Json.createObjectBuilder()
                 .add(YieldPlan.TONNES, 1.5)
+                .add(YieldPlan.STONE_SIZE, 0)
                 .build();
         return Stream.of(
-                arguments(R1_1, List.of(), plan(DAY, 12_500), new Outcome(201, plan(DAY, 12_500))),
+                arguments(R1_1, List.of(), plan(DAY, 12_500, 80), new Outcome(201, plan(DAY, 12_500, 80))),
                 arguments(R1_2, List.of(), plan(DAY, 0), new Outcome(201, plan(DAY, 0))),
                 arguments(R1_3, List.of(DAY), plan(DAY, 9_000), new Outcome(409, "day already planned: " + DAY)),
                 arguments(R1_4, List.of(), invalid, new Outcome(400, """
-                        {"invalid":["day","tonnes"]}""")));
+                        {"invalid":["day","tonnes","stoneSize"]}""")));
     }
 
     @ParameterizedTest(name = "{0}")
@@ -100,10 +105,19 @@ class YieldPlansResourceTest {
 
     static Stream<Arguments> revisePlanCases() {
         return Stream.of(
-                arguments(R2_1, true, tonnes(9_000), new Outcome(200, plan(DAY, 9_000))),
-                arguments(R2_2, false, tonnes(9_000), new Outcome(404, "day not planned: " + DAY)),
-                arguments(R2_3, true, tonnes(-1), new Outcome(400, """
-                        {"invalid":["tonnes"]}""")));
+                arguments(R2_1, true, revision(Map.of(YieldPlan.TONNES, 9_000, YieldPlan.STONE_SIZE, 80)),
+                        new Outcome(200, plan(DAY, 9_000, 80))),
+                arguments(R2_2, false, revision(Map.of(YieldPlan.TONNES, 9_000)),
+                        new Outcome(404, "day not planned: " + DAY)),
+                arguments(R2_4, true, revision(Map.of(YieldPlan.STONE_SIZE, 80)),
+                        new Outcome(200, plan(DAY, 12_500, 80))),
+                arguments(R2_5, true, revision(Map.of(YieldPlan.TONNES, 9_000)),
+                        new Outcome(200, plan(DAY, 9_000, 50))),
+                arguments(R2_6, true, revision(Map.of()), new Outcome(400, """
+                        {"invalid":["tonnes","stoneSize"]}""")),
+                arguments(R2_7, true, revision(Map.of(YieldPlan.TONNES, -1, YieldPlan.STONE_SIZE, 2.5)),
+                        new Outcome(400, """
+                                {"invalid":["tonnes","stoneSize"]}""")));
     }
 
     @ParameterizedTest(name = "{0}")

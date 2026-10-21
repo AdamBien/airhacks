@@ -48,9 +48,10 @@ public class YieldPlansResource {
 
     @PUT
     @Path("{day}")
-    @Requirement({ R2_1, R2_2, R2_3, R6_3 })
+    @Requirement({ R2_1, R2_2, R2_4, R2_5, R2_6, R2_7, R6_3 })
     public JsonObject revisePlan(@PathParam("day") String day, JsonObject json) {
-        return this.plans.revise(dayOf(day), YieldPlan.tonnesFromJSON(json)).toJSON();
+        var revision = YieldPlan.revision(json);
+        return this.plans.revise(dayOf(day), revision).toJSON();
     }
 
     @DELETE

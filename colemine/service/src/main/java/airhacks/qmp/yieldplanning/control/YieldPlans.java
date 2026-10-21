@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.function.UnaryOperator;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -40,9 +41,9 @@ public class YieldPlans {
         return plan;
     }
 
-    public YieldPlan revise(LocalDate day, long tonnes) {
+    public YieldPlan revise(LocalDate day, UnaryOperator<YieldPlan> revision) {
         rejectStarted(day);
-        var revised = this.plans.computeIfPresent(day, (_, plan) -> plan.withTonnes(tonnes));
+        var revised = this.plans.computeIfPresent(day, (_, plan) -> revision.apply(plan));
         if (revised == null)
             throw notPlanned(day);
         return revised;

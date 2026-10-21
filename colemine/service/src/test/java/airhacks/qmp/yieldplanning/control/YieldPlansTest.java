@@ -25,8 +25,8 @@ import jakarta.ws.rs.ClientErrorException;
 class YieldPlansTest {
 
     static LocalDate TODAY = LocalDate.of(2026, 10, 21);
-    static YieldPlan PAST = new YieldPlan(TODAY.minusDays(20), 11_000);
-    static YieldPlan CURRENT = new YieldPlan(TODAY, 12_500);
+    static YieldPlan PAST = new YieldPlan(TODAY.minusDays(20), 11_000, 50);
+    static YieldPlan CURRENT = new YieldPlan(TODAY, 12_500, 50);
 
     YieldPlans plans = plansAt("2026-10-21T10:00:00Z");
 
@@ -55,8 +55,8 @@ class YieldPlansTest {
     @Requirement(R6_1)
     void dayStartsAtMidnightInMineZone() {
         var lateEvening = plansAt("2026-10-21T22:30:00Z");
-        var started = new YieldPlan(TODAY.plusDays(1), 12_500);
-        var upcoming = new YieldPlan(TODAY.plusDays(2), 12_500);
+        var started = new YieldPlan(TODAY.plusDays(1), 12_500, 50);
+        var upcoming = new YieldPlan(TODAY.plusDays(2), 12_500, 50);
 
         assertThatThrownBy(() -> lateEvening.plan(started))
                 .as(R6_1.statement())
@@ -77,8 +77,8 @@ class YieldPlansTest {
 
     static Stream<Arguments> lockedDayCases() {
         return Stream.of(
-                arguments(R6_2, (Consumer<YieldPlans>) plans -> plans.plan(new YieldPlan(TODAY, 9_000))),
-                arguments(R6_3, (Consumer<YieldPlans>) plans -> plans.revise(TODAY, 9_000)),
+                arguments(R6_2, (Consumer<YieldPlans>) plans -> plans.plan(new YieldPlan(TODAY, 9_000, 50))),
+                arguments(R6_3, (Consumer<YieldPlans>) plans -> plans.revise(TODAY, plan -> new YieldPlan(TODAY, 9_000, 80))),
                 arguments(R6_4, (Consumer<YieldPlans>) plans -> plans.delete(TODAY)));
     }
 }
